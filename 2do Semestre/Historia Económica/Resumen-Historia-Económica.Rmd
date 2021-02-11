@@ -1,0 +1,1356 @@
+---
+title: ""
+date: ""
+header-includes:
+- \usepackage[utf8]{inputenc}
+- \usepackage[spanish]{babel}
+- \usepackage{graphicx}
+- \usepackage{multirow,rotating}
+- \pagenumbering{gobble} 
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    includes:
+      before_body: coverpage.tex
+---
+\pagenumbering{gobble}
+\pagenumbering{arabic} 
+
+```{r setup, include=FALSE }
+knitr::opts_chunk$set(echo = F, fig.width = 6, fig.height = 3.5)
+```
+
+\newpage
+
+# Semana 1
+
+## PIB per cápita desde 1820. *Bolt & Timmer*.
+
+Desde 1820, la economía mundial ha experimentado un crecimiento de la producción mayúsculo. De hecho, el PIB per cápita se ha incrementado por 10 desde 1820 hasta 2010; no obstante, dicho crecimiento ha sido muy desigual, lo que ha acrecentado las brechas entre países.
+
+Esta divergencia se ha aminorado gracias al crecimiento de China e India.
+
+### Introducción.
+
+El bienestar de la gente, entendido como la capacidad de adquirir bienes y servicios. Así, el PIB per cápita es un indicador relevante para medir el desempeño económico de los países y el bienestar de su población.
+
+- Esto debido a que un PIB per cápita más alto no solo indica la posibilidad de comprar más bienes y servicios, sino de adquirir otras cosas como educación y salud.
+
+Por tal motivo, el PIB per cápita y la productividad tienen consecuencias importantes en los cambios del bienestar de la población durante los últimos 200 años.
+
+La principal idea de este capítulo es la siguiente: **en promedio, el mundo ha experimentado una mejoría sustancial del mando de los individuos sobre los recursos. Sin embargo, esto se ha manifestado de manera desigual en el mundo.**
+
+### Descripción de los conceptos utilizados.
+
+El PIB y conceptos similares como el ingreso nacional han sido largamente usados y criticados. No obstante, su medición sigue siendo relevante. Como ejemplo, la creación del Sistema Nacional de Cuentas es considerada como uno de los grandes avances del siglo 20.
+
+De manera sucinta, **el PIB resume en un solo valor el valor total de todos los bienes y servicios producidos en una sociedad, o alternativamente, el valor del ingreso total recibido.** Es decir, el PIB per cápita puede verse como una mejor aproximación para el análisis del bienestar de los individuos, toda vez que el PIB incluye a actores institucionales como las firmas o el gobierno.
+
+Como se sabe, el PIB juega un papel central en el pensamiento económico cobre crecimiento y desarrollo, y una gran parte de las explicaciones utilizan, principalmente, al PIB como variable para explicar esto. El crecimiento del PIB, causado por la inversión y el cambio tecnológico, es lo que ha sacado a gran parte de la población mundial de la pobreza del mundo pre-industrial.
+
+El PIB incluye tanto al consumo como al gasto en inversión. **Desde una perspectiva de bienestar, tiene sentido distinguirlos.** Cuando una economía utiliza todos sus recursos, se enfrenta a un trade-off: consumir ahora o en el futuro. Por tanto, resulta pertinente prestar atención al Ingreso Disponible Bruto Nacional, o sea, los recursos disponibles para el consumo (desafortunadamente, estos datos no están disponibles antes de 1950).
+
+Para el análisis posterior, se utilizaron precios internacionales, con el objetivo de mantener el poder adquisitivo.
+
+### Fuentes históricas.
+
+Para los periodos recientes, las instituciones oficiales proveen estimados sobre el PIB y sus componentes, los cuales son armonizados y estandarizados por varias organizaciones internacionales (OCDE, ONU, BM). Sin embargo, estas organizaciones no producen series de tiempo históricas de PIB real; esta información puede encontrarse en los trabajos de Maddison.
+
+De manera general, mientras más se retrocede en el tiempo, más escasa y de menor calidad la información disponible sobre estimaciones del PIB. Suelen existir 3 maneras para estimarlo:
+
+1. Como la producción total de bienes y servicios;
+2. Como la suma total de los gastos (consumo e inversión); y
+3. Como el ingreso total ganado (salarios, beneficios, etc.).
+
+El **primer paso** en la realización de cuentas nacionales históricas es establecer
+**el tamaño de la población**. Esta información puede servir para estimar el tamaño de diversos sectores económicos, el empleo en ellos, o la demanda existente en sectores específicos.
+
+La estimación de la actividad económica suele comenzar desde el enfoque del producto y complementada por información sobre ingreso y gasto. Además, los datos sobre el sector industrial, por lo general, son de mejor calidad que aquellos del sector agrícola o el de servicios. Inversamente, el gasto e ingreso del gobierno suelen estar bien documentados.
+
+### Calidad de los datos.
+
+Existen limitaciones bastante obvias respecto de **qué** mide el PIB y **cómo** lo mide. Una de ellas es que no toma en cuenta servicios que no están en el mercado y que son consumidos por un hogar. Adicionalmente, las estimaciones del PIB suelen tener márgenes de error crecientes a medida que se utiliza información anterior. 
+
+Hay que prestar atención a que los cambios en el PIB per cápita no sean reflejo de una reconfiguración de la cantidad de países en la región analizada.
+
+![Tabla 1.1. Calidad de los datos del PIB por región y año, 1820 - 2000](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_1_1.png)
+
+### Puntos importantes de las tendencias del PIB desde 1820.
+
+Existen buenas y malas noticias: las buenas, que el PIB per cápita promedio mundial se ha incrementado por 10 en este periodo, suceso que ha contribuido enormemente a un mayor bienestar de los individuos. **Este proceso ha sido producto de la industrialización: el decremento de la participación agrícola en la economía y el incremento sustancial de las manufacturas y los servicios en ella.**
+
+Las malas noticias son que el crecimiento del PIB ha sido muy desigual a través de las regiones del mundo: durante el siglo 19, los países ricos se volvieron más ricos y los pobres más pobres. Esta tendencia continuó hasta mitad del siglo 20, momento en el que se mitigó un poco: **por primera vez, las tasas de crecimiento de los países menos desarrollados han sido similares a las de los más adelantados** (de hecho, en Asia los primeros han superado a los segundos).
+
+En 1820, el país más rico, Gran Bretaña, tenía solo 4 veces más PIB per cápita que el más pobre, Australia.
+
+De hecho, desde 1950, todos los países del mundo han experimentado crecimiento económico real y, a veces, acelerado (las disminuciones reales han sido excepciones: la desintegración de la URSS, las décadas perdidas de África Sub-Sahariana en los 80s y 90s, y el consistentemente bajo crecimiento de Latinoamérica en el mismo periodo).
+
+![Gráfica 1.1. Promedios regionales de PIB per cápita, 1820 - 2010](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_1_1.png)
+
+Una manera de relacionar el liderazgo tecnológico con la capacidad de producción es a través de los cambios estructurales de la economía. Resulta particularmente interesante el rol del empleo en las manufacturas.
+
+### Participación del consumo en el PIB.
+
+A veces, el análisis del consumo resulta más productivo que el del PIB si se pretende analizar el bienestar de la población. Después de todo, el consumo está directamente relacionado con el bienestar material.
+
+Inicialmente, cuando los países son pobres, la participación del consumo en el PIB será alta. En las fases previas al crecimiento del PIB per cápita, el país invertirá más, lo que implica menos recursos disponibles para el consumo. Es decir, **existe un trade-off entre el consumo actual y el futuro**.
+
+Los datos muestran que esto es cierto: en el año 2000, la participación del consumo y el gasto gubernamental en el PIB era de 81% en países de bajo ingreso y 71% en países de ingresos altos. En naciones con ingresos medios, era de 59% (debido a la fuerte inversión).
+
+![Gráfica 1.2. Participación del consumo en el PIB para países seleccionados, 1950 - 2010](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_1_2.png)
+
+En resumen: **un país pobre tiene una alta participación del consumo en su PIB, la cual disminuye cuando se dedican más recursos a la inversión (y al consumo futuro); cuando el país se vuelve rico, el consumo se recupera.**
+
+### Prioridades de investigaciones futuras.
+
+Asignatura pendientes:
+
+- El estudio del desarrollo económico de largo plazo en África; y
+- Volver a analizar los datos presentados a partir de una nueva paridad del poder adquisitivo (2005 o 2011).
+
+\newpage
+
+## Crecimiento e interacción en la economía mundial. *Maddison*.
+
+### Introducción.
+
+El objetivo principal del ensayo es explicar el porqué el Occidente se volvió rico, cuándo comenzó su ascenso, cómo su desarrollo económico ha divergido del resto del mundo, y la relación entre ambos.
+
+Dos interpretaciones erróneas:
+
+1. La visión de que el mundo estaba inmerso en una "trampa Maltusiana", con estándares de vida oscilantes alrededor del nivel de subsistencia por milenios, derivado del estancamiento tecnológico, y que fue superada gracias a la Revolución Industrial.
+
+2. La visión de que los niveles de ingreso en Asia y Europa eran similares alrededor de 1800 y que la divergencia posterior emergió solo en los dos siglos posteriores.
+
+La ascensión del Occidente no fue un despegue violento, sino un proceso largo, con el PIB per cápita triplicándose de 1000 a 1820, comparado con el incremento de un tercio en el resto del mundo durante el mismo periodo. Además, en estos años, la población en el Occidente de quintuplicó, mientras que apenas se cuadruplicó en el resto de países.
+
+Entre 1500 y 1820, el comercio en el mundo se multiplicó por 20, lo que sostuvo el crecimiento poblacional a partir del intercambio de productos entre continentes.
+
+### Parte 1. ¿Por qué y cuándo se volvió rico Occidente?
+
+#### Cambios en el momentum del crecimiento a largo plazo.
+
+Durante el último milenio, la población mundial se multiplicó por 23 y el PIB per cápita por 14, mientras que el PIB lo hizo 300 veces. Dentro de la "época capitalista" (a partir de 1820), pueden identificarse 5 fases:
+
+1. La Edad de Oro, 1950-1973, donde el PIB per cápita mundial creció casi 3% anualmente.
+
+2. La Edad actual, desde 1973, donde el crecimiento del PIB per cápita mundial ha sido el segundo mejor.
+
+3. El Orden Liberal, 1870-1913, donde el crecimiento del PIB per cápita mundial fue marginalmente menor al actual.
+
+4. De 1913-1950, donde el crecimiento del PIB fue menor al potencial, principalmente causado por las dos guerras mundiales.
+
+5. 1820-1870, donde el crecimiento estuvo casi exclusivamente reservado para los países europeos, los Western Offshoots y Latinoamérica.
+
+#### La divergencia entre el Occidente y el Resto del Mundo.
+
+En el año 1000, las diferencias entre el PIB per cápita entre las 7 grandes regiones del mundo era bastante pequeño ($400 - $450 1990 USD). Sin embargo, para el año 2011 el ratio entre países llegó a ser de 18:1; además, el Occidente tiene ahora el 52% del PIB mundial a pesar de solo contar con 14% de la población.
+
+**La dicotomía Europa Occidental-China.** Hace 2000 años, estas regiones eran las más avanzadas en términos de tecnología e instituciones de gobierno. Sus niveles de ingreso fueron similares hasta el siglo V, cuando el Imperio Romano Occidental colapsó; adicionalmente, las invasiones árabes a España, África del Norte y Asia Occidental acabaron con el comercio entre Europa: en China no ocurrió este colapso.
+
+Desde el siglo X hasta el XIII, existió un progreso significativo en China. Se promovió la agricultura intensiva en arroz y los centros poblacionales se modificaron. De 1300 a 1850, la población aquí creció más rápido que en Europa Occidental, pero el PIB per cápita se estancó. La debacle ocurrió a partir de 1850, cuando el PIB per cápita se redujo hasta un cuarto.
+
+![Gráfica 1.3. Niveles de PIB per cápita: China y Europa Occidental, 400 - 2001](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_1_3.png)
+
+Así, Europa Occidental superó los niveles de PIB per cápita de China en el siglo XIV
+
+**Experiencia del crecimiento, divergencia y convergencia desde 1950.**
+
+En los últimos 50 años, han existido cambios importantes en la rapidez y patrones del crecimiento en diferentes partes del mundo.
+
+De 1950 a 1973 se vivieron años durados de prosperidad sin precedentes. PIB, PIB per cápita y exportaciones crecieron a ritmos muy altos a nivel mundial, lo que llevó a un nivel significativo de convergencia en el PIB per cápita y productividad.
+
+A partir de 1973, el crecimiento mundial se desaceleró y comenzó una divergencia importante entre regiones, donde el rendimiento económico en muchas de ellas fue por debajo del potencial. La excepción se observó en Asia Oriental, donde se produce un cuarto del PIB mundial y se encuentra la mitad de la población del planeta.
+
+#### Las fuerzas que explican la aceleración del crecimiento Occidental desde 1820.
+
+Desde 1820, es posible cuantificar las causas aproximadas del rendimiento de los principales países capitalistas.
+
+EL Reino Unido lideraba al mundo en términos de **productividad laboral** durante el siglo XIX y jugó un papel relevante como difusor de capital y libre comercio.
+
+Japón vivió una experiencia de *catch-up*, derivado de **fuertes inversiones en capital humano y físico**.
+
+Estados Unidos superó al Reino Unido como líder de productividad a finales del siglo XIX.
+
+![Tabla 1.2. Oferta mundial de energía primaria, 1820 - 2001](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_1_2.png)
+
+La característica más dinámica de estos tres países fue el **crecimiento explosivo en el stock de maquinaria y equipamiento per cápita**. Resulta interesante notar que este crecimiento fue soportado por una **eficiencia mayúscula en el uso de energía**. Además, disfrutaron de los beneficios de la expansión del capital humano, el progreso tecnológico y el comercio internacional.
+
+#### Las raíces de la modernidad: Características fundamentales de la expansión Occidental, 1000 - 1820.
+
+Durante este periodo, la inversión en maquinaria fue extremadamente modesta, al igual que la inversión en capital humano. Si bien hubo avances científicos, el desarrollo técnico fue más bien lento y menos intensivo en capital. Asimismo, existió poco uso de los combustibles minerales.
+
+#### Cuatro cambios intelectuales e institucionales en Occidente antes de 1820.
+
+1. **Reconocimiento de la capacidad humana para transformar la naturaleza a través de investigación y experimentación:** Creación y proliferación de universidades y centros de enseñanza; invención de la imprenta y difusión del conocimiento; nociones geocentristas fueron abandonadas.
+
+2. **Surgimiento de centros urbanos de comercio:** Se potenció el emprendimiento; protección de los derechos de propiedad; desarrollo de la contabilidad; surgimiento de instituciones de crédito y seguros.
+
+3. **Adopción del cristianismo:** Reconfiguración de la figura del matrimonio; limitación de la discrecionalidad en las herencias, lo cual redirigió muchos recursos hacia la Iglesia (dicha institución se convirtió en una poseedora de tierras principal).
+
+4. **Surgimiento de un sistema de naciones - Estado cercanos con relaciones comerciales:** intercambio comercial e intelectual; estimulación de la competición y la innovación.
+
+#### El *locus* del progreso técnico, 1000 - 1820.
+
+Es innegable la relevancia de los **avances tecnológicos en la navegación,  construcción de barcos, cartografía y geografía** para Europa Occidental en este periodo. A través de esto, la región se consolidó como líder en el comercio mundial. 
+
+![Tabla 1.3. *Ratio* de Globalización: Crecimiento comparado del volumen de comercio y PIB mundiales, 1500 - 2011](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_1_3.png)
+
+#### La Revolución Científica.
+
+Avances múltiples en las percepciones sobre el universo y la interacción entre planetas y astros; leyes de Newton; progreso astronómico y físico; mejor entendimiento del clima.
+
+**Los avances intelectuales estuvieron cercanamente relacionados con la investigación empírica y la producción de instrumentos de precisión y, sin duda, fueron inéditos en el mundo.**
+
+## HOT TAKES
+
+1. El proceso de ascensión del Occidente no atendió a los procesos establecidos de una trampa maltusiana;
+
+2. Europa Occidental y Asia no tenían los mismos niveles de PIB per cápita alrededor de 1800;
+
+3. 1820 como periodo en el que la divergencia del PIB per cápita entre Europa Occidental y el resto del mundo se acentúa: coincide con el inicio de la Revolución Industrial;
+
+4. Las regiones más ricas del mundo siempre han representado una minoría en términos demográficos a nivel mundial;
+
+5. **Transición epidemiológica:** momento en el que la población de Europa Occidental comenzó a crecer menos que el resto del mundo (mayor expectativa de vida, menor mortalidad infantil y reconfiguración socioeconómica);
+
+6. Durante la época pre-industrial, el crecimiento del PIB per cápita en cualquier parte del mundo fue insignificante: a partir de 1820, el ritmo de crecimiento de esta variable experimentó un cambio de velocidad sumamente significativo. **Crecimiento económico moderno:** Crecimiento del PIB per cápita sostenido y significativo a lo largo del tiempo;
+
+7. La mayor utilización de las energías modernas significó una mucho mayor eficiencia energética, además de que las energías orgánicas tienen menor disponibilidad relativa (constreñían la frontera de posibilidades de producción).
+
+\newpage
+
+# Semana 2.
+
+## El desarrollo económico de la Antigüedad. *Cameron & Neal*.
+
+El desarrollo tecnológico y social de los seres humanos fue bastante lento durante los primeros 1'990'000 años de su existencia.
+
+- El desarrollo tecnológico de herramientas primitivas comenzó hace 20'000 o 30'000 años.
+
+- Los cazadores - recolectores debieron gozar de una mejor salud que los primeros agricultores; aún así, vivían al margen de la subsistencia.
+  - Se encontraban sujetos a ciclos de escasez y abundancia, lo que los obligaba a moverse, característica y ventaja fundamental de nuestra especie.
+- Los hombres del Paleolítico se distribuyeron, no obstante, por todo el planeta. La mayor densidad de población se observaba en zonas tropicales: a finales de este periodo, la población en la Tierra era de alrededor de 10 millones de humanos.
+
+### La economía y la aparición de la civilización.
+
+Hace 10'000 años ocurrió una desglaciación que significó la mejora sustantiva de los climas en el hemisferio norte. Asimismo, durante los siguientes 5'000 años, las mejores tecnológicas y técnicas de los utensilios utilizados por el hombre fueron muy relevantes ( Periodo Neolítico).
+
+- Dichos avances, si bien probablemente fueron relativamente extendidos, se observaron con mayor intensidad en el extremo oriental del Mar Mediterráneo, en los valles del Éufrates y el Tigris.
+  - Se domesticaron animales como el perro, cabras y ovejas.
+  
+La aparición de la agricultura sedentaria alrededor del año 6'000 a.C.en el Mediterráneo se extendió a Egipto, India, China y Europa Occidental (masa terrestre eurasiática).
+  - **Esto permitió la fundación de asentamientos relativamente estables.**
+    - A su vez, esto aumentó las posibilidades de mayor acumulación de bienes materiales y riqueza, dejando así más tiempo libre a actividades como el arte y la religión.
+    
+También se incorporaron innovaciones tecnológicas en utensilios y técnicas agrícolas y ganaderas. 
+
+Existen vestigios de producciones textiles, alfareras y metalúrgicas en el quinto y cuarto milenio a.C.
+
+**Asimismo, comenzaron a observarse prácticas de división de trabajo y especialización**, lo que llevó a una mayor productividad, eficacia y progreso tecnológico.
+
+**Por otro lado, el comercio, al menos en trueque, estaba bastante extendido desde la última parte del Paleolítico**.
+
+Una de las principales consecuencias de la agricultura sedentaria fue el **aumento de la capacidad en determinadas áreas para sustentar a poblaciones enteras**.
+
+**Aparición de ciudades-estado a mediados del cuarto milenio a.C.** No obstante, existen vestigios de asentamientos bien establecidos en Anatolia, Mesopotamia o Jericó desde 7'000 u 8'000 a.C. (Mayormente Asia Menor y la península Arábiga).
+
+- Se considera como la primera civilización de la historia a Sumer, en Mesopotamia (entre los ríos Éufrates y Tigris).
+  - Enormes concentraciones humanas, ciudades bulliciosas, arquitectura monumental y tradiciones religiosas, literarias y artísticas.
+  - **Civilización basada, principalmente, en la agricultura altamente productiva.**
+
+La aparición de la civilización condujo a una mayor complejización de la división de trabajo y el sistema de organización económica. Nacieron las profesiones, como arquitectos, ingenieros y médicos. Se sistematizaron pesos y medidas, se inventaron las matemáticas y se sugirieron formas primitivas de ciencia.
+
+La escritura nació en Sumer, producto de la necesidad económica para registrar los impuestos o tributos (3'000 a.C.)
+
+### Las bases económicas del imperio.
+
+Durante el Neolítico, la propiedad privada se limitaba a los utensilios y armas: es probable que la propiedad de tierras y ganado fuera colectiva.
+
+A medida que la expansión de las ciudades-estado las hizo aproximarse entre sí, surgieron las disputas por las fronteras y los derechos de riego, lo que dio pie al conflicto y las conquistas.
+
+**La base económica de los imperios antiguos residía en el botín, los tributos y los impuestos que los conquistadores obtenían de los conquistados y las masas campesinas.**
+
+**La aportación tecnológica de los imperios antiguos es bastante escasa.** La única excepción notables es el descubrimiento del proceso para fundir el metal de hierro (1'400 - 1'200 a.C. en Anatolia).
+
+Durante la época helenística y el Imperio Romano se escribieron muchos tratados sobre la agricultura.
+
+No obstante el estancamiento de la tecnología durante los imperios antiguos, **los logros económicos fueron sustanciales: expediciones comerciales y formulación de leyes civiles, lo que estimuló enormemente el comercio.**
+
+### El comercio y el desarrollo en el mundo mediterráneo.
+
+El desarrollo económico entre 800 a.C. y 200 d.C. fue espectacular, debido en gran medida a la amplia división del trabajo en un contexto de redes comerciales y mercados altamente desarrollados.
+
+- Los fenicios monopolizaron durante mucho tiempo el comercio marítimo en el Mar Mediterráneo. Los griegos también aprovecharon su situación geográfica
+
+![Mapa 1. Las colinizaciones griega y fenicia](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Mapa_2_1.png)
+
+**Estos progresos comerciales y financieros fueron facilitados por una invención trascendental: el dinero en moneda. que simplificaron enormemente las transacciones y expandió el sistema de mercado a individuos y grupos más aislados.**
+
+### Logros y límites económicos de la civilización antigua.
+
+El apogeo de la civilización clásica en términos económicos ocurrió durante los primeros dos siglos d.C. en el Imperio Romano.
+
+- Originalmente, el pueblo romano era primordialmente agricultor: a medida que se expandió, creció su interés en asuntos militares y administrativos, pero su apego a la agricultura permaneció.
+
+- Eventualmente, se fortaleció la libertad de empresa y la no penalización de actividades comerciales, además de una especial atención al cumplimiento de contratos.
+
+  - El derecho romano proporcionaba un marco legal coherente y uniforme para la actividad comercial de todo el Imperio.
+  
+**La mayor contribución de Roma al desarrollo económico fue la *pax romana*: el largo periodo de paz y orden en el Mediterráneo que permitió que el comercio se desarrollara favorablemente y un crecimiento demográfico sin precedentes.**
+
+- Si bien el nivel de vida aumentó significativamente, es difícil ponderar hasta qué punto si se le compara con la situación actual.
+  
+Los mejores años del Imperio concluyeron con la muerte de Marco Aurelio en 180 d.C., aunque las invasiones germanas en el norte, la escasez de la mano de obra y la inflación ya presagiaban la decadencia del Imperio.
+
+- Con el tiempo, los impuestos se volvieron más elevados y estaban mucho más cargados a los menos favorecidos, lo que socavó las capacidades de los dos grandes pilares del Imperio: la agricultura y el comercio. **La actividad económica entró en un círculo vicioso contractivo de poco comercio y autosuficiencia de las grandes haciendas: la economía volvió a un sistema primitivo de subsistencia.**
+
+- Existe una razón aún más fundamental de las limitaciones y el fracaso de la economía romana: **la falta de creatividad tecnológica: si bien los avances militares y arquitectónicos fueron sorprendentes, la ciencia no acompañó nunca a la eficiencia económica o el mejoramiento de las condiciones de vida.**
+
+- Es decir, no fue falta de inteligencia: la explicación se encuentra en la estructura socioeconómica y en la naturaleza de las actitudes y estímulos que esta generó: **era una civilización basada en la esclavitud donde se produjeron grandes conquistas, construcciones, obras de arte y literatura, pero no un crecimiento ni desarrollo económico sostenido.**
+
+\newpage
+
+## Cambio, continuidad y azar. *E.A. Wrigley*.
+
+### La economía orgánica avanzada.
+
+**Toda la economía preindustrial estaba fuertemente ligada a la tierra como única fuente no solo de alimentos, sino de la mayor parte de las materias primas que se utilizaban.**
+
+- Puesto que la oferta de tierra era y es fija, la producción solo podía expandirse al aumentar los rendimientos de cada hectárea de tierra; sin embargo, eventualmente se caía en el estancamiento de los rendimientos decrecientes.
+
+  - **A partir de esta noción surge el término de "estado estacionario", para describir a la naturaleza de los límites del crecimiento.**
+  
+#### La transformación de la productividad agrígola.
+
+El rasgo distintivo más notable de la historia económica en Inglaterra durante el siglo XVI y XIX fue el aumento de la producción por persona en la agricultura. Lo más destacado de esta situación es que se alcanzó mediante el alza en los rendimientos agrícolas y no por medio de la explotación de nuevas tierras.
+
+Este progreso puede ser abordado desde dos puntos de vista:
+
+1. ¿Cómo un trabajador promedio de 1800 era capaz de procurar alimentos para más personas además de su familia?
+
+2. El aumento en la productividad agrícola fue acompañado no por un incremento desmesurado de las familias dependientes de esta actividad, lo que permitió **conservar los beneficios adicionales.**
+
+**Es decir, el crecimiento en Inglaterra en esta época fue más una reestructuración a gran escala de la economía, más que una simple ampliación de esta.**
+
+- Una posible explicación es la mayor proporción de animales de tiro disponibles en Inglaterra en comparación con el resto del continente y el mundo. Es de destacar la importancia de contar con una fuerza motriz caballar excedente que fuera utilizable para cubrir las necesidades agrícolas, industriales y transportistas: **significó una abundancia de energía por persona para el trabajo agrícola.**
+
+  - **La productividad marginal de cada trabajador debía exceder su subsistencia la de su familia, y ofrecer rendimientos atractivos para el lugarteniente.**
+
+El aumento en la productividad agrícola trajo algo consigo: el abandono, de algunos, de estas actividades para migrar a áreas más urbanas y dedicarse a actividades industriales como las manufacturas.
+
+Adam Smith describió el proceso de **realimentación positiva**: cadenas de circunstancias dentro de un proceso productivo que permitían que los altos niveles de productividad agrícola decantaran en prosperidad manufacturera y el crecimiento económico generalizado. 
+
+#### Los límites del crecimiento y el nivel de vida.
+
+Según Adam Smith, la alta fecundidad en esta época provocaba que los aumentos en la demanda de trabajo fueran rápidamente cubiertos y, de hecho, superados. Esto dejaba la proporción existente entre ambas igual y, en consecuencia, la invariabilidad de los salarios reales.
+
+Además, sostenía que las tasas de interés eran un indicador sobre el la cercanía de una economía a su estado estacionario en el contexto de las riquezas disponibles en su suelo y clima.
+
+Sostenía que la **inversión a la agricultura era la más beneficiosa para la comunidad y la que ofrecía rendimientos más elevados.** Eventualmente, estos rendimientos alcanzarían su estado estacionario (0) y las inversiones ahora enfocarían su atención en la industria manufacturera, para posteriormente pasar al comercio.
+
+#### Presagios de un nuevo régimen.
+
+Los hechos pusieron de manifiesto que lo anterior no era cierto: las oportunidades de inversión no se agotaron de forma gradual. Para mostrar esto, tuvo que ocurrir la Revolución Industrial.
+
+**Hasta este momento, todas las economías orgánicas dependían, de una u otra forma, de su capacidad para mantener un equilibrio favorable entre la energía utilizada y la conseguida.**
+
+A principios de la Edad Moderna, apareció en Inglaterra un elemento capitalista importante en la economía de la energía: **se comenzaron a explotar depósitos de energía en forma de carbón acumulados durante millones de años y que excedía con creces cualquier flujo de energía orgánica y se encontraba en cantidades inmensamente superiores a las necesidades de las sociedades de esa época.**
+
+**Necesidades primarias:** alimento, vestido, alojamiento y lumbre, donde el abastecimiento de alguna compite directamente con el abastecimiento de las otras tres.
+
+- Las necesidades por combustible eran cada vez mayores y a estar presente en más áreas de la vida diaria y las actividades industriales de todo tipo. Por tal motivo, **la aparición de una alternativa barata y abundante (carbón) fue sumamente relevante.**
+
+- Existió una **transición de la dependencia sobre los flujos de energía orgánicos hacia la dependencia sobre las reservas de energía inorgánica.** De este modo la necesidad primaria de la lumbre pasó a un plano secundario.
+
+- Una segunda necesidad primaria, el alojamiento, vivió algo similar cuando la utilización generalizada de carbón provocó el abaratamiento en la construcción de ladrillos. Así, el incremento demográfico y la mayor demanda de lumbre y alojamiento no supuso un aumento en la demanda y competencia por las materias primas vegetales.
+
+#### Ascenso y caída de la República de Holanda.
+
+Durante el siglo XVII la República de Holanda era la economía más próspera de Europa: en el siglo XVIII se estancó.
+
+Una de las explicaciones más aceptadas de su ascenso es la disponibilidad de un combustible barato y abundante en Países Bajos: la turba. Sin embargo, y previsiblemente, esta explotación llegó a su límite.
+
+En comparación con Inglaterra, donde los yacimientos de carbón eran infinitamente más abundantes y dotaban de más energía.
+
+#### Conclusión: Precios y bienestar de una economía orgánica avanzada.
+
+Malthus tomó en cuenta los efectos posibles de la depreciación de la moneda, la depresión de los salarios reales, la importancia del desempleo y el subempleo y sus efectos en los ingresos reales. Además, subrayó que lo que determinaba el nivel de vida era el nivel de ingresos de la familia más que los salarios de los varones adultos con trabajo.
+
+**En Inglaterra, se ha observado, desde la época Tudor, precios ascendentes en concordancia con tasas de crecimiento poblacional crecientes, y viceversa. Asimismo, se observó una relación inversa entre la tasa de crecimiento poblacional y los salarios reales.**
+
+![Gráfica 2.1. Tasas anuales de crecimiento demográfico y del índice de precios de los productos de la canasta básica.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_2_1.png)
+
+![Gráfica 2.2. Tasas anuales de crecimiento demográfico y del índice de salarios reales.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_2_2.png)
+\newpage
+
+## HOT TAKES
+
+1. Diamond asegura que la existencia de latitudes y zonas geográficas climáticamente favorecidas y receptivas para la agricultura explica la revolución agrícola de la Antigüedad (agricultura sedentaria);
+
+2. Los imperios antiguos compartían dos elementos sumamente relevantes:
+
+  - Economía basada fuertemente en la esclavitud; y
+  - Centralización en la acuñación de la moneda.
+
+3. La innovación tecnológica durante el Imperio Romano estuvo mayoritariamente concentrada en la ingeniería civil, por lo que el aumento en la eficiencia productiva o el alza en la calidad de vida fue bastante escaso.
+
+4. Economistas clásicos: **crecimiento económico es asintótico y tiende al estado estacionario.**
+
+5. En Inglaterra, se observó una relación positiva entre el **índice de precios y el crecimiento poblacional**, así como una relación negativa entre el **salario real y el crecimiento poblacional.**
+
+  - Claves para la expansión económica de Inglaterra en relación con otros países:
+  
+    - Gran disponibilidad de animales de tiro;
+    
+    - Gran disponibilidad de abono natural.
+    
+  - **Esto significó una dominación absoluta de la productividad agrícola por persona de Gran Bretaña sobre el resto de Europa.**
+
+\newpage
+
+# Semana 3.
+
+## Power and Plenty. Trade, War, and the World Economy in the Second Millennium. *Findlay & O'Rourke*.
+
+### Comercio y la Revolución Industrial.
+
+La Revolución industrial significó el inicio de la modernidad o la Edad Moderna y tuvo su origen en Inglaterra a finales del siglo XVIII y principios del XIX.
+
+Los intelectuales clásicos han sostenido los siguientes puntos sobre la Revolución Industrial:
+
+- Una o dos décadas de "despegue", donde se observó un incremento agudo y discontinuo en la tasa de crecimiento del ingreso nacional y una duplicación del ahorro.
+  - Rostow sitúa este proceso de 1783 - 1802.
+
+- No obstante, la "nueva historia económica" desechó estas ideas, al no encontrar avidencia de cambios tan pronunciados en las tasas de crecimiento.
+
+![Tabla 3.1. Estimaciones del crecimiento del PIB en la Inglaterra industrial, 1761 - 1860.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_3_1.png)
+
+- Por otro lado, se solía creer en hitos dramáticos en los datos sobre crecimiento tecnológico y productividad total de los factores.
+
+De hecho, **los datos más recientes arrojan un comportamiento de crecimiento estable desde el comienzo del siglo XVIII. Los orígenes del crecimiento económico moderno se extendieron durante un periodo más largo y áreas más extensas de lo que la teoría tradicional suponía.**
+
+Pregunta relevante: ¿fue la Revolución Industrial revolucionaria?
+
+**Características cualitativas**: 
+
+1. El crecimiento comenzó, primero, en sectores específicos como el metalúrgico y el textil;
+
+2. Existieron cambios estructurales muy relevantes;
+
+3. El nivel de vida no disminuyó a pesar del rápido crecimiento poblacional; y
+
+4. Progreso tecnológico muy extendido.
+
+- La participación laboral en la agricultura disminuyó y las exportaciones se reestructuraron.
+
+![Tabla 3.2. Exportaciones británicas, 1784 - 1856, por producto.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_3_2.png)
+
+![Gráfica 3.1. Población y salarios en Inglaterra, de 1280 a 1860.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_3_1.png)
+
+De hecho, en el siglo XIX el salario real comenzó un ascenso sostenido y constante, a la par del crecimiento poblacional.
+
+- El modelo Maltusiano puede explicar estas variables hasta el periodo preindustrial. A partir de ahí, el modelo de crecimiento de Solow es la mejor herramienta para sostener este comportamiento.
+
+  - A diferencia de Malthus, Solow creía que el crecimiento de la población y el ingreso per cápita no estaban relacionados (n exógena); además, Solow defendía la idea de un progreso tecnológico constante.
+  
+- Esto da lugar a un modelo de tasas de crecimiento de **estado estacionario**.
+
+Por tanto, este cambio de paradigma económico puede asociarse con la Revolución Industrial, donde existió un progreso tecnológico constante. A partir de 1870, la fertilidad comenzó a declinar, lo que permitió que los beneficios del progreso tecnológico no se diluyeran y dando paso al crecimiento económico moderno.
+
+- La industria del algodón sufrió grandes transformaciones técnicas y tecnológicas que la hicieron sumamente eficiente y productiva. Esto es, la idea de Rostow de defender a esta industria como el sector líder de la Revolución Industrial inglesa es bastante verosímil.
+
+- Otros sectores como el metalúrgico, también sacaron a Inglaterra de la trampa Maltusiana.
+
+- El reemplazo de la biomasa por carbón como fuente principal de energía fue importantísima.
+
+- Otro elemento fue el avance de las tecnologías de transporte (permitió la importación de materias y el transporte de personas para despresurizar el crecimiento poblacional).
+
+- **Si bien la productividad de estas industrias era espectacular, no fue sino hasta el siglo XIX que se convirtieron en un componente grande de la producción británica y europea y su impacto se volvió profundo y extendido.**
+
+![Gráfica 3.2. Producción industrial y de algodón británica, 1700 - 1913.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_3_2.png)
+
+Por otro lado, puede observarse una divergencia muy importante entre los niveles de industrialización de los países europeos y el resto del mundo, donde el comercio jugó un papel central.
+
+![Tabla 3.3. Niveles de industrilización per cápita, 1750 - 1913 (Reino Unido en 1900 = 100).](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_3_3.png)
+
+### Comercio durante la Revolución Industrial.
+
+Los datos de Davis (1979) muestran que las exportaciones de algodón crecieron de manera constante entre 1780 y 1850, además de que se volvieron un componente central de la composición de la producción y exportaciones británicas.
+
+Dichas exportaciones fueron, crecientemente, dirigidas a los "nuevos mercados" (Asia, América, África y Oceanía).
+
+Además, las importaciones de materia prima (proveniente de los nuevos mercados) aumentó significativamente.
+
+- **Estos cambios reflejan la creciente especialización de Inglaterra en la manufactura e implican la apertura comercial que lo permitió.**
+
+  - La dependencia sobre productos primarios extranjeros permitió la especialización de Inglaterra y le proveyó de un incentivo estratégico muy importante para asegurar el comercio internacional eficiente.
+
+![Tabla 3.4. Exportaciones de algodón, 1784 - 1856, por detino.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_3_4.png)
+
+![Tabla 3.5. Importaciones británicas, 1784 - 1856 por producto.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_3_5.png)
+
+Existe una vertiente académica que asegura que las raíces de la Revolución Industrial se encuentran en las relaciones europeas con el resto del mundo.
+
+- Los términos de comercio (TOT) se han visto reducidos consistentemente para Inglaterra; la razón, el crecimiento más rápido de este país en relación con sus socios comerciales provoca una mayor oferta de bienes de exportación, al punto que sobrepasa la demanda de los mismos por parte de los socios, así, los precios de las exportaciones comienzan a caer.
+
+- La Revolución Industrial estuvo bastante apoyada por el comercio de esclavos en el Atlántico: los beneficios de este comercio financiaron la Revolución Industrial.
+
+**Se defiende al comercio internacional como razón clave para que la Revolución Industrial británica fuera diferente a otros hitos económicos en la historia.**
+
+1. Las nuevas tecnologías estimularon el crecimiento económico, lo que a su vez conllevó un incremento en los ingresos, gracias a las oportunidades proveídas por el comercio internacional; y
+
+2. La expansión del cambio tecnológico dependió, en gran medida, en la apertura de la economía para comerciar.
+
+- Ambos argumentos recaen en la idea de que las elasticidades de la oferta y la demanda de una economía aumentan con el comercio.
+
+#### Modelo de Findlay:
+
+Tres regiones, donde Inglaterra produce manufacturas con K y L, cuya oferta es fija y necesita de un bien intermedio. América produce la materia prima que es exportada y usada como el factor de producción en Inglaterra a cambio del producto manufacturero final. A su vez, esta materia prima es producida con esclavos de África con costo marginal creciente y tierra en cantidades fijas. África exporta esclavos a cambio de manufacturas. El capital está en oferta perfectamente elástica con tipo de interés constante. La población esclava de América tiene una tasa de mortalidad mayor a la de natalidad, por lo que se necesita exportarlos de África.
+
+En el contexto de la Revolución Industrial, se tiene un shock tecnológico positivo, aumentado la eficiencia de la producción manufacturera; esto acrecienta la demanda por la materia prima de América, así como su precio, lo que mejora los TOT de América; luego, las exportaciones de esclavos de África suben, mejorando sus TOT.
+
+Esto explica la expansión productiva en Europa y el mejoramiento de los TOT en América.
+
+**KEY:**
+
+1. El comercio previno que los precios de exportación en Inglaterra se desplomaran; y 
+
+2. Los inventivos para la innovación hubieran sido menores de no haber existido comercio
+
+\newpage
+
+## From Divergence to Convergence. *Brandt*.
+
+### Introducción.
+
+El Imperio Qing fue la economía más grande del mundo hasta el siglo XIX, donde su población se triplicó en los siglos XVII y XVIII sin rastros de disminución en el ingreso per cápita.
+
+La ventaja obtenida por el Occidente a raíz de la Revolución Insutrial nuevamente se acortó a partir de 1970, cuando el crecimiento de China comenzó a ser impresionante.
+
+El desarrollo provino de la economía de desarrollo planeado:
+
+- Expansión de capital humano; y
+
+- Surgimiento de industrias manufactureras en casi todas las provincias chinas.
+
+Sin embargo, las raíces pueden rastrearse mucho más atrás.
+
+¿Por qué China se rezagó respecto a las economías mundiales más avanzadas en el siglo XIX?
+
+### Evolución de largo plazo de la economía china.
+
+![Mapa 1.1. Dinastías Qing y Ming.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/mapa_3_1.png)
+
+Durante el periodo de la Era Song, de 960 - 1279 estuvo caracterizado por la formación de instituciones y estructuras que evolucionaron hasta convertirse en la "China pre-moderna": 
+
+- Consolidación de un sistema tributario basado en el registro de la propiedad privada de tierra, regularización del servicio civil compuesto por civiles y no por aristócratas, y las evaluaciones escritas para la selección de burócratas; y
+
+- Cambios de la terratenencia hacia la pequeñoburguesía, mayor importancia de los mercados de bienes y factores para la producción, la penetración del dinero en el intercambio comercial y el desarrollo extensivo de la actividad mercantil privada.
+
+Además, avances importantes como la pólvora, el compás magnético, el papel y la construcción naval.
+
+Todo esto derivó en incrementos de la urbanización, superávits agrícolas e ingreso per cápita.
+
+**Auge Song**
+
+**¿Por qué estas bases no llevaron a China a una Revolución Industrial?**: *Needham puzzle.*
+
+Se atribuye que la caída del auge de la Era Song se debió al crecimiento poblacional enorme que acompañó a una expansión económica meramente expansiva y no técnicamente progresista. Esto es, el ingreso per cápita no subió durante el periodo de las Dinastías Ming y Qing (1368 - 1644, 1644 - 1912).
+
+**No obstante, el Imperio Qing fue capaz de absorber el incremento excesivo de población durante el siglo XVIII:**
+
+![Tabla 3.6. Economía china en Perspectiva.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Tabla_3_6.png)
+
+- Expansión comercial y mercantil considerable durante la Era Song (960 - 1279) y durante la Era Ming-Qing;
+
+- Red mercantil agrícola local pero sumamente extendida y profunda.
+
+- La mayoría de las transacciones eran locales, aunque existía un pequeño pero significativo comercio internacional, restringido a Asia Central y Sudoriental.
+
+- En el siglo XVI comenzó el intercambio con Europa, lo que aumentó la participación del comercio en la producción total de China.
+
+- Las institucional y redes informales jugaron un papel relevante para facilitar la historia comercial china.
+
+  - Arreglos informales para facilitar el intercambio lejano.
+  
+- A medida que las redes de mercado se fortalecían, la densidad población se incrementó.
+
+- Existencia de bancos tradicionales y locales que aceptaban depósitos, emitían préstamos, facilitaban transferencias internacionales y, a veces, proporcionaban bonos.
+
+- Surgimiento de casas de intercambio de moneda.
+
+- Arreglos contractuales.
+
+  - No obstante, las finanzas tenían costos elevados (tasas de interés altas) que eran reflejo de la poca oferta de capital institucional.
+  
+- Alfabetismo relativamente alto y acceso a la educación más extendido.
+
+- Racionalidad económica anterior a Adam Smith.
+
+- Comportamientos demográficos avanzados: abortos primitivos, espaciamiento de nacimientos y adopciones.
+
+**Todas estas características posicionaron a China a la par, si no es que mejor, que países Occidentales en términos de desarrollo económico y calidad de vida.**
+
+**La divergencia entre ambos comenzó después de 1800 pero sus raíces pueden rastrearse desde el siglo XIV.**
+
+1. Entorno doméstico:
+
+- Divergencia entre la periferia de China y sus territorios interiores, donde los últimos enfrentaron precios más altos y redujeron su demanda por manufacturas.
+
+2. Entorno internacional:
+
+- Inglaterra despega gracias al carbón barato y la amplia oferta de productos intensivos en tierra provenientes de sus colonias.
+
+De manera general:
+
+- Caída en la innovación durante la Era Ming-Qing comparada con la Song;
+ 
+- Trampa Maltusiana que provocó la caída de salarios y la desatención a la productividad del capital;
+
+- Interés decreciente en la ciencia dentro de las élites, cuya consecuencia fue un progreso técnico escaso.
+
+- Despotismo gubernamental.
+
+## HOT TAKES
+
+1. *Power & Plenty*: el poder de los Estados y la riqueza de éstos como relación bidireccional, causa y efecto. Sin embargo, esta relación no es mecánica y, en la actualidad, pueden señalarse ejemplos donde no se cumple esta correlación.
+
+2. Revolución industrial: proceso esencialmente desequilibrado entre sectores y regiones que reestructuró el aparato productivo y comercial de la economía y permitió el mantenimiento de la calidad de vida y la expansión del progreso tecnológico.
+
+3. Mejora en la productividad textil como detonante y punta de lanza de la Revolución Industrial (horas requeridas para procesar el algodón).
+
+4. Términos de Intercambio de Inglaterra disminuyen debido a dos factores:
+
+  - El incremento en la eficiencia manufacturera elevó la productividad de esta industria, abaratando el precio de sus bienes; y
+  
+  - Lo anterior implica una mayor demanda de materias primas, provenientes de América o África: dado que en estos lugares no existió un incremento significativo de la productividad, los precios de estos bienes aumentaron.
+  
+  - Esto significó una especialización productiva de los países.
+  
+5. Mejoras en el transporte como mecanismo de despresurización de la población y de transferencia de grandes cantidades de personas entre regiones o continentes.
+
+6. Durante las primeras décadas de la Revolución Industrial la aportación a la fuerza de laboral de mujeres y niños fue significativa: posteriormente, se legisló en contra del trabajo infantil.
+
+7. Inglaterra protegió su productividad prohibiendo la exportación de maquinaria y evitando la migración de técnicos especializados: no obstante, estas medidas no funcionaron por mucho tiempo.
+
+8. El financiamiento de la Revolución Industrial provino, en buena medida, de préstamos realizados por allegados a los empresarios y emprendedores. Por otro lado, las altas tasas de beneficio empresarial en las industrias punteras también amortiguaron el financiamiento.
+
+8. Convergencia económica de China impulsada, principalmente, por el impresionante progresismo administrativo durante la Dinastía Song.
+
+\newpage
+
+# Semana 4. 
+
+## La difusión de la industrialización y la emergencia de las economías capitalistas. *Parejo*.
+
+La difusión de la Revolución Industrial hacia el resto del continente europeo y Estados Unidos ocurrió de 1815 a 1870:
+
+- 1815: Fin de las Guerras Napoleónicas y con ello, las inestabilidades producto de la Revolución Francesa de 1789 y Congreso de Viena, que liberalizó los factores de producción.
+
+- 1870: Guerra franco-prusiana, la comuna de París, nacimiento del Estado alemán. Sin embargo, lo más relevante fue el surgimiento de innovaciones tecnológicas importantes, a saber, electricidad, petróleo, motor eléctrico y de combustión internar, acero, empresa corporativa y la mundialización de mercados y factores.
+
+**¿Cómo una estructura económica y social de partida diferente llevó a Europa a converger a resultados finales similares?**
+
+- Existieron diferentes modelos de industrialización por parte de los seguidores del ejemplo británico; y
+
+  - Los fenómenos de emulación no se establecieron exclusivamente con respecto del modelo británico.
+  
+- La dimensión regional o nacional de estos fenómenos varió.
+  
+  - El papel del Estado fue una constante transversal a todos los procesos de industrialización.
+
+![Cuadro 4.1. Indicadores de Desarrollo Económico en países Occidentales.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_1.png)
+En este periodo, todos los países del Cuadro 4.1 experimentaron transformaciones productivas profundas. No obstante, Gran Bretaña era todavía en 1870 la más avanzada de las economías del mundo (la producción manufacturera de la isla representaba 75% de la mundial a principios del siglo XIX: en 1870, era el 32%).
+
+### Pautas de la industrialización europea y estadunidense durante la primera revolución tecnológica.
+
+#### Energía e industrialización.
+
+Al igual que ocurrió con Gran Bretaña, los primeros procesos de industrialización fuera de la isla fueron una transición de una economía orgánica avanzada a otra de origen mineral y el descubrimiento de las posibilidades energéticas del subsuelo para superar los límites de los factores anteriores. A continuación se muestran los cambios de la capacidad de las máquinas de vapor en Gran Bretaña, Estados Unidos y Europa Continental:
+
+![Gráfica 4.1. Capacidad de las máquinas de vapor fijas y móviles en Gran Bretaña, EE.UU. y Europa Continental.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_4_1.png)
+
+La capacidad de Europa Continental llegó a superar a la británica para 1870, impulsada principalmente por Francia, Bélgica y Alemania (cambios desiguales en comparación con España, Italia, Europa Oriental o Escandinavia).
+
+- Este progreso energético requirió una gran explotación de carbón mineral y permitió una extensión ferroviaria impresionante.
+
+- Países sin reservas carboneras (Italia) tenían que importar hulla británica o belga, otros con una gran demanda para sus industrias (Francia) tuvieron que desarrollar innovaciones como la turbina.
+
+- **La energía hidráulica** se volvió una opción eficaz para países poco dotados con carbón.
+
+#### Modernización, crecimiento u diversificación del sector manufacturero.
+
+Las tasas de crecimiento industrial fueron bastante homogéneas para los países siguientes, exceptuando España, que inició con retraso su industrialización. Además, Gran Bretaña desaceleró su crecimiento en la segunda mitad del siglo XIX, aunque continuó siendo la economía más industrializada del planeta.
+
+![Cuadro 4.2. Crecimiento del producto industrial, 1815 - 1870.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_2.png)
+
+##### Industria de bienes de consumo.
+
+Suele afirmarse que el proceso industrializador está caracterizado por el dominio de los sectores de bienes de consumo frente a los de inversión.
+
+- Derivado de la extensión del sistema ferroviario, que fue el único elemento capaz de modificar el balance intersectorial en favor de los bienes de producción.
+
+- Para 1870 el ratio intersectorial en Gran Bretaña o Francia entre bienes de producción contra inversión se redujo, mientras que las economías periféricas continuaban con valores muy altos.
+
+- Sectores relevantes: algodón, lana, agroalimentario, diferenciados por ventajas comparativas y tradiciones regionales.
+
+#### Industria de bienes intermedios y de inversión.
+
+Esta industria experimentó una renovación y crecimiento relevante. Lo que el algodón fue para el sector textil, lo fue el hierro para la industria pesada.
+
+No obstante, tiene que señalarse que las innovaciones en este sector ocurrieron antes de 1815: mayor eficiencia del combustible empleado y un producto final de mayor calidad con fuerza, plasticidad y dureza. Pero no fue sino hasta 1860 que la introducción de nuevos sistemas de fabricación de acero significaron un hito en la industria.
+
+**La modernización de la agricultura, transporte y otros sectores se encuentran en el origen del incremento de la demanda mundial de productos metalúrgicos.**
+
+### El comportamiento de la demanda.
+
+Todas las transformaciones mencionadas fueron posibles porque estuvieron acompañadas de cambios igualmente profundos en la demanda:
+
+- Incremento en el número de consumidores (crecimiento demográfico); y
+
+- Aumento en sus niveles de consumo (cambio estructural y crecimiento económico).
+
+#### Aumento de población y transición demográfica.
+
+Entre 1800 y 1900 la población mundial creció como nunca lo había hecho en ese periodo de tiempo, cuya distribución regional favoreció especialmente a Europa. No obstante, las razones de crecimiento por país varían:
+
+- En los países industrializados se estaba produciendo un cambio paralelo en las estructuras demográficas (se dejó atrás el crecimiento ineficiente y desordenado sacudido por crisis de mortalidad y se dio paso a la disminución de la mortalidad extraordinaria y la mortalidad infantil).
+
+  - Las mejores higiénicas y de alimentación obviamente fueron causas fundamentales de esto.
+  
+  - Además, esto significó una redistribución de la población activa.
+  
+  - Por otro lado, este contexto favoreció el desarrollo de nuevas relaciones capitalistas y, en consecuencia, un incremento de los movimientos migratorios internacionales.
+  
+![Cuadro 4.3. Pautas de la transición demográfica en el siglo XIX.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_3.png)
+
+#### Modernización agraria y cambio estructural.
+
+Transferencia de activos del sector primario al secundario y una mayor aportación del último al PIB: esto significó el tránsito de un modelo económico rural a uno predominantemente urbano.
+
+![Cuadro 4.4. Cambios estructurales de Gran Bretaña y Europa.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_4.png)
+
+Estas transformaciones implicaron el surgimiento de la clase media urbana como el principal consumidor de productos manufacturados.
+
+Si bien la agricultura europea del siglo XIX continuó siendo básicamente cerealista, se introdujeron nuevos cultivos que contribuyeron a la mejora y diversificación de la dieta europea.
+
+Además, la productividad de los factores se incrementó gracias a la introducción de nuevas técnicas de cultivo, el empleo de maquinaria para determinadas tareas, los abonos de procedencia no orgánica y una mayor vinculación entre agricultura y ganadería.
+
+En el caso estadounidense, el desarrollo agrario se benefició de tierras vírgenes y la posibilidades del aumento en la extensión cultivada. Además, la relativa escasez del factor trabajo promovió la mecanización acelerada.
+
+#### Integración y expansión de los mercados.
+
+La demanda efectiva como impulsor y soporte de la industria nacional. Este proceso obedeció a tres factores, la densidad demográfica, las redes de comunicación y las políticas comerciales.
+
+- Se suele situar un *umbral mínimo* de población como base para un crecimiento industrial;
+
+- El ferrocarril fue el instrumento fundamental de expansión de los mercados, ensanchándolos y garantizados especializaciones.
+
+  - Incremento en el volumen de mercancías transportadas, la rapidez de los desplazamientos y el precio del transporte.
+  
+  - Este desarrollo fue acompañado por la modernización del transporte marítimo y las redes de información (telégrafo).
+  
+  - No obstante, el aumento de tráfico internacional de mercancías debió adaptarse a las limitaciones arancelarias, aunque estas eran desiguales.
+  
+- Desarrollo del mercado de inversión: flujo constante y creciente de capitales que descansaba en en un sistema monetario internacional cuya base era el metal precioso.
+
+![Cuadro 4.5. Desarrollo de la red ferroviaria, 1840 - 1870.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_5.png)
+
+#### Crecimiento económico y niveles de bienestar.
+
+Aunque todos los países europeos aumentaron su población en el siglo XIX, no todos lo hicieron al mismo ritmo 
+
+![Cuadro 4.6. PIB per cápita, 1820 - 1870 (Gran Bretaña en 1820 = 100).](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_6.png)
+
+El cuadro anterior conduce a algunos comentarios:
+
+- En 1820, las diferencias entre Europa Continental, EE.UU. y Gran Bretaña eran ostensibles. Las que separaban al resto eran más pequeñas. 50 años más tarde, las diferencias se ensancharon.
+
+![Cuadro 4.7. Índice de Desarrollo Humano 1870.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_7.png)
+
+### Agentes y factores de la industrialización.
+
+#### Empresarios y trabajadores durante la primera revolución tecnológica.
+
+Estudios recientes indican la importancia de una nueva figura como elemento crucial para el proceso de industrialización, el empresario.
+
+Esta relevancia reside en la ampliación de las oportunidades de negocio derivadas del crecimiento de los mercados y el cambio tecnológico, en un marco institucional favorable a la iniciativa particular y la propiedad privada.
+
+- Empresario como responsable en la toma de decisiones relativas a la organización de procesos productivo;
+
+- El sistema de fábrica se extendió de manera muy desigual en el siglo XIX, tanto territorial como sectorialmente. Además, la dimensión de la empresa industrial fue más bien modesta y fue de carácter familiar;
+
+- Salarios industriales continuaron siendo bajos, pero más elevados que en otros sectores productivos.
+
+#### El papel del Estado y las instituciones financieras.
+
+El Estado fue mucho menos intervencionista durante el siglo XIX que en el XX; no obstante, tuvo una contribución relevante en el proceso de industrialización.
+
+Por definición, el Estado surgido de las revoluciones burguesas aspiraba a la liberalización de los factores de producción.
+
+- Construcción de infraestructuras;
+
+- Adopción de un único sistema monetario;
+
+- Mejoras del sistema educativo;
+
+- Establecimiento de los derechos de propiedad;
+
+- Protección de innovaciones tecnológicas;
+
+- Política comercial protectora con los mercados interiores;
+
+- Promulgación de leyes laborales; y
+
+- Creación de instituciones financieras con competencias crediticias.
+
+Si bien el ferrocarril suele se visto como el principal elemento difusor de la industrialización, el Estado permitió acelerar estos procesos. El proceso de liberalización, impulsado en Gran Bretaña, fue extendiéndose a otras partes de Europa.
+
+#### España durante la primera industrialización.
+
+Los resultados alcanzados en España divergieron del exitoso Británico.
+
+Causas de la divergencia:
+
+- Crecimiento poblacional adecuado, aunque menor al caso europeo, que no permitió una transición demográfica;
+
+- Avances en urbanización mínimos;
+
+- Baja productividad agraria;
+
+- Capacidad adquisitiva baja que limitaron la demanda interna; y
+
+- Proceso de industrialización limitado por territorio y sector (Cataluña y algodón).
+
+### Conclusiones.
+
+**Conquista pacífica:** la imitación del modelo británico de crecimiento por parte de otros países, el cual provocó situaciones diversas en cuanto a los plazos, la intensidad y las consecuencias sociales.
+
+Éxito británico debido a la confluencia de factores físicos e institucionales, así como a las transformaciones previas experimentadas por su agricultura, la amplia tradición artesanal y la disponibilidad de un amplio mercado interior.
+
+1. Entre 1815 y 1870, la primera revolución tecnológica se extendió prácticamente por todo el continente europeo y por Estados Unidos; en menor medida, también afectó a América Latina, Canadá y Australia.
+
+2. La intensidad del proceso industrializados fue muy diversa. Francia, Bélgica, Suiza, Alemania y Estados Unidos constituyeron el primer círculo de difusión.
+
+3. Los incrementos en las tasas de renta por habitante están directamente ligadas al crecimiento en el sector industrial.
+
+4. La industrialización fuera de Gran Bretaña fue variada, aunque se mantuvieron elementos comunes, en alguna medida: modernización de sectores líderes (energía, textil, metalurgia) y la emergencia del sistema de fábrica como modelo organizativo de la producción industrial.
+
+5. Se trató de un proceso fundamentalmente regional.
+
+6. Papel fundamental de la demanda (crecimiento demográfico, posibilidades de consumo, integración de mercados nacionales y acceso a los exteriores, y tránsito de una economía agraria a una industrializada).
+
+\newpage
+
+## Comercio y pobreza. *Williamson*.
+
+### Introducción. 
+
+Existe la idea de que el Tercer Mundo sufrió un proceso de desindustrialización a lo largo del siglo XIX. No obstante, no existen datos confiables ni continuos sobre la actividad económica de los siglos XVIII y XIX en Latinoamérica, Oriente Próximo, Asia y el sureste de Europa.
+
+Las explicaciones convencionales sobre la desindustrialización apuntan a dos sucesos:
+
+1. La mejora en la productividad británica en la industria artesanal e industriales provocó un descenso en los precios mundiales de las manufacturas, lo cual desembocó en que la producción en México, España, Rusia, Asia Menor y otros lugares resultara cada vez menos rentable; y 
+
+2. En relación con los sectores textil, metalúrgico y otras manufacturas, el sector exportador de materias primas del Tercer Mundo vivió una mejora significativa en sus términos de intercambio, lo que expulsó a sus trabajadores.
+
+**Definición:** La desindustrialización se entenderá como el desplazamiento de la mano de obra en manufacturas hacia la agricultura.
+
+### La utilización de las manufacturas textiles para valorar el grado de desindustrialización en el Tercer Mundo.
+
+Las manufacturas textiles son un indicador de los procesos de industrialización tempranos en la era moderna, ya que son ligeras y dan paso a industrias más pesadas que requieren mayor grado de técnicas y especialización como la metalúrgica o la química.
+
+Si se define qué impulsa la producción textil y la distribución del empleo en una economía que inicia un crecimiento económico moderno, es posible entender el proceso que guiaron la posterior industrialización.
+
+### Una valoración comparativa de carácter cuantitativo.
+
+![Cuadro 4.8. Producción manufacturera registrada entre los años 1750, 1938.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_8.png)
+
+En general la participación del centro desarrollado en el PIB mundial representaba valores similares en la participación de producción manufacturera, algo que no ocurrió con China e India, por ejemplo.
+
+- Entre 1750 y 1800 se observa el inicio de la desindustrialización india y del resto de la periferia, periodo en el que comenzó la industrialización europea.
+
+- A partir de 1830 la participación regional en la producción manufacturera se dirigía al llamado *nuevo orden económico* con el centro desarrollado como principal protagonista.
+
+- El proceso de desindustrialización en la periferia pobre se completó en 1880.
+
+Esta divergencia podría deberse al éxito del Occidente ó al fracaso del resto del mundo, ó a ambas. El siguiente cuadro muestra la industrialización per cápita
+
+![Cuadro 4.9. Niveles de industrialización per cápita entre 1750 - 1913.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_4_9.png)
+
+Krugman proporciona la siguiente explicación: las regiones ricas y pobres del mundo se polarizaron geográficamente, mientras los primeros se especializaban en la producción industrial y los segundos en la producción de materias primas.
+
+- La participación de la industria textil nacional para satisfacer la demanda interna descendió en India, Indonesia, el Imperio Otomano y México entre 1800 y 1900.  
+
+### Una valoración comparativa de carácter cualitativo.
+
+#### La desindustrialización y el síndrome holandés en Egipto.
+
+Explosión de los términos de intercambio en Egipto entre 1820 y 1860, lo que llevó a un proceso de industrialización sumamente agudo.
+
+Se realizaron intervenciones con el objetivo de aumentar la competitividad doméstica y fomentar la industrialización:
+
+- Se restringieron las importaciones mediante barreras arancelarias;
+
+- El Estado tomó las riendas de la economía; y
+
+- Se creó algo parecido a un gabinete de comercialización para comprar alimento a bajo precio a los granjeros y mantener el coste de vida en las ciudades y los salarios nominales de las empresas manufactureras en niveles inferiores.
+
+Todas estas medidas lograron revertir la desindustrialización, aunque es difícilmente cuantificable. 
+
+En resumen, Egipto adoptó una posición sumamente antiglobal, lo que conllevó a renunciar a las ganancias derivadas del comercio.
+
+#### La desindustrialización y el síndrome holandés en Indonesia.
+
+Similarmente, Indonesia también vio sus términos de intercambio aumentar considerablemente. Esto generó una desindustrialización significativa. De igual manera, la participación de las manufacturas nacionales en el mercado local disminuyó fuertemente.
+
+#### La liberalización obligada del mercado: la industrialización y el síndrome holandés en Japón.
+
+Países como Japón contaban con abundante mano de obra y escasos recursos. Así, el aperturismo económico fomentó la exportación de manufacturas intensivas en mano de obra, no de materias primas.
+
+Pese a la caída del coste de los transportes, el descenso de los aranceles europeos y al crecimiento de los ingresos de Europa beneficiaron al comercio asiático.
+
+Los precios de los productos de exportación de Japón se dispararon, mientras que los de importación se desplomaron. La industria textil, por ejemplo, aumentó su participación.
+
+#### El caso chino: una desindustrialización débil seguida de un moderado síndrome holandés.
+
+Al igual que Japón, China trató de aperturarse al comercio exterior entre 1842 y 1860. También existió una fuerte subida de sus precios de exportación; no obstante, la desindustrialización sí ocurrió, aunque débilmente:
+
+- El comercio no era tan significativo como en Japón;
+
+- El comercio "clandestino" ya era bastante practicado desde antes, por lo que la apertura comercial oficial no significó un gran cambio;
+
+- Fuerzas internas capaces de contrarrestar los efectos positivos del comercio y amortiguar el incremento de los términos de intercambio y, de hecho, bajarlos.
+
+### HOT TAKES
+
+1. Similitudes de diferentes procesos de industrialización:
+
+- Transición energética hacia una economía industrial basada en el carbón;
+
+- Modernización de sectores industriales lideres como el textil y el manufacturero;
+
+- Liberalización del comercio mediante la suavización de aranceles;
+
+- Disminución de los costos de transporte;
+
+- Integración de mercados en radios geográficos crecientes.
+
+- Traspaso de la fuerza de trabajo del sector primario al sector terciario;
+
+- Urbanización;
+
+- Surgimiento de la figura del empresario como líder de una nueva instancia productiva, la fábrica moderna.
+
+2. Diferencias de los procesos de industrialización:
+
+- Diferentes stocks energéticos;
+
+- Sectores industriales líderes diferentes.
+
+3. Desindustrialización entendida como el desplazamiento del sector manufacturero por el agrícola.
+
+4. Síndrome holandés entendido como el desguarecimiento de sectores a expensas del favorecimiento de un sumamente exitoso.
+
+5. ¿Qué impulsó el proceso de globalización del siglo XVIII?
+
+- Abaratamiento de los costos de transporte;
+
+- Suavización de los aranceles;
+
+- Coerción estatal para la apertura comercial derivado de presiones externas (China y Japón);
+
+- Integración regional de mercados
+
+\newpage
+
+# Semana 5.
+
+## Power and Plenty. Trade, War, and the World Economy in the Second Millennium. *Findlay & O'Rourke*.
+
+### Comercio mundial 1870 -1914: La gran especialización.
+
+Para mediados del siglo XVIII ya existía una red de comercio mundial que conectaba todos los continentes. A partir de 1780, sucedieron choques muy relevantes:
+
+1. La Revolución Industrial;
+
+2. El inicio de un periodo de conflicto militar mundial;
+
+3. Movimientos independentistas en el continente americano;
+
+4. La abolición del comercio esclavista entre África y las colonias en 1807.
+
+Debido a que la Revolución Industrial, con sus efectos más importantes, estuvo limitada más bien a Europa Occidental y los *Western Offshoots*, la estructura del comercio internacional y la división de trabajo mundial cambiaron drásticamente.
+
+### Guerra y revolución.
+
+#### Conflictos de Francia.
+
+Guerra declarada a Austria y Prusia en 1792; un año más tarde, a Gran Bretaña. En consecuencia, Francia prohibió muchas importaciones británicas, incluyendo las manufacturas. Incluso los países que permanecieron neutrales se vieron envueltos en un conflicto comercial que los afectó: **Napoleón promovió un bloqueo comercial a Gran Bretaña que se extendió a naciones vasallas como España, Nápoles y Holanda (eventualmente, se unirían países como Dinamarca y Noruega)**. Eventualmente, Rusia abrió sus puertos a las naves neutrales, lo que a su vez fue una razón de la invasión Napoleónica a Rusia, que culminaría con la abdicación del militar y la invasión de Francia en 1814, terminando efectivamente con el bloqueo comercial.
+
+**En consecuencia, en 1814, el mundo se encontraba sustancialmente dividido.**
+
+### Implicaciones de las Guerras Napoleónicas.
+
+Existen, básicamente, dos puntos de vista: aquel que asegura que el Bloqueo Continental no tuvo grandes repercusiones en el sistema comercial internacional, debido al contrabando y la corrupción. Opuestamente, hay quien asegura que dichos sucesos sí significaron consecuencias relevantes.
+
+Los datos muestran que, durante el Embargo realizado por el presidente Thomas Jefferson, el volumen de importaciones y exportaciones estadounidenses disminuyeron significativamente. Los **precios relativos** son un buen indicador sobre la escasez de los bienes importados:
+
+![Tabla 5.1. Impacto en precios de las Guerras Napoleónicas (incremento porcentual relativo)](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_5_1.png)
+
+Otro indicador es el **precio de los esclavos** que durante esta época se desplomó, debido a la abolición de la esclavitud en Gran Bretaña y Estados Unidos.
+
+Los bloqueos comerciales continentales tuvieron repercusiones a largo plazo muy significativas: se crearon grupos de países proteccionistas en el norte de Europa; por otro lado, se puso fin a muchas características restrictivas en el comercio del sistema mercantilista del siglo XVIII.
+
+Efectos:
+
+1. El proceso de completa liberización comercial en Inglaterra, y por tanto, en el resto de Europa, se retrasó debido a las Guerras Napoleónicas; 
+
+2. En Francia, las guerras dañaron severamente a las industrias tradicionales (lino, construcción de barcos, velas, etc.). Inversamente, algunas industrias como el algodón y el azúcar se beneficiaron de la falta de competencia británica.
+
+- Como resultado, dichas industrias solo pudieron sobrevivir gracias a las protecciones y subvenciones de sus gobiernos.
+
+3. Las Guerras Napoleónicas dieron como resultados el derrumbe del poder europeo en América; en consecuencia, el comercio se internacionalizó a regiones como Latinoamérica y Asia.
+
+4. Fin de muchas restricciones comerciales: el comercio se volvió multilateral con un líder hegemónico claro, Gran Bretaña.
+
+### La Revolución Industrial y la tecnología de transportación.
+
+Como se ha revisado, la Revolución Industrial creó una asimetría inédita de los niveles de ingreso per cápita en los *Western Offshoots*, en comparación con el resto del mundo; por otro lado, este proceso permitió la integración sin igual de los mercados internacionales.
+
+**Globalizaciones previas han sido resultado de procesos de violencia y paz; este, en cambio, fue conducido por el progreso tecnológico.**
+
+La Revolución de los transportes fue precedida por el mejoramiento de los caminos en países como Reino Unido, Francia y Estados Unidos, así como por la utilización de canales para la transportación.
+
+- Los canales fueron los primeros beneficiados con la invención de los **barcos de vapor** en el siglo XIX;
+
+- La invención del ferrocarril jugó un papel central en la creación mercados nacionales en países desarrollados pero también en naciones como India, Australia y China.
+
+  - En consecuencia, los precios de la transportación terrestre disminuyeron dramáticamente
+
+![Tabla 5.2. Factores de transporte.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_5_2.png)
+
+
+### *Commodities* a granel y el efecto Heckscher - Ohlin
+
+**Mientras los costos de transporte disminuyeron, el volumen y variedad del comercio aumentó.**
+
+- Cuando los costos de transporte eran altos, solo se comerciaban bienes de alto valor **no competitivos**.
+
+- Una implicación de esto es que el comercio de bienes a granel aumentó considerablemente y, en consecuencia, la distribución de los recursos se modificó.
+
+- Ahora, los precios relativos dejaron de regirse por las dotaciones locales de tierra y trabajo y pasaron a hacerlo por las condiciones del mercado mundial.
+
+![Gráfica 5.2. Dotaciones y precios relativos británicos, 1500 - 1936](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_5_2.png)
+
+### Imperialismo del siglo XIX.
+
+La Revolución Industrial no solo provocó asimetrías económicas y comerciales, sino también políticas y militares.
+
+- Particularmente, Francia, Reino Unido y Rusia se expandieron hacia Asia y África, soportados por el progreso tecnológico en sus países. Resaltan dos factores de dicha expansión:
+
+  - El poder de las nuevas tecnologías; y
+  
+  - Motivos comerciales y geopolíticos para la dominación de tierra y recursos en Asia y África.
+  
+    - Esto se logró mediante: (1)Penetración, (2) Conquista e (3) incorporación.
+    
+    - Ejemplo: Las guerras del opio entre Gran Bretaña y China y las invasiones francesas en Asia y África.
+
+- Eventualmente, casi todo el continente africano se encontró bajo dominio o influencia europea
+
+  - Los mercados africanos aumentaron su participación en las importaciones y exportaciones europeas.
+  
+- Si bien Estados Unidos tuvo una expansión relativamente más pacífica, también estuvo manchada por el sometimiento de tribus nativas en su actual territorio.
+
+**Todas estas naciones forzaron políticas de libre comercio en los territorios conquistados y promovieron la construcción de ferrocarriles por razones económicas y estratégicas. Así, el Imperialismo fue, en gran medida, un motor de la globalización del siglo XIX.**
+
+### Política comercial del siglo XIX.
+
+Las políticas comerciales variaron dramáticamente entre continentes durante el siglo XIX:
+
+- En Europa, y en general, existió una liberalización gradual hasta 1870, seguida por un repliegue proteccionista que desactivó (pero no revirtió) los efectos de las nuevas tecnologías de transporte;
+
+- En América, las tarifas comerciales fueron grandes durante todo el siglo XIX.
+
+En Europa, los años inmediatos siguientes a las Guerras Napoleónicas fueron caracterizados por el proteccionismo; subsecuentemente, Inglaterra fue el primer país en liberalizar su economía en los 1820s y los 1830s.
+
+Durante el siglo XIX, el comercio internacional tuvo impactos sustanciales en la distribución del ingreso, **disminuyendo los ingresos de los terratenientes en relación con los trabajadores a lo largo de Europa.**
+
+![Gráfica 5.3. Tarifas de grano europeas, 1870 - 1913](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_5_3.png)
+
+Las gráficas anteriores muestran el proceso de liberalización y la subsecuente vuelta al proteccionismo. Algunas excepciones de países que se mantuvieron relativamente libres son Países Bajos, Bélgica, Suiza, Dinamarca y, más importante, Gran Bretaña.
+
+Las tarifas igualmente aumentaron en Latinoamérica, posterior a los procesos de independencia en muchos países. Por su parte, en África y Asia, en donde se impuso el libre comercio a las colonias. China, por ejemplo, también abrió fuertemente sus fronteras al comercio.
+
+![Cuadro 5.3. Tarifas promedios en productos importados manufacturados, 1875 y 1913.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_5_3.png)
+
+### Integración del mercado de commodities, 1815 - 1914
+
+La evidencia muestra al siglo XIX como un hito sumamente relevante en el mundo en términos económicos y comerciales:
+
+- Existió una convergencia mundial de precios;
+
+- La integración de economías de países del Tercer Mundo se aceleró;
+
+- La estabilidad monetaria se fortaleció, causa y producto de las monedas convertibles y los estándares de oro.
+
+### Flujos de factores complementarios y la Gran Frontera
+
+Otro elemento sumamente relevante de la transformación del siglo XIX es el ingente incremento de los flujos de factores en el mercado internacional:
+
+- La migración entre países y regiones aumentó considerablemente; estos flujos migratorios se concentraron hacia regiones abundantes en tierra y recursos.
+
+  - Las economías del Tercer Mundo eran escasas en trabajo y capital, por tal motivo, tuvieron que importar factores de producción europeos.
+  
+**Tres de las características más importantes de la economías internacional del siglo XIX -el crecimiento del comercio internacional, la expansión de las fronteras del Nuevo Mundo y el flujo de los factores a nivel mundial- estuvieron profundamente relacionadas:**
+
+- Por ejemplo: si los mercados británicos no hubieran sido tan abiertos, no hubiera sido tan atractivo invertir en ferrocarriles y expansión de fronteras -> las economías de frontera hubieran crecido menos y hubieran atraído a menos migrantes (también hubieran crecido menos de no haber tenido acceso a financiación extranjera) -> sin expansión de fronteras, el precio de los granos ingleses hubiera sido mayor y la población hubiera pagado más por ellos y el nivel de vida hubiera crecido menos de lo que lo hizo.
+
+### Comercio y división global del trabajo.
+
+![Cuadro 5.4. Comercio mundial, 1876 - 80 y 1913.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_5_4.png)
+
+Se observa una especialización de los *Western Offshoots* en productos manufactureros y, por parte del resto del Mundo, una especialización en bienes primarios.
+
+En términos generales, el comercio internacional del siglo XIX puede ser visto en términos cardinales de Norte y Sur: ricos e industriales exportando bienes industriales a cambio de exportaciones primarias de los pobres y agrícolas del Sur.
+
+### Comercio, fronteras tropicales y la Gran Divergencia.
+
+**La desigualdad del ingreso creció dramáticamente durante el siglo XIX entre países.**
+
+- Mientras los ricos se hicieron más ricos, los pobres más pobres.
+
+![Cuadro 5.5. Desigualdad de ingreso per cápita regional, 1820 - 1913.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Cuadro_5_5.png)
+
+¿La combinación de industrialización Occidental y la internacionalización del comercio redujeron o aumentaron el crecimiento del Sur?
+
+1. Visión pesimista: La industrialización del Norte dañó al Sur, al reducir los precios que los manufactureros del Sur podían recibir y, así, sacándolos del negocio.
+
+2. Visión optimista: La industrialización del Norte fue un motor para las economías del Sur, al proveerles de mercados en auge para sus exportaciones primarias y facilitando créditos y financiación para aumentar sus stocks de capital.
+
+\newpage
+
+## HOT TAKES
+
+1. El periodo de globalización del siglo XIX fue tan, o más, relevante que el proceso que se vive hoy en día.
+
+- Fue precedido por una cerrazón comercial y arancelaria sustancialmente fuerte derivada de los efectos económicos negativos de las Guerras Napoleónicas.
+
+2. Elementos más relevantes:
+
+- Conflictos militares europeos;
+
+  - Visión mercantilista de que los bloqueos comerciales provocarían una escasez de los recursos necesarios para financiar la guerra (Mercantilismo: volumen global del comercio es fijo, hay que exportar lo más posible e importar lo menos).
+  
+  - Modificación de las preferencias económicas de los países: se reforzaron las políticas proteccionistas y de introversión productiva.
+
+- Desconolización de América;
+
+  - Provocada por las Guerras Napoleónicas.
+  
+  - Permitió a los países recién independizados integrarse de mejor manera al comercio internacional.
+
+- Progreso tecnológico del transporte;
+
+  - Permitió la integración muy sustantiva de muchos países.
+  
+  - Los precios dejaron de regirse por las leyes de oferta y demanda nacionales y pasaron a obedecer a los comportamientos de los mercados y el comportamiento mundial.
+
+    - Por tal motivo, la tierra perdió valor relativo al trabajo, ya que dejó de ser un factor intensivo, producto de la internacionalización del comercio agrícolas.
+    
+- La aceptación de la liberación comercial estuvo soportada por la creciente competencia agrícola: eventualmente, esto resultaría contraproducente y sería razón para regresar al proteccionismo.
+
+- El **patrón oro** implicó una estabilidad cambiara (al eliminar el riesgo cambiario) que permitió la integración comercial internacional mucho más estrecha, dado que el valor de las monedas pasó a ser una variable definida exógenamente. Su desventaja se encontraba en su rigidez y en el *stock* limitado de reservas.
+
+- **Proceso de globalización:**
+
+1. Progreso tecnológico en el transporte (reducción de costos);
+
+2. Suavización y liberalización de las políticas comerciales y arancelarias;
+
+3. Expansión colonial o imperialista que extendió el régimen liberal de comercio;
+
+4. Aparato monetario, bancario y cambiario internacional mucho más integrado, solvente y estable;
+
+5. Flujos de capitales mucho más fáciles entre naciones;
+
+6. Flujos migratorios importantes entre países y regiones.
+
+\newpage
+
+# Semana 6.
+
+## Desintegración de la economía mundial y la Gran Depresión (1914 - 1945). *Comín*.
+
+### El desordenado retorno al patrón oro y los desequilibrios financieros.
+
+En 1919, Estados Unidos volvió a la convertibilidad del dólar en oro, lo cual desestabilizó a los mercados cambiarios. Muchas monedas, como la libra o aquellas de los países derrotados, se depreciaron.
+
+En consecuencia, en la Conferencia Internacional de Génova de 1922, se acordó la restauración del sistema internacional de pagos basados en el patrón cambiario de oro
+
+- Entre 1925 y 1928, Reino Unido, Sudáfrica, Bélgica, Dinamarca, Italia y Francia retornaron al patrón oro.
+
+- Países como Reino Unido, España e Italia procuraron mantener la paridad de sus monedas en niveles de la preguerra, lo cual implicó sobrevalorarlas. Así, se mantuvieron tipos de interés muy altos, lo cual deprimió a la actividad económica y aumentando el desempleo, al tiempo de dañar fuertemente a las industrias exportadoras.
+
+En general, la vuelta al patrón oro benefició la expansión económica europea de la segunda mitad de los 1920s:
+
+- Producción y beneficios empresariales aumentaron notablemente;
+
+- Precios disminuyeron levemente;
+
+- Flujos internacionales de capital se recuperaron (debido, principalmente, a EE.UU., que se convirtió en el principal acreedor internacional).
+
+No obstante, el patrón oro también trajo la inestabilidad económica característica del periodo de entreguerras.
+
+- En gran medida, esto se debió a la falta de coordinación entre países para restaurar el patrón oro: cada uno lo hizo con la paridad que más le convino y, así, mientras algunos sobrevaloraban sus monedas, otros las infravaloraban. 
+
+La vuelta al patrón oro tuvo **tres consecuencias monetarias:**
+
+1. La obligación de mantener la paridad de las divisas limitó la capacidad de los gobiernos para emprender políticas expansivas; 
+
+2. El sistema de tipos de cambios fijos aumentó los flujos financieros entre las economías europeas; y
+
+3. Los países con superávit en la balanza corriente no respetaron las reglas del patrón oro, lo que acentuó los desequilibrios internacionales, pues dejó la carga del ajuste sobre los países con déficit en las balanzas de pago.
+
+  - Si un país con superávit en la balanza básica adoptaba medidas monetarias expansivas, en teoría, hubiera incrementado los precios y, a través de la pérdida de competitividad internacional, corregido el desequilibrio. Esto no ocurrió: el patrón oro implicaba una falta de penalizaciones o sanciones por este comportamiento.
+
+Una prueba de la desintegración del sistema financiero mundial en el periodo de entreguerras fue el aumento de los diferenciales de los tipos de interés entre EE.UU. y Reino Unido:
+
+
+![Cuadro 6.1. Diferenciales en los tipos de interés nominales entre EE.UU. y Reino Unido, 1870 - 2000.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_1.png)
+
+### Los deasjustes estructurales y los obstáculos políticos para afrontarlos.
+
+Los desajustes estructurales existentes en los países europeos y sus relaciones económicas exteriores, respondían a transformaciones económicas, entre las que destacaron:
+
+1. La alteración general a irreversible de los flujos comerciales internacionales originada en la PGM, que provocó una sobreproducción en todas las naciones;
+
+2. Las secuelas geopolíticas de la desmembración de imperios y naciones;
+
+3. Los notables avances en la tecnología y los cambios en los patrones de demanda ocurridos en la posguerra;
+
+4. El reforzamiento de la rigidez de los mercados de factores y de productos impidió que las economías europeas se ajustasen a aquellas transformaciones.
+
+Todo esto provocó una deficiente asignación de recursos y un amplio desempleo estructural.
+
+Por otro lado, la diplomacia falló estrepitosamente en el periodo de entreguerras.
+
+1. Se establecieron reparaciones de guerra sumamente estrictas;
+
+2. Se exigió la devolución de préstamos de guerra incluso entre aliados;
+
+3. Ningún país quiso o pudo asumir el liderazgo internacional.
+
+Además, todos los países europeos adoptaron actitudes proteccionistas, poniendo barreras cuantitativas al comercio y transacciones internacionales.
+
+Finalmente, los políticos retornaron a recetas económicas de la ortodoxia clásica, que incluían el patrón oro y el equilibrio presupuestario.
+
+### El capitalismo europeo en los años veinte.
+
+Antes de la Gran Depresión, el crecimiento del PIB en Europa occidental presentó una tasa de 2% anual entre 1913 y 1929, gracias al desmantelamiento de los controles estatales establecidos durante la PGM y al afloramiento de una demanda privada que se había deprimido, además de políticas monetarias y fiscales expansivas. Contrariamente, la oferta agregada de la posguerra se comportó bastante rígida, por cuatro razones:
+
+1. La capacidad instalada quedó obsoleta física y técnicamente, por el desgaste y la escasa inversión en mantenimiento y reposición;
+
+2. Las existencias de repuestos, materias primas y productos finales eran insuficientes;
+
+3. Los transportes estaban deteriorados y colapsados; y
+
+4. La reasignación de los recursos de la economía de guerra hacia las industrias civiles fue lenta.
+
+En consecuencia, **el aumento de la demanda produjo una inflación intensa sin apenas apoyar a la oferta.**
+
+En 1921 estalló una crisis derivada del retorno a políticas fiscales y monetarias restrictivas que, agravada por la inflación, contrajo la demanda al reducir los salarios reales y aumentar los costos de producción.
+
+En 1924, Europa comenzó a recuperarse cuando comenzaron a estabilizarse los desequilibrios de la inflación, el desempleo, el exceso de capacidad, las deudas de guerra, la inestabilidad de los cambios, la escasez de recursos y de capital y los conflictos sociales. Incluso así, Europa todavía no recuperaba el volumen de comercio internacional de 1913.
+
+Además, el crecimiento de la producción industrial fue desigual y desequilibrado: el crecimiento fue mayor en los países que habían sido neutrales durante la PGM y en aquellos que habían evitado una ocupación; el crecimiento fue menor en naciones que restauraron el patrón oro y sobrevaloraron sus divisas; el crecimiento más grande se dio en las industrias modernas.
+
+A finales de la década, en Europa se distinguían cuatro grupos de naciones, según su renta per cápita y la estructura de la población activa:
+
+1. Países industrializados (Reino Unido, Bélgica, Suiza, Holanda y Alemania), donde más del 40% de la población trabajaba en la industria;
+
+2. Francia, Checoslovaquia, Austria y países escandinavos, donde la población activa se dividía en tercios en la agricultura, la industria y los servicios;
+
+3. Países del Sur de Europa (más Irlanda y Hungría), donde la mitad del empleo era agrario y la industria el 25%;
+
+4. Países de Europa central y del este, donde la población agraria oscilaba entre el 65 y el 80%.
+
+
+#### El progreso técnico en la industria.
+
+En la década de 1920, a productividad por hora trabajada creció más rápidamente que la productividad por trabajador. La explicación está en la reducción de las jornadas laborales de la mayoría de países europeos, derivada de legislaciones sociales. Adicionalmente, los salarios aumentaron gracias a la creciente capacidad negociadora de los sindicatos. Esta productividad aumentó por la inversión en capital físico y humano, a las innovaciones tecnológicas y al perfeccionamiento de la organización empresarial y de producción en las fábricas.
+
+Durante la PGM, las innovaciones tecnológicas en industrias como la química, eléctrica y de construcción se intensificaron, lo que mejoró la eficiencia de muchas industrias durante los 20s. **El progreso técnico puso a disposición de los consumidores artículos nuevos y redujo los precios industriales, lo cual amplió la demanda de consumo y de inversión.**
+
+Contrariamente, la productividad agraria apenas aumentó durante la década de 1920, debido a la falta de innovaciones y progreso tecnológico en esta industria.
+
+#### La Gran Depresión de 1930.
+
+¿El fallo del mercado durante la Gran Depresión fue causado por la demanda o por la oferta? La evidencia apunta a una caída simultánea de la producción y de los precios, lo que sugiere un descenso de la demanda agregada. Surge otra pregunta: ¿por qué tantos países sufrieron de crisis de demanda simultáneamente? ¿Podría haberse evitado?
+
+La Gran Depresión se inició en Estados Unidos en 1929 y se difundió por el mundo, por distintos sectores económicos, con distintos ritmos e intensidades:
+
+1. La crisis golpeó más duramente a EE.UU., aunque, en general, duró 10 años, que fue el tiempo que tardaron muchos países en regresar a sus niveles de producción previos a 1929;
+
+2. Los precios cayeron al mismo tiempo, y casi en la misma proporción, que la producción, en casi todos los países;
+
+![Cuadro 6.2. Precios al por mayor, 1924 - 1938.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_2.png)
+
+![Cuadro 6.3. PIB per cápita en términos reales en la gran depresión.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_3.png)
+
+3. El desempleo azotó al mundo durante la GD;
+
+4. Los sectores económicos se vieron desigualmente afectados: la producción industrial cayó más que el PIB;
+
+![Cuadro 6.4. Producción industrial, 1920 - 1938.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_4.png)
+
+5. El comercio europeo descendió más que el PIB, prueba de la desintegración del comercio internacional.
+
+![Cuadro 6.5. Tasa de creceimiento de las exportaciones mundiales, 1928 - 2009.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_5.png)
+
+![Cuadro 6.6. Valor del comercio mundial en términos reales, 1720 - 2000.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_6.png)
+
+#### Las fases de la Gran Depresión.
+
+Si bien el *crash* bursátil de Nueva York ocurrió en 1929, la Gran Depresión comenzó hasta 1931. La razón fundamental es que las políticas económicas aplicadas agravaron la recesión hasta convertirla en depresión.
+
+Estados Unidos jugó un papel preponderante: antes de provocar el *crash* bursátil de 1929, el gobierno estadounidense ya había generado fuertes desequilibrios financieros en Europa, derivados de su giro hacia una política monetaria restrictiva, aumentando los tipos de descuento y provocando la repatriación de capitales americanos desde Europa; además, el gobierno de EE.UU. radicalizó su política monetaria en agosto de 1929, al aumentar aún más el tipo de descuento, con el objetivo de frenar inversiones especulativas en la bolsa.
+
+- Esto provocó un descenso en la inversión y el consumo; paralelamente, EE.UU. aumentó sus aranceles. Juntas, estas dos políticas despertaron la desconfianza de los consumidores.
+
+- La crisis bursátil tuvo dos efectos inmediatos:
+
+  - Empeoró las expectativas empresariales, redujo la inversión; y 
+  
+  - Por un efecto riqueza negativo, redujo la demanda de consumo.
+
+![Cuadro 6.7. Las bolsas mundiales en la Gran Depresión.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_7.png) 
+
+Así, hasta 1931, el patrón oro difundió la crisis económica originada en EE.UU. por todo el mundo, con causas y efectos similares.
+
+- Por tal motivo, en un primer momento, todos los países respondieron igual frente a la crisis: **impusieron políticas deflacionistas, mediante la restricción monetaria, para mantenerse en el patró oro.** Para mantener el tipo de cambio, se tenía que subir mucho el tipo de interés, lo que deprimió más la producción y el empleo, al tiempo de agravar las crisis bancarias.
+
+Keynes comenzó a proponer cosas diferentes: estímulos fiscales centrados en el déficit presupuestario, conseguido aumentando el gasto público y reduciendo los impuestos. Sin embargo, como no estaba probada, la teoría no se implementó.
+
+- La historia probó su teoría como correcta: la rigidez de los salarios nominales, debido a la fuerza de los sindicatos, y de los precios, por el poder del mercado que tenían los oligopolios, impedía el ajuste del modelo clásicos vía precios; también, debido al patrón oro, fue imposible el ajuste vía tipo de cambio.
+
+#### Crisis bancaria.
+
+El *crash* bursátil se transformó en una gran depresión cuando las quiebras bancarias se generalizaron:
+
+![Cuadro 6.8. Proporción de países con crisis bancarias sistemáticas.](C:/Users/marco/OneDrive/Documents/COLMEX/2do Semestre/Historia Económica/R/Gráficas y tablas/Gráfica_6_8.png) 
+
+Los bancos no pudieron hacer frente a las demandas generalizadas de retirada de fondos de los clientes, algunos por falta de liquidez y otros por problemas de solvencia. Se generó un desequilibrio patrimonial en el sistema bancario y una pérdida de confianza del público en él.
+
+#### Las políticas frente a la Gran Depresión.
+
+Frente a la crisis, los gobiernos utilizaron la política monetaria y comercial, pero no la fiscal:
+
+1. **Abandono de los patrones metálicos:** Algunas naciones siguieron el ejemplo británico y abandonaron el patrón oro. Además, las depreciaciones y aumento de la oferta monetaria ayudaron a países como Suecia y Nueva Zelanda a salir del problema, dado que esto redujo los tipos de interés sustancialmente.
+
+2. **Proteccionismo, autarquía y desintegración de la economía internacional:** Prevalecieron las devaluaciones competitivas y la protección exterior a ultranza. Solo existía una constante, la declaración de guerras comerciales y de divisas, que impidieron la cooperación internacional.
+
+- Esto se debió a la falta de un liderazgo claro a nivel mundial y a los intereses particulares y egoístas de muchos líderes políticos.
