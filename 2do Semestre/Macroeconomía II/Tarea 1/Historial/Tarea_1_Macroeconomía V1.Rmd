@@ -1,0 +1,1373 @@
+---
+title: |
+  | Tarea 1, Macroeconomía II
+  | Maestría en Economía, El Colegio de México, enero - mayo, 2021
+author:
+  - Vanessa Ayma Huaman
+  - Leobardo Enríquez Hernández
+  - Marco Méndez Atienza
+  - Flor Yurivia Valdés de la Torre 
+date: "`r format(Sys.time(), '%d de %B de %Y')`"
+header-includes:
+   - \usepackage[utf8]{inputenc}
+   - \usepackage[spanish]{babel}
+   - \usepackage{graphicx}
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.width = 6, fig.height = 3.5)
+```
+
+```{r}
+
+rm(list = ls())
+
+pacman::p_load(tidyverse,
+               kableExtra,
+               ggplot2,
+               cowplot,
+               stargazer,knitr,viridis,dplyr,readr,scales,quantmod,texreg,tinytex, tidyr, imager, readxl)
+```
+
+\newpage
+
+# Instrucciones
+
+\begin{enumerate}
+\item Resuelva los ejercicios 8.1, 8.2, 8.4, 8.5 y 8.6. Realice estos con ayuda de su laboratorista y entregue las soluciones a máquina, utilizando LaTeX. [3 horas,1 punto cada inciso]
+\item Simule una variedad de agentes que tienen ingresos permamentes diferentes e ingresos transitorios diferentes y calcule la relación entre consumo e ingreso que resulta dada una variedad de supuestos para las varianzas de cada tipo de ingreso sigiendo estos pasos:[2 horas, 1 punto cada inciso]
+\begin{enumerate}
+\item Cree un vector de 20 ingresos permanentes aleatorios $Y_i^P$, distribuidos normalmente, con media 10 y varianza $\sigma^P$. Cree 20 vectores (cada uno de estos vectores representa una persona) cada uno con 100 observaciones idénticas del ingreso permanente. Grafíquelos (eje x, persona; eje y, ingreso permanente).
+\item Cree 20 vectores de 100 ingresos transitorios aleatorios $Y_{i,t}^T$, distribuidos normalmente, con media 0 y con varianza $\sigma^T$. Grafíquelos.
+\item Cree 20 vectores de 100 ingresos totales $Y_{i,t}$, sumando el ingreso transitorio y el permanente. Grafíquelos.
+\item Cree 20 vectores de 100 errores de medición $\epsilon_{i,t}$, distribuidos normalmente, con media 0 y varianza $\sigma^\epsilon>0$. Grafíquelos.
+\item Cree  20 vectores de 100 consumos $C_{i,t}$ cada uno, de acuerdo a la siguiente regla $C_{i,t}=Y_i^P+0.1Y_{i,t}^T+\epsilon_{i,t}$. Grafíquelos.
+\item Estime la relación lineal entre ingreso total y consumo $C_{i,t}=\alpha+\beta Y_{i,t}+\epsilon_{i,t}$. Describa el resultado de su estimación y grafíque la relación entre las observaciones del consumo y las del ingreso.
+\item Incremente la varianza del ingreso permanente, y disminuya la varianza del ingreso transitorio y vuelva a estimar y graficar la relación entre el consumo y el ingreso.
+\item Disminuya la varianza del ingreso permanente, y aumente la varianza del ingreso transitorio y vuelva a estimar y graficar la relación entre el consumo y el ingreso.
+\end{enumerate}
+
+\item Estudie el consumo agregado en México siguiendo estos pasos: [3 horas, 0.5 puntos cada inciso]
+\begin{enumerate}
+\item Obtenga, del Inegi, datos de ``C'', el consumo agregado en México, de ``Y'', el producto agregado, de ``I'', la inversión agregada, de ``G'', el gasto del gobierno y de , de ``NX'', las exportaciones netas,  entre 1980 y el tercer trimestre de 2019, EN TÉRMINOS REALES.
+\item Grafíque dichas serie de tiempo juntas para compraralas visualmente.  (Compare la gráfica de las variables (de las que son siempre positivas) en su valor real original, y después de sacarles el logaritmo (cualquier logaritmo, no hace diferencia...)).
+\item Grafique también la tasa de crecimiento, $ \% \Delta a_t = (a_t-a_{t-1})/a_{t-1}$,  de todas estas series. 
+\item Enfóquese ahora nada más al consumo y al producto agregado. Grafique la relación entre una serie y la otra, es decir, grafique los puntos $(\% \Delta Y_t,\% \Delta C_t)$ poniendo el consumo en las ordenadas.
+\item Calcule la volatilidad de ambas series de tasas de crecimiento.
+\item Estime cuatro modelos lineales: $C_t=a+bY_t+\epsilon_t$, $\Delta\%C_t=a+b \Delta\%Y_t+\epsilon_t$, $\Delta\%C_t=a+b \Delta\%Y_{t-1}+\epsilon_t$ y $c_t=a+by_t+\epsilon_t$, donde las minúsculas reflejan el logaritmo de la variable en mayúscula, y reporte los valores estimados de los coeficientes, los estadísticos T, las R cuadradas, etc.
+\item Explique qué se puede concluir a cerca de la Hipótesis de Ingreso Permanente para México a partir de los coeficientes encontrados.
+\end{enumerate}
+\item Estudie el consumo de los individuos en México, siguiendo estos pasos:[1 hora, 0.5 puntos cada inciso]
+\begin{enumerate}
+\item Baje los datos de un año de la ENIGH del sitio del INEGI, (Grupo 1-2018, Grupo 2-2016, etc.)  y establezca el número de hogares y el ingreso y el gasto promedio.
+\item Estime una relación entre ingreso y gasto y reporte sus resultados.
+\item Estime una relación entre ingreso y gasto pero para hogares unipersonales de edad entre 30 y 40 años de edad de la Ciudad de México.
+\item Interprete sus resultados.
+\item Para todos los hogares unipersonales, estime el valor promedio del ingreso por edad, separando la muestra en grupos de edad de cinco años cada uno y grafiquelo.
+\end{enumerate}
+\item Estudie el ``acertijo del premio al riesgo'' para el caso de Mexico siguiendo estos pasos: [3 horas, 0.5 puntos cada inciso]
+\begin{enumerate}
+\item Consiga los valores anuales de IPC, el Indice de Precios y Cotizaciones de la Bolsa Mexicana de Valores por lo menos desde 1990.
+\item Calcule su tasa de retorno nominal para cada año.
+\item Consiga los valores promedio anual de la tasa de interés de CETES a 7 días, o la TIIE, la tasa interbancaria de equilibrio, y de la tasa de interés a un año, para el periodo que esté disponible.
+\item Calcule la diferencia entre el retorno del IPC y el retorno de invertir en CETES a distintos plazos.
+\item Calcule la covarianza entre dicha diferencias y  la tasa de crecimiento real del consumo agregado de la economía mexicana. 
+\item Calcule el valor de aversión relativa al riesgo que implican estos números, dado el supuesto de una utilidad con forma ARRC.
+\item Ahora calcule la covarianza entre dicha diferencias y  la tasa de crecimiento real del consumo agregado DE BIENES IMPORTADOS [aquí hay una serie: www.inegi.org.mx/temas/imcp/] de la economía mexicana. 
+\item Calcule el valor de aversión relativa al riesgo que implican estos números, dado el supuesto de una utilidad con forma ARRC.
+\end{enumerate}
+
+\item Utilice el método del árbol binomal para explicar el precio P=80 de un activo y valuar un ``call'' sobre él, con precio de ejercicio K=P-N donde N es el número de su equipo, asumiendo una tasa de interés de 5 por ciento: [1 horas, 0.5 puntos cada inciso]
+\end{enumerate}
+\newpage
+
+# Soluciones
+
+## Ejercicio 1
+**Resuelva los ejercicios 8.1, 8.2, 8.4, 8.5 y 8.6 de Romer. Realice estos con ayuda de su laboratorista y entregue las soluciones a máquina, utilizando LaTeX. [3 horas,1 punto cada inciso].**
+
+### Problema 8.1.
+
+**Ahorro en el ciclo vital (Modigliani y Brumberg, 1954). Suponga un individuo que vive de 0 a T y cuya utilidad vital viene dada por $U = \int_{t=0}^{T} u(C(t))dt$, donde $u'(.)>0$ y  $u''(.)<0$. La renta de este individuo es igual a $Y_0 + gt$ cuando $0\leq t<R$ e igual a 0 cuando $R\leq t \leq T$. La edad de jubilación, R, satisface que $0<R<T$. El tipo de interés es cero, el individuo no dispone de ninguna riqueza inicial y no hay incertidumbre.**
+
+**a) ¿Cuál es la restricción presupuestaria vital de este individuo?**
+
+El modelo planteado por Modigliani y Brumberg explica que los individuos ahorran durante la etapa de generación de ingresos, es decir cuando $0\leq t<R$, gastando menos de los ingresos que genera y pensando en su etapa de jubilación, ya que en ese periodo no generarán ingresos los individuos. La teoría planteada se basa en la gestión y planificación de ahorro para su jubilación, y en incentivar al ahorro a los individuos. 
+
+Con este resumen, podemos plantear la restricción presupuestaria vital a la que se enfrenta el individuo. Para ello, consideramos los siguientes supuestos, de acuerdo al enunciado, el tipo de interés es cero, el individuo no dispone de ninguna riqueza inicial y no hay incertidumbre. 
+
+El valor actual del consumo de por vida debe ser menor o igual al valor presente de por vida de los ingresos (el individuo no tiene riqueza inicial). Así tenemos:
+
+\setcounter{equation}{0}
+\begin{equation}
+\int_{t=0}^{T} C(t)dt\leqslant\int_{t=0}^{T}Y(t)dt
+\end{equation}
+
+El ingreso del individuo es $Y(t)=Y_0+gt$ para $0\leq t<R$ y $Y(t)=0$ para $R\leq t \leq T$, el valor presente del ingreso del ciclo de vida es 
+
+\begin{equation}
+\int_{t=0}^{T}Y(t)dt=\int_{t=0}^{R}(Y_0+gt)dt
+\end{equation}
+
+Resolviendo esta integral, obtenemos como resultado:
+
+\begin{equation}
+\int_{t=0}^{R}(Y_0+gt)dt=\left|Y_0t+\frac{1}{2}gt^2\right|_{0}^{R}
+\end{equation}
+
+Simplificando:
+
+\begin{equation}
+\int_{t=0}^{R}(Y_0+gt)dt=RY_0+\frac{1}{2}gR^2
+\end{equation}
+
+Sustituyendo la ecuación (4) en la ecuación (1) se obtiene la restricción presupuestaria del ciclo de vida: 
+
+\begin{equation}
+\int_{t=0}^{T} C(t)dt\leqslant RY_0+\frac{1}{2}gR^2
+\end{equation}
+
+**b) ¿Qué trayectoria del consumo, C(t), maximiza su utilidad?**
+
+Dado que $u''(.)<0$ y la tasa de interés y la tasa de descuento son iguales a cero, esto implica que la utilidad marginal del individuo es constante y depende únicamente del consumo. La trayectoria del consumo debe ser constante durante el periodo de vida del individuo. Entonces, la restricción presupuestaria implica que el consumo en cada momento es igual a los recursos de por vida divididos por la duración de la vida (T). 
+
+En la parte (a), los recursos de por vida vienen dados por $RY_0+\frac{1}{2}gR^2$ y así el nivel de consumo constante es:
+
+\begin{equation}
+\bar C= \frac {1}{T} (RY_0+\frac{1}{2}gR^2)
+\end{equation} 
+
+
+Simplificando la ecuación:
+
+\begin{equation}
+\bar C= \frac {R}{T} (Y_0+\frac{1}{2}gR)
+\end{equation}
+
+
+**c) ¿Qué trayectoria sigue la riqueza de este individuo en función de t?**
+
+La riqueza del individuo en cualquier momento t es la suma del ahorro desde el momento 0 hasta el momento t.
+
+\begin{equation}
+W(t)=\int_{\gamma=0}^{t}S(\gamma)d\gamma
+\end{equation}
+
+Donde W es la riqueza y S es el ahorro. El ahorro del individuo en el periodo t es la diferencia entre la renta y el consumo.
+
+\begin{equation}
+S(t)=Y(t)-C(t)
+\end{equation}
+
+Si diferenciamos los dos periodos:
+
+En el periodo $0\leq t<R$, el individuo logra ahorrar, siendo la trayectoria del ahorro:
+
+\begin{equation}
+S_t=Y_t-C_t=Y_0+gt-\frac {R}{T} (Y_0+\frac{1}{2}gR)=Y_0+gt-\bar C
+\end{equation}
+
+En el periodo $R\leq t \leq T$, el individuo no obtiene ingresos, por lo que el individuo utiliza el ahorro que genero. La trayectoria del ahorro en este periodo es:
+
+\begin{equation}
+S_t=Y_t-C_t=0-\frac {R}{T} (Y_0+\frac{1}{2}gR)=-\bar C
+\end{equation}
+
+Entonces, el ahorro se define:
+
+\begin{equation}
+S(t)=\left\{ \begin{array}{lcc}
+              Y_0+gt-\frac {R}{T} (Y_0+\frac{1}{2}gR) &   si  & 0\leq t<R \\
+            \\ -\frac {R}{T} (Y_0+\frac{1}{2}gR) &  si  & R\leq t \leq T
+             \end{array}
+   \right.
+\end{equation}
+
+Ahora, la trayectoria de la riqueza es:
+
+En el periodo $0\leq t<R$, la riqueza viene dada por:
+
+\begin{equation}
+W(t)=\int_{\gamma=0}^{t}S(\gamma)d\gamma=\int_{\gamma=0}^{t}(Y_0+g\gamma-\bar C) d\gamma
+\end{equation}
+
+Resolviendo la integral, se obtiene:
+
+\begin{equation}
+W(t)=\left|Y_0\gamma+\frac{1}{2}g\gamma^2-\bar C\gamma\right|_{\gamma=0}^{t}
+\end{equation}
+
+\begin{equation}
+W(t)=Y_0t+\frac{1}{2}gt^2-\bar Ct
+\end{equation}
+
+Simplificando la ecuación, se obtiene lo siguiente:
+
+\begin{equation}
+W(t)=t(Y_0+\frac{1}{2}gt-\bar C)
+\end{equation}
+
+Para el periodo $R\leq t \leq T$, la riqueza es igual a:
+
+\begin{equation}
+W(t)=\int_{\gamma=0}^{t}S(\gamma)d\gamma+W(R)
+\end{equation}
+
+donde W(R) es la riqueza en el momento en que el individuo se jubila. Podemos sustituir t=R en la ecuación (15) para determinar la riqueza al jubilarse. Esto nos da:
+
+\begin{equation}
+W(R)=R(Y_0+\frac{1}{2}gR-\bar C)
+\end{equation}
+
+Como $\bar C= \frac {R}{T} (Y_0+\frac{1}{2}gR)$, reemplazando en la ecuación (15), se obtiene:
+
+\begin{equation}
+W(R)=R(\frac{T}{R}\bar C-\bar C)
+\end{equation}
+
+que se simplifica a:
+
+\begin{equation}
+W(R)=(T-R)\bar C
+\end{equation}
+
+La ecuación (20) es intuitiva, dado que el individuo no recibe ingresos al jubilarse, el individuo para poder consumir tiene que utilizar la riqueza acumulada durante el periodo que percibió ingresos. Dado que $(T-R)$ es el tiempo que pasa en la jubilación y dado que el individuo consume C, la riqueza en la jubilación debe ser igual $(T-R)\bar C$.  
+
+Sustituyendo la ecuación (20) y dado que $S_t=-\bar C$ para $R\leq t \leq T$ en la ecuación (17) se obtiene:
+
+\begin{equation}
+W(t)=(T-R)\bar C-\int_{\gamma=R}^{t}\bar Cd\gamma
+\end{equation}
+
+
+Resolviendo la integral en la ecuación (21), se obtiene lo siguiente: 
+
+\begin{equation}
+W(t)=(T-R)\bar C-\bar C(t-R)
+\end{equation}
+
+Simplificando:
+
+\begin{equation}
+W(t)=(T-t)\bar C
+\end{equation}
+
+Por lo tanto, el individuo comienza a ahorrar de manera positiva una vez que los ingresos actuales exceden los ingresos medios de por vida. La riqueza es maximizada en la jubilación, después de lo cual la riqueza se reduce para financiar el consumo hasta el final de la vida.
+El patrón implícito en nuestro análisis se muestra en las siguientes figuras:
+
+```{r FIGURA 1}
+imagen1 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-1/Problema%208.1.PNG")
+
+plot(imagen1, main = "Figura 1. Ahorro en el ciclo de vida", axes = FALSE)
+```
+
+La figura de la izquierda muestra el ingreso y el consumo como funciones del tiempo, asumiendo que el ingreso en el tiempo 0 supera el nivel constante de consumo. La línea en negrita muestra ingresos que equivalen a $Y_0 + g$t hasta jubilación y es igual a 0 a partir de entonces. El consumo es constante en el nivel $\bar C$.
+
+La figura de la derecha representa la riqueza en función del tiempo. La pendiente de la curva de riqueza es igual a ahorro que a su vez es igual a la diferencia entre ingreso y consumo en la figura de la izquierda. Riqueza aumenta (a un ritmo creciente) durante la vida laboral, ya que los ingresos superan el consumo; la riqueza alcanza un máximo de $(T-R)\bar C$ barrita al jubilarse. Durante la jubilación - entre período R y T- la riqueza disminuye a una tasa constante hasta que llega a cero al final de la vida. Dada la forma de la función de la riqueza, este patrón de acumulación de riqueza durante el ciclo de vida se conoce como *hump saving*.
+
+### Problema 8.2.
+
+**El Ingreso promedio de los agricultores es menor al ingreso promedio de los no agricultores, pero fluctúa más año con año. Dado esto, ¿cómo la Hipótesis del Ingreso Permanente predice que las funciones de consumo estimado entre ambos grupos difieren?**
+
+Sabemos que, en promedio, el ingreso transitorio es igual a cero y que el ingreso promedio puede ser interpretado como el ingreso permanente promedio. Así, el problema indica que el ingreso permanente de los agricultores es menor al de los no agricultores, esto es:
+
+\setcounter{equation}{0}
+\begin{equation}
+\bar{Y}_{A}^P < \bar{Y}_{NA}^P 
+\end{equation}
+
+Es decir, el hecho de que el ingreso de los agricultores fluctúe más año con año implica que la varianza del ingreso transitorio de los agricultores es mayor a la de los no agricultores: $Var(Y^T_{A}) > Var(Y_{NA}^T)$.
+
+Considere el siguiente modelo de regresión:
+
+\begin{equation}
+C_{i} = a + bY_{i} + e_{i}
+\end{equation}
+
+Donde $C_{i}$ es el consumo actual y, de acuerdo a la HIP, determinado por completo por $Y^P$, tal que $C = Y^P$. Además, $Y_{i}$ es el ingreso actual, que es la suma del ingreso permanente y el transitorio, tal que $Y = Y^P + Y^T$.
+
+Sabemos que el estimador de b bajo Mínimos Cuadrados Ordinarios (MCO) tiene la forma:
+
+\begin{equation}
+\hat{b} = \frac{Var(Y^P)}{Var(Y^P) + Var(Y^T)}
+\end{equation}
+
+$Var(Y_{A}^T)>Var(Y_{NA}^T)$ implica que **el coeficiente estimado $\hat{b}$ de la pendiente es menor para los agricultores que para los no agricultores**. Esto significa que el impacto estimado de un incremento marginal en el ingreso actual sobre el consumo es más pequeño en el caso de los agricultores. De acuerdo a la HIP, esto se debe a que el incremento es mucho más probable de provenir del ingreso transitorio para los agricultores.
+
+Por otra parte, el estimador MCO para el término constante toma la forma:
+
+\begin{equation}
+\hat{a} = (1-\hat{b})\bar{Y}^P
+\end{equation}
+
+Los agricultores, en promedio, tienen un ingreso permanente menor a los no agricultores. Sin embargo, como se mencionó, el estimador $\hat{b}$ también es menor para los agricultores, por lo que **el efecto sobre el estimador $\hat{a}$ es ambiguo.**
+
+
+### Problema 8.4
+
+**En el modelo de la Sección 8.2, la incertidumbre sobre el ingreso futuro no afecta al consumo. ¿Significa esto que la incertidumbre no afecta la utilidad vitalicia esperada?**
+
+Sabemos que la utilidad esperada vitalicia esperada es:
+
+\setcounter{equation}{0}
+\begin{equation}
+E_{1}[U] = E_{1}[\sum_{t=1}^{T} (C_{t} - \frac{a}{2}C_{t}^2)]
+\end{equation}
+
+donde $a > 0$. Esto puede ser reescrito como:
+
+\begin{equation}
+E_{1}[U] = \sum_{t=1}^{T}(E_{1}[C_{t}] - \frac{a}{2}E_{1}[C_{t}^{2}])
+\end{equation}
+
+Dado que el valor esperado del consumo en todos los periodos es $C_{1}$, esto es:
+
+\begin{equation}
+E_{1}[C_{t}]=C_{1}
+\end{equation}
+
+Que puede escribirse:
+
+\begin{equation}
+C_{t} = C_{1} + e_{t}
+\end{equation}
+
+donde $E_{1}[e_{t}] = 0$ y $Var(e_{t} = \sigma_{e_{t}}^2)$. La ecuación (4) se cumple para todos los periodos; entonces, sustituyéndola en la ecuación (2):
+
+\begin{equation}
+E_{1}[U] = \sum_{t=1}^T(E_{1}[C_{1} + e_{t}]-\frac{a}{2}E_{1}[(C_{1} + e_{t})^2]
+\end{equation}
+
+Como $E_{1}[C_{1}] = C_{1}$ y $E_{1}[e_{t}] = 0$:
+
+\begin{equation}
+E_{1}[U] = \sum_{t=1}^{T}(C_{1} - \frac{a}{2}C_{1}^{2} - \frac{a}{2}E_{1}[e_{t}^{2}])
+\end{equation}
+
+Como $E_{1}[e_{t}^{2}] = Var(e_{t}) = \sigma_{e_{t}}^{2}$, la ecuación (6) puede ser escrita:
+
+\begin{equation}
+E_{1}[U] = \sum_{t=1}^{T}(C_{1} - \frac{a}{2}C_{1}^{2} - \frac{a}{2}\sigma_{e_{t}}^{2})
+\end{equation}
+
+Si $C_{t} = C_{1}$ con seguridad, tal que $e_{t} = 0$ y $Var(e_{t}) = \sigma_{e_{t}}^{2} = 0$, la utilidad vitalicia es:
+
+\begin{equation}
+U = \sum_{t=1}^{T}(C_{1} - \frac{a}{2}C_{1}^{2})
+\end{equation}
+
+Es decir, se comparan las ecuaciones con incertidumbre (7) y con certidumbre (8): como $C_{1}$ es el mismo con o sin incertidumbre, **la utilidad bajo incertidumbre (siempre que $Var(e_{t}) = \sigma_{e_{t}}^{2} > 0$) será menor.**
+
+### Problema 8.5
+
+**(Seguimos en este problema a Hansen y Singleton, 1983.) Suponga que la función de utilidad instantánea adopta la forma de aversión constante al riesgo relativo, $u(C_t)=\frac{C_t^{1-\theta}}{(1-\theta)} \ , \ \theta>0$ . Suponga también que el tipo de interés real, $r$, es constante, pero no necesariamente igual la tasa de descuento, $\rho$.**
+
+**a) Halle la ecuación de Euler que relaciona $C_t$ con las expectativas sobre $C_{t+1}$.**
+
+
+Sabemos que la ecuación de Euler que relaciona $C_t$ con $C_{t+1}$ en situaciones de certidumbre, admitiendo un tipo de interés distinto de cero (y con las demás características idénticas al planteado en este ejercicio, de acuerdo al texto sección 8.4 y a lo visto en clase) es:
+
+\setcounter{equation}{0}
+\begin{equation}
+\frac{C_{t+1}}{C_t}=[\frac{1+r}{1+\rho}]^\frac{1}{\theta}
+\end{equation}
+
+
+Haremos un proceso similar, pero ahora tomando en cuenta que hay incertidumbre. 
+
+Derivado la función de utilidad instantánea CRRA  $[u(C_t)=\frac{C_t^{1-\theta}}{(1-\theta)} \ , \ \theta>0]$  c.r.a. $C_t$ y $C_{t+1}$ obtenemos la utilidad marginal del consumo para los periodos $t$ y $t+1$ respectivamente:
+
+\begin{equation} 
+u'(C_t) = C_t^{-\theta} \ \ \ \ \ \ y \ \ \ \ \ \ u'(C_{t+1}) = C_{t+1}^{-\theta}
+\end{equation}
+
+Si consideramos el experimento habitual de tomar una disminución en el consumo en una cantidad pequeña (formalmente, infinitesimal) de $dC$ en el período $t$  se tiene que, dicho cambio tiene un costo de utilidad puesto que disminuye la utilidad en dicho periodo, el cual es igual a:
+
+
+\begin{equation}
+Costo \ de \ utilidad=C_t^{-\theta}dC
+\end{equation}
+
+
+Sin embargo, esta disminución del consumo en el periodo $t$ provoca que el individuo espere consumir un adicional de $(1+r)dC$ en el periodo $t+1$, dónde $r$ es la tasa de interés real. Es decir, se tiene un beneficio de utilidad esperada, el cual vamos a expresar en términos del valor en el periodo $t$, y no en términos del valor en el periodo $t+1$, y para ello usamos la tasa de descuento $\rho$, obteniendo:
+
+
+\begin{equation}
+beneficio \ de\  utilidad \ esperada = \frac{1}{1+\rho}E_t[C_{t+1}^{-\theta}(1+r)dC]
+\end{equation}
+
+Si el individuo está optimizando, un cambio marginal de este tipo no afecta la utilidad esperada. Esto significa que el costo de la utilidad debe ser igual al beneficio esperado de la utilidad, o:
+
+\begin{equation}
+C_t^{-\theta}dC = \frac{1}{1+\rho}E_t[C_{t+1}^{-\theta}(1+r)dC]
+\end{equation}
+
+\begin{equation}
+C_{t}^{-\theta}=\frac{1+r}{1+\rho}E_t[C_{t+1}^{-\theta}]
+\end{equation}
+
+donde hemos cancelado los dD. La ecuación (6) es la ecuación de Euler.
+
+**b) Suponga que la distribución del logaritmo de la renta y, por tanto, la del logaritmo de $C_{t+1}$ es normal. Llamemos $\sigma^2$ a la varianza de este último condicionada a la información disponible en el período $t$. Reescriba la expresión hallada en a) en términos de $lnC_1$, $E_t [lnC_{t+1} ]$, $\sigma^2$ y los parámetros $r,\rho \ y \ \theta$. [Pista: si una variable $x$ está distribuida normalmente con media $\mu$  y varianza $V$,     $E[e^x]=e^{\mu} e^{V/2}$ ].**
+
+Aplicando logaritmos a ambos lados de la ecuación (6)
+\begin{equation}
+ln(C_{t}^{-\theta})=ln(\frac{1+r}{1+\rho}E_t[C_{t+1}^{-\theta}])
+\end{equation}
+
+
+\begin{equation}
+ln(C_{t}^{-\theta})=ln(1+r)-ln(1+\rho)+ln[E_t(C_{t+1}^{-\theta})]
+\end{equation}
+
+Para cualquier variable $x , e^{lnx}=x$, así que podemos escribir:
+
+\begin{equation}
+E_t[C_{t+1}^{-\theta}]=E_t[e^{-\theta lnC_{t+1}}]
+\end{equation}
+
+
+Usando la pista en la pregunta - si $x \sim N(\mu,V)$ entonces $E[e^x ]=e^\mu e^{V/2}$ - entonces dado que el logaritmo del consumo se distribuye normalmente, tenemos:
+
+
+\begin{equation}
+E_t[C_{t+1}^{-\theta}] = E_t[e^{-\theta E_t ln C_{t+1}}e^{\theta^2\sigma^2}]=e^{-\theta E_t ln C_{t+1}}e^{\theta^2\sigma^2}
+\end{equation}
+
+
+En la primera línea, hemos utilizado el hecho de que, condicional a la información del tiempo $t$, la varianza del logaritmo del consumo es $\sigma^2$. Además, hemos escrito la media del logaritmo del consumo en el período $t +1$, condicionado a la información del tiempo $t$, como $E_t  lnC_{t+1}$. Finalmente, en la última línea hemos utilizado el hecho de que $e^{-\theta E_t ln C_{t+1}}e^{\theta^2\sigma^2}$ es simplemente una constante.
+
+Sustituyendo la ecuación (10) nuevamente en la ecuación (8) tenemos:
+
+\begin{equation}
+ln(C_{t}^{-\theta})=ln(1+r)-ln(1+\rho)+ln[e^{-\theta E_t ln C_{t+1}}e^{\theta^2\sigma^2}]
+\end{equation}
+
+\begin{equation}
+-\theta ln C_t = ln(1+r) - ln(1+\rho) -\theta E_t ln C_{t+1} + \theta^2 \sigma^2
+\end{equation}
+
+
+Dividiendo ambos lados de la ecuación (12) por $-\theta$ , nos queda:
+
+
+\begin{equation}
+ln C_t = E_t ln C_{t+1} + \frac { ln(1-\rho)-ln(1+r)}{\theta - \theta \sigma^2}
+\end{equation}
+
+**c) Demuestre que si r y $\sigma^2$ permanecen constantes a lo largo del tiempo, el resultado de la parte b) implica que el logaritmo del consumo sigue un paseo aleatorio cuyo rumbo es $lnC_{t+1}=a+lnC_t + u_{t+1}$, dónde $u$ es ruido blanco.**
+
+Reordenando la ecuación (13) para resolver para $E_tlnC_{t+1}$ nos da:
+
+\begin{equation}
+E_t ln C_{t+1} =ln C_t - \frac { ln(1-\rho)-ln(1+r)}{\theta - \theta \sigma^2}
+\end{equation}
+
+\begin{equation}
+E_tlnC_{t+1}=lnC_t + \frac {ln(1+r)-ln(1-\rho)}{\theta + \theta \sigma^2}
+\end{equation}
+
+La ecuación (15) implica que se espera que el consumo cambie en una cantidad constante $\frac{ln(1+r)-ln(1- \rho)}{\theta + \theta \sigma^2}$ de un período al siguiente. Los cambios en el consumo aparte de esta cantidad determinista son impredecibles. Por la definición de expectativas podemos escribir:
+
+
+\begin{equation}
+lnC_{t+1}=lnC_t+ \frac{ln(1+r)-ln(1- \rho)}{\theta + \theta \sigma^2}+U_{t+1}
+\end{equation}
+
+
+Dónde $u_{t+1}$ tiene una media cero, condicionada a la información del tiempo $t$. Por lo tanto, el logaritmo del consumo sigue un paseo aleatorio con deriva donde $\frac{ln(1+r)-ln(1- \rho)}{\theta + \theta \sigma^2}$   es el parámetro de deriva.
+
+**d) ¿Cómo afectan los cambios en r y en $\sigma^2$ al crecimiento esperado del consumo,  $E_t[ln C_{t+1}-ln  C_t ]$? Interprete la influencia de $\sigma^2$ sobre el crecimiento esperado del consumo a la luz del análisis desarrollado en la Sección 7.6 sobre el ahorro precautorio.**
+
+
+De la ecuación (15), el crecimiento esperado del consumo es:
+
+\begin{equation}
+E_t[lnC_{t+1}-lnC_t]= \frac{ln(1+r)-ln(1- \rho)}{\theta + \theta \sigma^2}
+\end{equation}
+
+
+Para saber el efecto que provoca un cambio en $r$ y $\sigma^2$ en el crecimiento esperado del consumo ($E_t[lnC_{t+1}-lnC_t]$) derivamos respecto a dichas variables.
+
+Claramente, un incremento en $r$ incrementa el crecimiento del valor esperado del consumo. Tenemos:
+
+\begin{equation}
+\frac{ \partial {E_t[lnC_{t+1}-lnC_t]}}{\partial r}= \frac{1}{\theta} \frac{1}{(1+r)} \ > 0
+\end{equation}   
+
+Hay que tener en cuenta que cuanto menor es  $\theta$ - mayor es la elasticidad de sustitución, $\frac{1}{\theta}$ - más aumenta el crecimiento del consumo debido a un aumento dado en la tasa de interés real.
+
+Un aumento en $\sigma^2$  también aumenta el crecimiento del consumo:
+
+\begin{equation}
+\frac{ \partial {E_t[lnC_{t+1}-lnC_t]}}{\partial \sigma^2}= \theta > 0
+\end{equation}   
+
+
+Es sencillo verificar que la función de utilidad CRRA tiene una tercera derivada positiva. Como $u'(C_t )=C_t^{-\theta }$ y $u''(C_t )=-\theta C_t^{-\theta }$. Entonces:
+	        
+\begin{equation}
+u'''(C_t )=-\theta (-\theta -1) C_t^{-\theta - 2} > 0
+\end{equation}
+
+Por tanto, un individuo con una función de utilidad CRRA exhibe el comportamiento de ahorro preventivo explicado en la Sección 7.6. Un aumento de la incertidumbre (medida por $\sigma^2$, la varianza del logaritmo del consumo) aumenta el ahorro y, por lo tanto, el crecimiento esperado del consumo.
+
+
+### Problema 8.6
+
+**Un marco para investigar el exceso de suavidad. Suponga que $C_t=[\frac{r}{1+r}]\{A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}\}$ y que $A_{t+1}=(1+r)(A_t+Y_t-C_t)$.**
+
+**a) Muestre que estos supuestos implican que $E_t[C_{t+1}]=C_t$ (y entonces que el consumo sigue una caminata aleatoria) y que $\sum^\infty_{s=0}\frac{E_t[C_{t+s}]}{(1+r)^s}=A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}$.** 
+
+Sustituyendo la expresión para el consumo en el periodo t: 
+
+\setcounter{equation}{0}
+\begin{equation}
+C_t=[\frac{r}{1+r}]\{A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}\}
+\end{equation}
+
+en la expresión de la riqueza en el periodo t+1: 
+
+\begin{equation}
+A_{t+1}=(1+r)(A_t+Y_t-C_t)
+\end{equation}
+
+obtenemos la expresión:
+
+\begin{equation}
+A_{t+1}=(1+r)[A_t+Y_t-\frac{r}{1+r}A_t-\frac{r}{1+r}(Y_t+\frac{E_tY_{t+1}}{1+r}+\frac{E_tY_{t+2}}{(1+r)^2}+...)]
+\end{equation}
+
+Obteniendo un común denominador de $(1+r)$ y cancelando los términos $(1+r)$ obtenemos:
+
+\begin{equation}
+A_{t+1}=A_t+Y_t-r(\frac{E_tY_{t+1}}{1+r}+\frac{E_tY_{t+2}}{(1+r)^2}+...)
+\end{equation}
+
+Como la ecuación $C_t=[\frac{r}{1+r}]\{A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}\}$ se mantiene en todos los periodos, podemos escribir el consumo en el periodo t+1 como: 
+
+\begin{equation}
+C_{t+1}=\frac{r}{1+r}[A_{t+1}+\sum^\infty_{s=0}\frac{E_{t+1}[Y_{t+1+s}]}{(1+r)^s}]
+\end{equation}
+
+Sustituyendo la ecuación (4) en (5) tenemos la ecuación: 
+
+\begin{equation}
+C_{t+1}=\frac{r}{1+r}[A_t+Y_t-r(\frac{E_tY_{t+1}}{1+r}+\frac{E_tY_{t+2}}{(1+r)^2}+...)+(E_{t+1}Y_{t+1}+\frac{E_{t+1}Y_{t+2}}{1+r}+...)]
+\end{equation}
+ 
+Tomando la esperanza, condicional a la información en el tiempo t, de ambos lados de esta última ecuación, tenemos:
+
+\begin{equation}
+E_tC_{t+1}=\frac{r}{1+r}[A_t+Y_t-r(\frac{E_tY_{t+1}}{1+r}+\frac{E_tY_{t+2}}{(1+r)^2}+...)+(E_{t}Y_{t+1}+\frac{E_{t}Y_{t+2}}{1+r}+...)]
+\end{equation}
+
+donde hemos usado la ley de las proyeccciones iteradas tal que para toda variable $x$, $E_tE_{t+1}x_{t+2}=E_tx_{t+2}$. Si esto no se sostuviera, los individuos estarían esperando a revisar su estimación hacia arriba o hacia abajo, y entonces su expectativa original no podría haber sido racional. 
+
+Y simplificando términos de la última ecuación, tenemos:
+
+\begin{equation}
+E_tC_{t+1}=\frac{r}{1+r}[A_t+Y_t-(1-\frac{r}{1+r})E_tY_{t+1}+(\frac{1}{(1+r)}-\frac{r}{(1+r)^2})E_tY_{t+2}+...]
+\end{equation}
+
+el cual se simplifica a: 
+
+\begin{equation}
+E_tC_{t+1}=\frac{r}{1+r}[A_t+Y_t+\frac{E_tY_{t+1}}{1+r}+\frac{E_tY_{t+2}}{(1+r)^2}+...]
+\end{equation}
+
+Usando la notación de suma, y que $E_tY_t=Y_t$ tenemos la expresión:
+
+\begin{equation}
+E_tC_{t+1}=\frac{r}{1+r}[A_t+\sum^\infty_{s=0}\frac{E_tY_{t+s}}{(1+r)^s}]
+\end{equation}
+
+El lado derecho de la ecuación $$C_t=[\frac{r}{1+r}]\{A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}\}$$  y de la ecuación $E_tC_{t+1}=\frac{r}{1+r}[A_t+\sum^\infty_{s=0}\frac{E_tY_{t+s}}{(1+r)^s}]$ son iguales por lo que: 
+
+\begin{equation}
+E_tC_{t+1}=C_t
+\end{equation}
+
+El consumo sigue una caminata aleatoria; cambios en el consumo son impredecibles.
+
+Como el consumo sigue una caminata aleatoria, el mejor estimador del consumo para cualquier periodo futuro es simplemente el valor esperado del consumo en ese periodo. Esto es, para toda $s\geq 0$, podemos escribir: 
+
+\begin{equation}
+E_tC_{t+s}=C_t
+\end{equation}
+
+Usando esta ecuación $E_tC_{t+s}=C_t$, podemos escribir el valor presente de la trayectoria esperada de consumo como:
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[C_{t+s}]}{(1+r)^s}=\sum^\infty_{s=0} \frac{C_t}{(1+r)^s}=C_t\sum^\infty_{s=0}\frac{1}{(1+r)^s}
+\end{equation}
+
+Como $\frac{1}{1+r}<1$, la suma infinita del lado derecho de la última ecuación converge a $\frac{1}{[1-\frac{1}{1+r}]}=\frac{(1+r)}{r}$ y entonces tenemos:
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[C_{t+s}]}{(1+r)^s}=\frac{1+r}{r}C_t
+\end{equation}
+
+Sustituyendo la ecuación $C_t=[\frac{r}{1+r}]\{A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}\}$ por $C_t$ en el lado derecho de la ecuación $\sum^\infty_{s=0}\frac{E_t[C_{t+s}]}{(1+r)^s}=\frac{1+r}{r}C_t$ tenemos:
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[C_{t+s}]}{(1+r)^s}=\frac{r}{1+r}(\frac{1+r}{r})[A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}]=A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}
+\end{equation}
+
+Esta última ecuación establece que el valor presente de la trayectoria esperada del consumo iguala a la riqueza inicial más el valor presente de la trayectoria esperada del ingreso. 
+
+**b) Suponga que $\Delta Y_t=\phi \Delta Y_{t+1}+u_t$, donde *u* es ruido blanco. Suponga que $Y_t$ excede $E_{t-1}[Y_t]$ en 1 unidad (esto es, suponga *u_t=1*). ¿En cuánto incrementa el consumo?**
+
+
+Tomando el valor esperado, como del tiempo t-1, en ambos lados de la ecuación $C_t=[\frac{r}{1+r}]\{A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}\}$, tenemos:
+
+\begin{equation}
+E_{t-1}C_t=\frac{r}{1+r}[A_t+\sum^\infty_{s=0}\frac{E_{t-1}(Y_{t+s})}{(1+r)^s}]
+\end{equation}
+
+donde hemos usado el hecho de que $A_t=(1+r)[A_{t-1}+Y_{t-1}-C_{t-1}]$ no es incierto como en t-1. 
+
+Adicionalmente, hemos usado la ley de las proyecciones iteradas tal que $E_{t-1}E_{t}[Y_{t+s}]=E_{t-1}[Y_{t+s}]$. 
+
+Restando la ecuación (16) de la ecuación $C_t=[\frac{r}{1+r}]\{A_t+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}\}$ tenemos el cambio en el consumo:
+
+
+\begin{equation}
+C_t-E_{t-1}C_t=\frac{r}{1+r}[\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]}{(1+r)^s}-\sum^\infty_{s=0}\frac{E_{t-1}[Y_{t+s}]}{(1+r)^s}]=\frac{r}{1+r}[\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]-E_{t-1}[Y_{t+s}]}{(1+r)^s}]
+\end{equation}
+
+El cambio en el consumo será la fracción $\frac{r}{(1+r)}$ del valor presente del cambio  en el ingreso vitalicio esperado.  
+
+El siguiente paso es determinar el valor presente del cambio en el ingreso vitalicio esperado: 
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]-E_{t-1}[Y_{t+s}]}{(1+r)^s}=[Y_t-E_{t-1}Y_t]+[\frac{E_tY_{t+1}-E_{t-1}Y_{t+1}}{1+r}]+[\frac{E_tY_{t+2}-E_{t-1}Y_{t+2}}{(1+r)^2}]+...
+\end{equation}
+
+En lo subsecuente "se espera que sea más alto" significa que "el valor esperado, como por ejemplo en el periodo t, sea mayor a lo que era en el periodo t-1". Como $u_t=1$, entonces: 
+
+\begin{equation}
+Y_t-E_{t-1}Y_t=1
+\end{equation}
+
+En el periodo t+1, como $\Delta Y_{t+1}=\phi \Delta Y_t + u_{t+1}$, el cambio en $Y_{t+1}$ se espera que sea $\phi \Delta Y_t=\phi$ más alto. Entonces, el nivel de $Y_{t+1}$ se espera que sea más alto por $1+\phi$. Entonces:
+
+\begin{equation}
+\frac{E_tY_{t+1}-E_{t-1}Y_{t+1}}{1+r}=\frac{1+\phi}{1+r}
+\end{equation}
+
+En el periodo t+2, como $\Delta Y_{t+2}=\phi \Delta Y_{t+1}+u_{t+2}$, el cambio en $Y_{t+2}$ se espera que sea más alto por $\phi \Delta Y_{t+1}=\phi^2$. Entonces el nivel de $Y_{t+2}$ se espera que sea más alto por $1+\phi +\phi^2$. Por lo tanto, tenemos:
+
+\begin{equation}
+\frac{E_tY_{t+2}-E_{t-1}Y_{t+2}}{(1+r)^2}=\frac{1+\phi+\phi^2}{(1+2)^2}
+\end{equation}
+
+Este comportamiento debe de ser claro. Tenemos que:
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]-E_{t-1}[Y_{t+s}]}{(1+r)^s}=1+\frac{1+\phi}{1+r}+\frac{1+\phi + \phi^2}{(1+r)^2}+\frac{1+\phi+\phi^2`+\phi^3}{(1+r)^3}+...
+\end{equation}
+
+Notemos que la serie infinita puede escribirse como: 
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]-E_{t-1}[Y_{t+s}]}{(1+r)^s}=[1+\frac{1}{1+r}+\frac{1}{(1+r)^2}+...]+[\frac{\phi}{1+r}+\frac{\phi}{(1+r)^2}+\frac{\phi}{(1+r)^3}+...]+[\frac{\phi^2}{(1+r)^2}+\frac{\phi^2}{(1+r)^3}+...]+...
+\end{equation}
+
+Si definimos $\gamma =\frac{1}{1+r}$, la primera suma del lado rerecho de la última ecuación converge a $\frac{1}{1-\gamma}$, la segunda suma converge a $\frac{\phi \gamma}{(1-\gamma)}$, la tercera suma converge a $\frac{\phi^2 \gamma^2}{1-\gamma}$, y así sucesivamente. 
+
+Por lo tanto la ecuación anterior puede escribirse como 
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]-E_{t-1}[Y_{t+s}]}{(1+r)^s}=\frac{1}{1-\gamma}[1+\phi \gamma+\phi^2 \gamma^2+...]=\frac{1}{(1-\gamma)} \frac{1}{(1-\phi \gamma)}
+\end{equation}
+
+Reescribiendo esta última ecuación con la definición de $\gamma =\frac{1}{1+r}$ tenemos: 
+
+\begin{equation}
+\sum^\infty_{s=0}\frac{E_t[Y_{t+s}]-E_{t-1}[Y_{t+s}]}{(1+r)^s}=\frac{1}{1-[\frac{1}{1+r}]}\frac{1}{1-[\frac{\phi}{1+r}]}=\frac{(1+r)}{r}\frac{(1+r)}{(1+r-\phi)}
+\end{equation}
+
+Sustituyendo esta última ecuación en la ecuación inmediata anterior tenemos el siguiente cambio en el consumo: 
+
+\begin{equation}
+C_t-E_{t-1}C_t=\frac{r}{(1+r)}[\frac{(1+r)}{r}\frac{(1+r)}{(1+r-\phi)}]=\frac{(1+r)}{(1+r-\phi)}
+\end{equation}
+
+**c) Para el caso de $\phi >0$, cuál tiene una mayor varianza, la innovación en el ingreso, $u_t$, o la innovación en el consumo,$C_t-E_{t-1}[C_t]$? ¿Utilizan los consumidores el ahorro y el endeudamiento para suavizar la senda del consumo en relaciónal ingreso en este modelo? Explique.**
+
+
+La varianza del cambio en el consumo es: 
+
+\begin{equation}
+var(C_t-E_{t-1}C_t)=var[\frac{(1+r)}{(1+r-\phi)}u_t]=[\frac{(1+r)}{(1+r-\phi)}]^2 var(u_t)>var(u_t)
+\end{equation}
+
+
+Como$\frac{(1+r)}{(1+r-\phi)}>1$, la varianza del cambio en el consumo es más grande que la varianza del cambio en el ingreso.
+
+Intuitivamente, un cambio en el ingreso significa que en promedio, el consumidor experimentará más cambios en el ingreso en la misma dirección en los periodos futuros. 
+
+No es claro si el consumidor usa el ahorro o la deuda para suavizar el consumo relativo al ingreso. El ingreso no es estacionario, entoces no es obvio lo que significa suavizarlo.  
+
+
+\newpage
+
+
+## Ejercicio 2
+**Simule una variedad de agentes que tienen ingresos permamentes diferentes e ingresos transitorios diferentes y calcule la relación entre consumo e ingreso que resulta dada una variedad de supuestos para las varianzas de cada tipo de ingreso sigiendo estos pasos:[2 horas, 1 punto cada inciso]**
+
+### Ejercicio 2.a
+
+**Cree un vector de 20 ingresos permanentes aleatorios $Y_i^P$, distribuidos normalmente, con media 10 y varianza $\sigma^P$. Cree 20 vectores (cada uno de estos vectores representa una persona) cada uno con 100 observaciones idénticas del ingreso permanente. Grafíquelos (eje x, persona; eje y, ingreso permanente).**
+
+Se creó un vector de 20 observaciones aleatorias distribuidas normalmente con media igual a 10 y varianza de 4 que representan el ingreso permanente de 20 individuos, esto es: $\mu_{Y^P_{i}} = 10$ y $Var(Y^P_{i}) = 4$. Posteriormente, se construyó una matriz con 100 observaciones para cada individuo, siendo estas idénticas a su ingreso permanente.
+
+```{r INGRESO PERMANENTE, include = FALSE}
+
+Yp_i <- rnorm(20, 10, 2)
+
+Yp <- matrix(0, nrow = 100, ncol = 20)
+
+for (i in 1:20){
+  Yp[,i] <- Yp_i[i]
+}
+
+colnames(Yp) <- c(paste0(1:20))
+rownames(Yp) <- c(1:100)
+
+```
+
+Así, la siguiente gráfica muestra el ingreso permanente de 20 individuos, donde puede observarse que la media de todas las observaciones es bastante cercana al valor de 10, dado que $\mu_{Y^P_{i}} = 10$:
+
+```{r GRÁFICA INGRESO PERMANENTE, echo=FALSE}
+
+GrafIngPerm <- barplot (Yp[1,], col = "blue", ylim = c(0, 20), main = "Gráfica 2.1. Ingreso permanente de 20 individuos", xlab = "Individuos", ylab = "Ingreso permanente en miles de pesos", cex.names = .7)
+
+abline(h = mean(Yp[1,]), col ="red", legend("topright", "Media", fill = "red"))
+```
+\newpage
+
+### Ejercicio 2.b
+
+**Cree 20 vectores de 100 ingresos transitorios aleatorios $Y_{i,t}^T$, distribuidos normalmente, con media 0 y con varianza $\sigma^T$. Grafíquelos.**
+
+```{r INGRESO TRANSITORIO, include = FALSE}
+
+Yt <- matrix( rnorm(100*20, mean = 0, sd = 2), 100, 20)
+
+colnames(Yt) <- c(paste0(1:20))
+rownames(Yt) <- c(1:100)
+```
+
+Una vez creados los 20 vectores con 100 ingresos transitorios para cada individuo con $\mu_{Y^T_{i}} = 0$ y $Var(Y^T_{i}) = 4$, y con el objetivo de facilitar la representación gráfica, se presenta la primera observación para los 20 individuos, así como 100 observaciones para el primer individuo, donde puede observarse que ambas medias son cercanas a cero:
+
+```{r GRÁFICO INGRESO TRANSITORIO , echo = FALSE}
+
+GrafIngTrans1 <- barplot (Yt[1,], col = "green", ylim = c(-7, 7), main = "Gráfica 2.2. Un ingreso transitorio de 20 individuos", xlab = "Individuos", ylab = "Ingreso transitorio en miles de pesos", cex.names = 0.7)
+
+abline(h = mean(Yt[1,]), col ="red", legend("topright", "Media", fill = "red"))
+
+GrafIngTrans2 <- barplot (Yt[,1], col = "green", ylim = c(-7, 7), main = "Gráfica 2.3. 100 Ingresos transitorios para el individuo 1", xlab = "Ingresos transitorios aleatorios", ylab = "Miles de pesos", cex.names = 0.7)
+
+abline(h = mean(Yt[,1]), col ="red", legend("topright", "Media", fill = "red"))
+```
+\newpage
+
+### Ejercicio 2.c
+
+**Cree 20 vectores de 100 ingresos totales $Y_{i,t}$, sumando el ingreso transitorio y el permanente. Grafíquelos.**
+
+Después de crear los 20 vectores aleatorios con 100 ingresos totales con base en la expresión $Y = Y^P + Y^T$, a continuación de muestran dos gráficas, una que exhibe la primera observación del ingreso total de los 20 individuos, y otra con 100 diferentes ingresos totales para el primer individuo:
+
+```{r INGRESO TOTAL, echo = FALSE}
+
+Y <- Yp + Yt
+```
+
+```{r GRÁFICA INGRESO TOTAL, echo = FALSE}
+
+GrafIngTotal1 <- barplot (Y[1,], col = "purple", ylim = c(0, 20), main = "Gráfica 2.4. Un ingreso total de 20 individuos", xlab = "Individuos", ylab = "Ingreso total en miles de pesos", cex.names = 0.7)
+
+abline(h = mean(Y[1,]), col ="red", legend("topright", "Media", fill = "red"))
+
+GrafIngTotal2 <- barplot (Y[,1], col = "purple", ylim = c(0, 20), main = "Gráfica 2.5. 100 ingresos totales para el individuo 1", xlab = "Ingresos totales", ylab = "Miles de pesos", cex.names = 0.7)
+
+abline(h = mean(Y[,1]), col ="red", legend("topright", "Media", fill = "red"))
+```
+
+Puede observarse que los valores del ingreso total para todos los individuos, $Y$, la media se mantiene alrededor del valor de 10, producto de la propiedad de linealidad de la esperanza: $E[Y] = E[Y^P] + E[Y^T] = 10 + 0 = 10$.
+
+\newpage
+
+### Ejercicio 2.d
+
+**Cree 20 vectores de 100 errores de medición $\epsilon_{i,t}$, distribuidos normalmente, con media 0 y varianza $\sigma^\epsilon>0$. Grafíquelos.**
+
+Se crearon 20 vectores con 100 errores cada uno, con media cero y varianza de 0.25, esto es: $\mu_{e_{i}} = 0$ y $Var(e_{i}) = 0.25$. Así, se presenta la primera observación de errores para los 20 individuos, así como 100 errores para el individuo 1, donde ambas medias se encuentran alrededor del cero.
+
+```{r ERRORES, include=FALSE}
+
+et <- matrix( rnorm(100*20, mean = 0, sd = 0.5), 100, 20)
+
+colnames(et) <- c(paste0(1:20))
+rownames(et) <- c(paste0(1:100))
+```
+
+```{r GRÁFICA ERRORES , echo = FALSE}
+GrafError1 <- barplot (et[1,], col = "red", ylim = c(-2, 2), main = "Gráfica 2.6. Un error de medición de 20 individuos", xlab = "Individuos", ylab = "Error promedio de medición en miles de pesos", cex.names = 0.7)
+
+abline(h = mean(et[1,]), col ="yellow", legend("topright", "Media", fill = "yellow"))
+
+GrafError1 <- barplot (et[,1], col = "red", ylim = c(-2.5, 2.5), main = "Gráfica 2.7. 100 errores de medición para el individuo 1", xlab = "Errores aleatorios", ylab = "Miles de pesos", cex.names = 0.7)
+
+abline(h = mean(et[,1]), col ="yellow", legend("topright", "Media", fill = "yellow"))
+```
+\newpage
+
+### Ejercicio 2.e
+
+**Cree  20 vectores de 100 consumos $C_{i,t}$ cada uno, de acuerdo a la siguiente regla $C_{i,t}=Y_i^P+0.1Y_{i,t}^T+\epsilon_{i,t}$. Grafíquelos.**
+
+Una vez calculados 100 diferentes consumos para cada uno de los 20 individuos, se graficó la primera observación para todos los individuos y todas las observaciones para el primer individuo:
+
+```{r CONSUMO, include = FALSE}
+
+Ct <- Yp + 0.1*(Yt) + et
+```
+
+```{r GRAFICA CONSUMO, echo = FALSE}
+
+barplot (Ct[1,], col = "#00FFFF", ylim = c(0, 20), main = "Gráfica 2.8. Un consumo de 20 individuos", xlab = "Individuos", ylab = "Consumo promedio en miles de pesos", cex.names = 0.7)
+
+abline(h = mean(Ct[1,]), col ="red", legend("topright", "Media", fill = "red"))
+
+barplot (Ct[,1], col = "#00FFFF", ylim = c(0, 20), main = "Gráfica 2.9. 100 consumos para el individuo 1", xlab = "Individuos", ylab = "Consumo promedio en miles de pesos", cex.names = 0.7)
+
+abline(h = mean(Ct[,1]), col ="red", legend("topright", "Media", fill = "red"))
+```
+
+Dado que $C_{i,t}=Y_i^P+0.1Y_{i,t}^T+\epsilon_{i,t}$, entonces $E[C_{i,t}] = E[Y_i^P] + 0.1E[Y_{i,t}^T] + E[\epsilon_{i,t}] = 10 + 0.1(0) + 0 = 10$, lo cual es consistente con las gráficas. 
+
+\newpage
+
+### Ejercicio 2.f
+
+**Estime la relación lineal entre ingreso total y consumo $C_{i,t}=\alpha+\beta Y_{i,t}+\epsilon_{i,t}$. Describa el resultado de su estimación y grafíque la relación entre las observaciones del consumo y las del ingreso.**
+
+Al realizar la regresión del modelo, puede observarse una relación positiva entre ambas variables. Además, hay una concentración de las observaciones más grande alrededor de los valores de 10 del Ingreso, lo cual es consistente con el hecho de que el Ingreso Total se compone del Ingreso Permanente (con media 10) y el Ingreso Transitorio (con media 0):
+
+```{r REGRESIÓN, echo=F, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+scatter.smooth(x = Y, y = Ct, span = 1, main = "Gráfica 2.10. Relación entre el Consumo y el Ingreso", xlab = "Ingreso", ylab = "Consumo", col = "#333399", cex = 0.5)
+
+```
+
+En las tablas siguientes, se exhiben los coeficientes estimados de las 20 regresiones realizadas, una por individuo. En ella puede observarse que, en general, el estimador $\hat\alpha$ suele estar entre valores de 7 y 13, lo que indica una variación moderada entre los individuos. Por otro lado, el estimador $\hat\beta$, que indica la responsividad del consumo ante el ingreso, es, como se esperaba positiva y con valores alrededor de 0.05 y 1.5, lo cual es consistente con el hecho de que el la aportación del ingreso transitorio a cambios en el consumo es baja en el modelo planteado $C_{i,t}=Y_i^P+0.1Y_{i,t}^T+\epsilon_{i,t}$.
+
+```{r, echo=FALSE, message = F, warning=F, include=F}
+for (i in 1:20) {
+    rr <- paste("reg", i, sep = "_")
+    reg_full<-assign(rr, lm(Ct[,i] ~ Y[,i]))
+    
+}
+```
+
+\newpage
+\begin{landscape}
+
+```{r regresiones, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+#Tabla mejorada
+stargazer(reg_1, reg_2, reg_3, reg_4, reg_5,reg_6, reg_7, reg_8, reg_9, reg_10,
+          title= "Tabla de Regresión 1",
+          column.labels = c("1","2","3","4","5","6","7","8","9","10"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Consumo",
+          covariate.labels = c("Ingreso", "Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+#h", "t","b", "p", "!", "H"
+
+###
+stargazer(reg_11, reg_12, reg_13, reg_14, reg_15, reg_16, reg_17, reg_18, reg_19, reg_20,
+          title= "Tabla de Regresión 1 (Continuación)",
+          column.labels = c("11","12","13","14","15","16","17","18","19","20"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Consumo",
+          covariate.labels = c("Ingreso","Constante"),
+          #omit.stat = c("ll","rsq"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+#h", "t","b", "p", "!", "H"
+
+```
+
+\end{landscape}
+
+\newpage
+
+### Ejercicio 2.g
+
+**Incremente la varianza del ingreso permanente, y disminuya la varianza del ingreso transitorio y vuelva a estimar y graficar la relación entre el consumo y el ingreso.**
+
+```{r NUEVO INGRESO PERMANENTE, include = FALSE}
+
+NYp_i <- rnorm(20, mean = 10, sd = 3)
+
+NYp <- matrix(0, nrow = 100, ncol = 20)
+
+for (i in 1:20){
+  NYp[,i] <- NYp_i[i]
+}
+
+colnames(NYp) <- c(paste0(1:20))
+rownames(NYp) <- c(1:100)
+```
+
+```{r NUEVO INGRESO TRANSITORIO, include = FALSE}
+
+NYt <- matrix( rnorm(100*20, mean = 0, sd = 0.5), 100, 20)
+
+colnames(NYt) <- c(paste0(1:20))
+```
+
+```{r NUEVO INGRESO TOTAL, echo = FALSE}
+
+NY <- NYp + NYt
+```
+
+```{r NUEVO CONSUMO, include = FALSE}
+
+NCt <- NYp + 0.1*(NYt) + et
+
+```
+
+Hasta ahora, los valores de las varianzas del ingreso permanente y el transitorio eran, respectivamente: $Var(Y^P) = Var(Y^T) = 4$. Ahora, se utilizaron los valores $Var'(Y^P) = 9$ y $Var'(Y^T) = 0.25$. Una vez realizado el procedimiento de código correspondiente, se encontró la siguiente relación entre el Nuevo Consumo y el Nuevo Ingreso:
+
+```{r REGRESIÓN 2, echo=FALSE}
+
+scatter.smooth(x = NY, y = NCt, span = 1, main = "Gráfica 2.11. Relación entre el Consumo y el Ingreso.\n Varianza del ingreso permanente más alta y varianza del ingreso transitorio más baja.", xlab = "Ingreso", ylab = "Consumo", col = "#333399", cex = 0.5, cex.main = 0.7)
+
+
+
+```
+
+En la siguiente tabla se pueden observar dos características relevantes:
+
+1. Los parámetros estimados $\hat{\alpha}$ para el segundo modelo presentan una varianza claramente mayor a la del modelo anterior, lo cual tiene sentido con los supuestos de este ejercicio. Esto es, la varianza del ingreso permanente es mayor a través de individuos.
+
+2. Por otra parte, se observa que la concentración de observaciones es más compacta que en el caso anterior. Esto se debe a que la varianza del Ingreso Transitorio es más baja que antes, lo que implica una menor dispersión de los datos alrededor del modelo estimado. Es decir, la relación entre el ingreso y el consumo es mucho más consistente en este ejemplo y, a través de la mayoría de individuos y observaciones, se comporta de manera casi lineal.
+
+
+```{r, echo=FALSE, message = F, warning=F, include=F}
+for (i in 1:20) {
+    nrr <- paste("nreg", i, sep = "_")
+    nreg_full<-assign(nrr, lm(NCt[,i] ~ NY[,i]))
+    
+}
+```
+
+\newpage
+\begin{landscape}
+
+```{r regresiones2, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+#Tabla mejorada
+stargazer(nreg_1, nreg_2, nreg_3, nreg_4, nreg_5,nreg_6, nreg_7, nreg_8, nreg_9, nreg_10,
+          title= "Tabla de Regresión 2",
+          column.labels = c("1","2","3","4","5","6","7","8","9","10"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Consumo",
+          covariate.labels = c("Ingreso", "Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+#h", "t","b", "p", "!", "H"
+
+###
+stargazer(nreg_11, nreg_12, nreg_13, nreg_14, nreg_15, nreg_16, nreg_17, nreg_18, nreg_19, nreg_20,
+          title= "Tabla de Regresión 2 (Continuación)",
+          column.labels = c("11","12","13","14","15","16","17","18","19","20"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Consumo",
+          covariate.labels = c("Ingreso","Constante"),
+          #omit.stat = c("ll","rsq"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+#h", "t","b", "p", "!", "H"
+
+```
+
+\end{landscape}
+
+\newpage
+
+### Ejercicio 2.h
+
+**Disminuya la varianza del ingreso permanente, y aumente la varianza del ingreso transitorio y vuelva a estimar y graficar la relación entre el consumo y el ingreso.**
+
+```{r NUEVO NUEVO INGRESO PERMANENTE, include = FALSE}
+
+NNYp_i <- rnorm(20, mean = 10, sd = 0.5)
+
+NNYp <- matrix(0, nrow = 100, ncol = 20)
+
+for (i in 1:20){
+  NNYp[,i] <- NNYp_i[i]
+}
+
+colnames(NNYp) <- c(paste0(1:20))
+rownames(NNYp) <- c(1:100)
+```
+
+```{r NUEVO NUEVO INGRESO TRANSITORIO, include = FALSE}
+
+NNYt <- matrix( rnorm(100*20, mean = 0, sd = 3), 100, 20)
+
+colnames(NNYt) <- c(paste0(1:20))
+```
+
+```{r NUEVO NUEVO INGRESO TOTAL, echo = FALSE}
+
+NNY <- NNYp + NNYt
+```
+
+```{r NUEVO NUEVO CONSUMO, include = FALSE}
+
+NNCt <- NNYp + 0.1*(NNYt) + et
+```
+
+Hasta ahora, los valores de las varianzas del ingreso permanente y el transitorio eran, respectivamente: $Var(Y^P) = Var(Y^T) = 4$. Ahora, se utilizaron los valores $Var'(Y^P) = .25$ y $Var'(Y^T) = 9$. Una vez realizado el procedimiento de código correspondiente, se encontró la siguiente relación entre el Nuevo Consumo y el Nuevo Ingreso:
+
+```{r REGRESIÓN 3, echo=FALSE}
+
+reg3 <- scatter.smooth(x = NNY, y = NNCt, span = 1, main = "Gráfica 2.12. Relación entre el Consumo y el Ingreso.\n Varianza del ingreso permanente más alta y varianza del ingreso transitorio más baja.", xlab = "Ingreso", ylab = "Consumo", col = "#333399", cex = 0.5, cex.main = 0.7)
+
+
+```
+
+
+En lasa tablas que se presentan a continuación, se identifican los siguientes comportamientos:
+
+1. El parámetro estimado $\hat{\alpha}$ para este tercer modelo presenta una variación visiblemente menor a los dos anteriores. Esto significa que el ingreso permanente es bastante homogéneo entre individuos y no suele variar demasiado.
+
+2. Por otra parte, se observa que la concentración de observaciones es menos compacta que en el caso anterior. Esto se debe a que la varianza del Ingreso Transitorio es más alta que antes, lo que implica una mayor dispersión de los datos alrededor del modelo estimado. Esto es, las relaciones entre ingreso y patrones de consumo no son tan consistentes y, de hecho, pueden encontrarse muchos más niveles diferentes de consumo para un solo nivel de ingreso que en los incisos anteriores.
+
+
+```{r, echo=FALSE, message = F, warning=F, include=F}
+for (i in 1:20) {
+    nnrr <- paste("nnreg", i, sep = "_")
+    nnreg_full<-assign(nnrr, lm(NNCt[,i] ~ NNY[,i]))
+}
+```
+
+
+\newpage
+\begin{landscape}
+
+```{r regresiones3, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+#Tabla mejorada
+stargazer(nnreg_1, nnreg_2, nnreg_3, nnreg_4, nnreg_5,nnreg_6, nnreg_7, nnreg_8, nnreg_9, nnreg_10,
+          title= "Tabla de Regresión 3",
+          column.labels = c("1","2","3","4","5","6","7","8","9","10"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Consumo",
+          covariate.labels = c("Ingreso", "Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+#h", "t","b", "p", "!", "H"
+
+###
+stargazer(nnreg_11, nnreg_12, nnreg_13, nnreg_14, nnreg_15, nnreg_16, nnreg_17, nnreg_18, nnreg_19, nnreg_20,
+          title= "Tabla de Regresión 3 (Continuación)",
+          column.labels = c("11","12","13","14","15","16","17","18","19","20"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Consumo",
+          covariate.labels = c("Ingreso","Constante"),
+          #omit.stat = c("ll","rsq"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+#h", "t","b", "p", "!", "H"
+
+```
+
+\end{landscape}
+\newpage
+
+## Ejercicio 3
+Estudie el consumo agregado en México siguiendo estos pasos: [3 horas, 0.5 puntos cada inciso]
+
+
+### Ejercicio 3.a
+Obtenga, del Inegi, datos de C, el consumo agregado en México, de Y, el producto agregado, de I, la inversión agregada, de G, el gasto del gobierno y de NX, las exportaciones netas,  entre 1980 y el tercer trimestre de 2019, EN TÉRMINOS REALES.
+
+### Ejercicio 3.b
+Grafíque dichas serie de tiempo juntas para compraralas visualmente.  (Compare la gráfica de las variables (de las que son siempre positivas) en su valor real original, y después de sacarles el logaritmo (cualquier logaritmo, no hace diferencia...)).
+
+### Ejercicio 3.c
+Grafique también la tasa de crecimiento, $\% \Delta a_t = (a_t-a_{t-1})/a_{t-1}$,  de todas estas series. 
+
+### Ejercicio 3.d
+Enfóquese ahora nada más al consumo y al producto agregado. Grafique la relación entre una serie y la otra, es decir, grafique los puntos $(\% \Delta Y_t,\% \Delta C_t)$ poniendo el consumo en las ordenadas.
+
+### Ejercicio 3.e
+Calcule la volatilidad de ambas series de tasas de crecimiento.
+
+### Ejercicio 3.f
+
+Estime cuatro modelos lineales: $C_t=a+bY_t+\epsilon_t$, $\Delta\%C_t=a+b \Delta\%Y_t+\epsilon_t$, $\Delta\%C_t=a+b \Delta\%Y_{t-1}+\epsilon_t$ y $c_t=a+by_t+\epsilon_t$, donde las minúsculas reflejan el logaritmo de la variable en mayúscula, y reporte los valores estimados de los coeficientes, los estadísticos T, las R cuadradas, etc.
+
+### Ejercicio 3.g
+Explique qué se puede concluir a cerca de la Hipótesis de Ingreso Permanente para México a partir de los coeficientes encontrados.
+
+\newpage
+
+## Ejercicio 4
+
+### Ejercicio 4.a
+
+**Baje los datos de un año de la ENIGH del sitio del INEGI, (Grupo 1-2018, Grupo 2-2016, etc.)  y establezca el número de hogares y el ingreso y el gasto promedio.**
+
+
+```{r MEDIAS ENIGH, include=FALSE}
+
+enigh2016_1 <- read_excel("C:/Users/marco/OneDrive/Escritorio/enigh2016_1.xlsx")
+
+enigh2016_1 <- as.matrix(enigh2016_1)
+
+summary(enigh2016_1)
+
+```
+
+Al inspeccionar las bases de microdatos de "Concentrado de hogares" de la Encuesta Nacional de Ingresos y Gastos de los Hogares 2016, se observó que el número de hogares (cada hogar está identificado por un folio) es de 70311. A continuación se muestran la media de ambas variables:
+
+|                                   | Gastos trimestrales | Ingresos trimestrales |
+|-----------------------------------|---------------------|-----------------------|
+| Número de Observaciones (Hogares) |               70311 |                 70311 |
+| Media (en MXN)                    |            25589.98 |              42038.99 |
+
+
+### Ejercicio 4.b
+
+**Estime una relación entre ingreso y gasto y reporte sus resultados.**
+
+Para realizar esta observación, se eliminaron datos considerados *outliers* tanto para ingreso como para gasto. Específicamente, no se tomaron en cuenta ingresos superiores al millón de pesos trimestral y a los 500'000 pesos trimestrales, respectivamente; así, el número de observaciones utilizadas para este inciso es de 70'280. Lo anterior con el objetivo de que el modelo lineal estimado se comportara mejor:
+
+```{r REGRESIÓN GASTOS INGRESOS,results = 'asis', echo = FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=3.5}
+
+enigh2016_1 <- subset(enigh2016_1, enigh2016_1[,1] < 1000)
+
+enigh2016_1 <- subset(enigh2016_1, enigh2016_1[,2] < 500)
+
+scatter.smooth(enigh2016_1[,1], enigh2016_1[,2] , span = 1, main = "Gráfica 4.1. Relación entre el Gasto y el Ingreso trimestral por hogar, 2016", xlab = "Ingreso en miles de pesos", ylab = "Gasto en miles de pesos", col = "#333399", cex = 0.5, cex.main = 0.9)
+
+regIG <- lm(enigh2016_1[,1] ~ enigh2016_1[,2])
+
+stargazer(regIG,
+          title= "Tabla de Regresión 4. Ingreso y Gasto trimestral, 2016",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Gasto",
+          covariate.labels = c("Ingreso","Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+\newpage
+
+### Ejercicio 4.c
+
+**Estime una relación entre ingreso y gasto pero para hogares unipersonales de edad entre 40 y 50 años de edad de la Ciudad de México.**
+
+Al obtener las observaciones correspondientes a los hogares unipersonales de 40 a 50 años en la Ciudad de México de la base de datos concentrada de la ENIGH 2016, surgió el problema de solo existir dos observaciones bajo estos filtros. Por tal motivo, y con el objetivo de presentar una estimación sustantiva de la relación entre el ingreso y el gasto de un grupo particular de población, a continuación se exhibe un modelo lineal estimado para los **hogares unipersonales y nucleares en la Ciudad de México, de entre 40 y 50 años** (donde un hogar nuclear está compuesto por una pareja, pareja con hijos ó persona con hijos).
+
+De igual manera que el inciso anterior, se eliminaron las observaciones *outliers*: en este caso, solo se trató de una, por lo que la regresión que se presenta a continuación estima un total de 70 hogares:
+
+```{r, echo =FALSE}
+
+enigh2016_2 <- read_excel("C:/Users/marco/OneDrive/Escritorio/enigh2016_2.xlsx")
+
+enigh2016_2 <- as.matrix(enigh2016_2)
+
+```
+
+```{r REGRESIÓN HOGARESUNI,results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+
+enigh2016_2 <- subset(enigh2016_2, enigh2016_2[,1] < 1000)
+
+enigh2016_2 <- subset(enigh2016_2, enigh2016_2[,2] < 500)
+
+scatter.smooth(enigh2016_2[,1], enigh2016_2[,2] , span = 5, main = "Gráfica 4.2. Relación entre el Gasto y el Ingreso trimestral por hogar. \n Hogares unipersonales y nucleares de 40 a 50 años, en la Ciudad de México", xlab = "Ingreso en miles de pesos", ylab = "Gasto en miles de pesos", col = "#333399", cex = 0.5, cex.main = 0.9)
+
+regIG2 <- lm(enigh2016_2[,1] ~ enigh2016_2[,2])
+
+stargazer(regIG2,
+          title= "Tabla de Regresión 5. Ingreso y Gasto trimestral, 2016",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Gasto",
+          covariate.labels = c("Ingreso","Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+### Ejercicio 4.d
+
+**Interprete sus resultados.**
+
+De acuerdo a los resultados de los dos incisos anteriores puede observarse que la responsividad del gasto ante cambios en el ingreso en Hogares Unipersonales y Nucleares de 40 a 50 años en la Ciudad de México es **menor** a aquella de los hogares nacionales.
+
+Intuitivamente, esto puede deberse a que los hogares unipersonales y nucleares de 40 a 50 años en la Ciudad de México, se encuentran en un contexto de su vida donde sus gastos son menos volátiles y se encuentran relativamente bien definidos de acuerdo a sus preferencias o los integrantes del hogar. Por otra parte, la muestra nacional también incluye hogares donde una variación del ingreso, dependiendo de la edad y el contexto familiar, podría verse reflejado en una modificación más sustancial de la estructura de gastos del hogar. 
+
+### Ejercicio 4.e
+
+**Para todos los hogares unipersonales, estime el valor promedio del ingreso por edad, separando la muestra en grupos de edad de cinco años cada uno y grafiquelo.**
+
+Utilizando la base de datos completa de la ENIGH 2016, se filtraron las observaciones pertinentes para este ejercicio, a saber: el tipo de hogar. Una vez hecho esto, se hizo uso de Excel para obtener los promedios de ingreso y gasto por hogar en grupos de edad de 5 años.
+
+Posteriormente se importó la base de datos a R y se obtuvieron las gráficas que a continuación se presentan:
+
+```{r echo=FALSE, fig.width = 5.5, fig.height = 3}
+
+enigh2016_3 <- read.csv("C:/Users/marco/OneDrive/Escritorio/enigh2016_3.csv", row.names=1)
+
+barplot (enigh2016_3[,1], names.arg= row.names(enigh2016_3), las =2, col = "magenta", ylim = c(0, 45), main = "Gráfica 4.2. Ingreso promedio trimestral en miles de pesos.\n Hogares unipersonales", xlab = "Grupos de edad", ylab = "Ingreso promedio", cex.names = .7, cex.main = 0.9)
+
+abline(h = mean(enigh2016_3[,1]), col ="red", legend("topright", "Media", fill = "red"))
+```
+
+```{r echo=FALSE, fig.width = 5.5, fig.height = 3}
+
+barplot (enigh2016_3[,2], names.arg= row.names(enigh2016_3), col = "cyan", las = 2, ylim = c(0, 35), main = "Gráfica 4.2. Gasto promedio trimestral en miles de pesos. \n Hogares unipersonales", xlab = "Grupos de edad", ylab = "Gasto promedio", cex.names = .7, cex.main = 0.9)
+
+abline(h = mean(enigh2016_3[,2]), col ="red", legend("topright", "Media", fill = "red"))
+```
+
+En estas gráficas pueden analizarse algunos elementos interesantes:
+
+1. Es claro que el ingreso promedio trimestral para hogares unipersonales tiene sus puntos más altos de los 26 hasta los 45 años. Esto debido a que se trata de individuos adultos jóvenes, potencialmente muy productivos, que viven solos, lo cual incrementa sustancialmente el ingreso promedio del hogar.
+
+2. Por otro lado, a partir de los 71 años, se observa que los ingresos promedios trimestrales de hogares unilaterales caen por debajo de la media. Si suponemos que se trata de adultos mayores cuya productividad y oportunidades laborales son más bien escasas, el comportamiento tiene sentido.
+
+3. En el caso del gasto promedio trimestral de hogares unipersonales, la tendencia es, si cabe, aún mucho más evidente: Los jóvenes adultos en etapa productiva tienen gastos sustancialmente altos. De hecho, se evidencia una tendencia consistentemente decreciente en el gasto trimestral cada lustro.
+
+### Ejercicio 4.f
+
+**Explique qué esperaría ver con los datos de 2020 acerca de la relación entre consumo e ingreso para los hogares mexicanos.**
+
+De acuerdo a los comportamientos de las variables estudiadios en este ejercicio y los anteriores, la fuerte crisis que atraviesa México se ha reflejado en un decremento significativo del ingreso nacional; a pesar de que se ha observado cierta recuperación en los últimos trimestres, lo cierto es que el impacto en la renta del país fue, y sigue siendo, de los más severos de la historia económica reciente. 
+
+Por su parte, las relaciones ya establecidas a lo largo de este documento indican una clara y consistente relación entre los niveles de ingreso, gasto y consumo agregados, pero también en grupos demográficos específicos. Aunque, dependiendo del caso, la responsividad o estrechez de la relación puede variar, se ha evidenciado que la relación es innegablemente positiva. Por tal motivo, las recientes coyunturas económicas de México, con toda probabilidad, provocarán caídas sustanciales en los niveles de consumo agregado y en el gasto trimestral que realiza cualquier tipo de hogar. 
+
+## Ejercicio 5
+
+Estudie el ``acertijo del premio al riesgo'' para el caso de Mexico siguiendo estos pasos: [3 horas, 0.5 puntos cada inciso]
+
+### Ejercicio 5.a
+
+Consiga los valores anuales de IPC, el Indice de Precios y Cotizaciones de la Bolsa Mexicana de Valores por lo menos desde 1990.
+
+### Ejercicio 5.b
+
+Calcule su tasa de retorno nominal para cada año.
+
+### Ejercicio 5.c
+
+Consiga los valores promedio anual de la tasa de interés de CETES a 7 días, o la TIIE, la tasa interbancaria de equilibrio, y de la tasa de interés a un año, para el periodo que esté disponible.
+
+### Ejercicio 5.d
+
+Calcule la diferencia entre el retorno del IPC y el retorno de invertir en CETES a distintos plazos.
+
+### Ejercicio 5.e
+
+Calcule la covarianza entre dicha diferencias y  la tasa de crecimiento real del consumo agregado de la economía mexicana. 
+
+### Ejercicio 5.f
+
+Calcule el valor de aversión relativa al riesgo que implican estos números, dado el supuesto de una utilidad con forma ARRC.
+
+### Ejercicio 5.g
+
+Ahora calcule la covarianza entre dicha diferencias y  la tasa de crecimiento real del consumo agregado DE BIENES IMPORTADOS [aquí hay una serie: www.inegi.org.mx/temas/imcp/] de la economía mexicana. 
+
+### Ejercicio 5.h
+
+Calcule el valor de aversión relativa al riesgo que implican estos números, dado el supuesto de una utilidad con forma ARRC.
+
+\newpage
+
+## Ejercicio 6
+
+**Utilice el método del árbol binomial para explicar el precio P=80 de un activo y valuar un instrumento derivado tipo “call” sobre él, con expiración un año después y precio de ejercicio K=P-N donde N es el número de su equipo (!), asumiendo una tasa de interés de 5 por ciento: [1 horas, 1 punto cada inciso]**
+
+### Ejercicio 6.a
+
+**Haga supuestos sobre distintos valores que podría tomar el activo un año después y sobre las probabilidades objetivas de que tome esos valores. Infiera las probabilidades subjetivas de que el activo tome dichos valores y de una explicación cualitativa sobre qué circunstancias podrían generar la diferencia entre las probabilidades objetivas y subjetivas observadas. (Si le salen probabilidades objetivas y subjetivas iguales, favor de cambiar sus probabilidades objetivas por otras. (!))**
+
+A continuación se establecen los parámetros relevantes del problema dados, o bien, supuestos:
+
+- Precio del activo (P): **80**
+
+- Precio del ejercicio de la opción (K): **78**
+
+- Precios supuestos sobre el valor del activo en T=1(S): **85 y 75**
+
+- Probabilidad supuesta de evento favorable / desfavorable: $\mathbf{Q_{A} =0.65 / Q_{B} = 0.35}$
+
+Así pues, y con base en la teoría expuesta en Romer (2019) y en las notas de clase, lo primero es establecer la lógica del precio de ejercicio del activo, $P_{0} = 78$. Este debe cumplirse de acuerdo a que $P_{0} = E^q[P_{1}]$. 
+
+Esto es, descomponiéndolo de acuerdo a dos probabilidades de eventos, uno que afectará positivamente su valor, y el otro negativamente: $78 = \frac{(q_{A}(85) + q_{B}(75))}{R^{LR}}$ donde $q_{i}$ son las probabilidades subjetivas de cada evento, $q_{A} + q_{B} = 1$ y $R^{LR} = 1 + r_{t,t+1}$. Es decir, el precio de ejercicio del activo es igual al valor esperado del activo en T = 1, con sus correspondientes probabilidades, traído a valor presente.
+
+Dado que la tasa de interés es de 5%, entonces $R^{LR} = 1.05$ y $78(1.05) = (85 - 75)q_{A} + 75$. Ya que $q_{B} = (1-q_{A})$, despejando las probabilidades de ambos eventos obtenemos que:
+
+$$q_{A} = 0.69$$
+
+$$q_{B} = 0.31$$
+Que son las probabilidades subjetivas; recuérdese que el supuesto de las probabilidades objetivas es:
+
+$$ Q_{A} = 0.65$$
+
+$$Q_{B} = 0.35$$
+Finalmente, supónganse que el activo en cuestión es un acción de la empresa GameStop, dedicada  a la renta y venta de videojuegos en formato físico. Derivado de la creciente digitalización de estos bienes, dicha empresa ha sufrido pérdidas enormes en sus ingresos durante los últimos 10 años, llevando el valor de su acción hasta un precio de $80 MXN. Sin embargo, usuarios de la red social Reddit se han organizado y decidido realizar una compra masiva de acciones de GameStop, con el objetivo de aumentar la demanda de éstas y, además, provocar pérdidas millonarias a las empresas que se han beneficiado durante años de la decadencia de GameStop mediante las llamadas *short-calls*.
+
+Por tal motivo, un individuo decide adquirir opciones de compra *call* de las acciones de GameStop con expiración de un año, basándose en los análisis profesionales que diferentes empresas han realizado, donde aseguran que el fenómeno de Reddit continuará indefinidamente y las acciones de la empresa, con probabilidad de 65%, valdrán 85 pesos en un año: en caso contrario, con probabilidad de 35%, el fenómeno se extinguirá y el precio de las acciones de GameStop continuará decayendo, con valor de 75 pesos en un año. 
+
+Intuitivamente, la diferencia entre las probabilidades objetiva y subjetiva recae en que la primera se basa en observaciones registradas por autoridades competentes sobre un fenómeno con un historial informativo amplio; por su parte, la probabilidad subjetiva puede tomar en cuenta intuiciones, experiencias propias y expectativas sobre un fenómeno. En este ejemplo, la probabilidad objetiva del evento favorable es más baja debido a que las instancias que la calculan podrían estar incurriendo en conflictos de interés, toda vez que sus preferencias bursátiles pueden estar alineadas a aquellas empresas que han sufrido durante el fenómeno Reddit, o bien, por presiones económicas y políticas.
+
+### Ejercicio 6.b
+
+**Calcule el valor de los pagos de la opción ante los distintos escenarios futuros y con ellos calcule el precio actual del instrumento derivado.**
+
+Con base en lo anterior, el precio que la opción de *call* debería tomar después de un año, de acuerdo a las probabilidades subjetivas, es:
+
+$$O_{S} = \frac{(q_{A}(85 - 78) + q_{B}(0))}{R^{LR}} = 4.6$$
+
+Y de acuerdo a las probabilidades objetivas:
+
+$$O_{O} = \frac{(Q_{A}(85 - 78) + Q_{B}(0))}{R^{LR}} = 4.33\bar{3}$$
+Suponiendo que $O_{O}$ es el valor observable de la opción, puede verse que el valor que debería tener, de acuerdo a las probabilidades subjetivas, es ligeramente mayor, por lo que su compra es sensata. Finalmente, es evidente que $q_{A} > Q_{A}$ y que $q_{B} < Q_{B}$, esto es: los retornos esperados del activo en un evento favorable son muy valorados el día de hoy y, asimismo, los retornos del activo en caso de un evento desfavorable son poco valorados en el presente.
