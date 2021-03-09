@@ -1,0 +1,2229 @@
+---
+title: ""
+date: ""
+header-includes:
+- \usepackage[utf8]{inputenc}
+- \usepackage[spanish]{babel}
+- \usepackage{graphicx}
+- \usepackage{multirow,rotating}
+- \pagenumbering{gobble} 
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    includes:
+      in_header: labels.tex
+      before_body: cover.tex
+csl: apa.csl
+bibliography: fuentes1.bib
+---
+
+```{=tex}
+\pagenumbering{gobble}
+\pagenumbering{arabic}
+```
+```{r setup, include=FALSE }
+knitr::opts_chunk$set(echo = F, fig.width = 6, fig.height = 3.5)
+```
+
+```{r, include=FALSE}
+
+rm(list = ls())
+
+pacman::p_load(tidyverse,
+               kableExtra,
+               ggplot2,
+               cowplot,
+               stargazer,knitr,viridis,dplyr,readr,scales,quantmod,texreg,tinytex, tidyr, imager,lubridate,tseries, astsa, growthrates, tis, dynlm, readxl )
+```
+
+\newpage
+
+# Instrucciones
+
+```{=tex}
+\begin{enumerate}
+
+\item Resuelva los ejercicios 9.1, 9.4 y 9.7 (5a edición). Realice estos con ayuda de su laboratorista y entregue las soluciones escritas a máquina, utilizando LaTeX. [3 horas,0.5 punto cada inciso]
+
+\item Estudie los determinantes de la inversión agregada en México siguiendo estos pasos: [3 horas, 0.5 puntos cada inciso]
+
+\begin{enumerate}
+
+\item Obtenga, del Inegi, datos DESESTACIONALIZADOS para México del consumo ``C'', datos de ``I'', la inversióm privada (inversión fija bruta), y de ``Y'', el PIB, entre 1980 y 2018/III, A FRECUENCIA TRIMESTRAL, EN TÉRMINOS REALES. (Si encuentra varias series pero ninguna cubre el periodo completo, tome una decisión ejecutiva para ``unir'' las series.)
+
+\item Grafique la relación entre I y Y, es decir, grafique los puntos (\%$\Delta Y_t$,\%$\Delta I_t$) poniendo la inversión en el eje la ordenadas.
+
+\item Calcule la volatilidad de las tres series de tasas de crecimiento (\%$\Delta I$, \%$\Delta C$ y \%$\Delta Y$) y explique cuál es más volatil.
+
+\item Obtenga, del banco de México, datos sobre las tasas de interés reales ($r^r$) de la economía $r^r=r^n-\pi$, es decir, la tasa de interés nominal, menos la tasa de inflación esperada (en cuyo caso se trata de la tasa de interés real ``ex-ante''), o menos la tasa de inflación observada (en cuyo caso se trata de la ``ex-post'').
+
+\item Estime una serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$. Utilice valores corrientes y rezagados del crecimiento en el producto, de la tasa de interés real, valores rezagados de la propia tasa de cambio en la inversión y combinaciones de estas variables. 
+
+\item Estime otra serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$: a las especificaciones del inciso anterior, agregue valores corrientes y/o rezagados de {\it la confianza empresarial} del Inegi además de tambíen estimar su efecto por si sólas. 
+
+\item Interprete los resultados. 
+
+\end{enumerate}
+
+\item Estudie la habilidad de modelo de la $q$ de Tobin para explicar las tasas de inversión de empresas individuales, siguiendo estos pasos [3 horas, 0.5 puntos cada inciso]:
+
+\begin{enumerate}
+
+\item Con el propósito de desarrollar intuición sobre la existencia y fuente de los datos corporativos, vaya al sitio de internet de algún corporativo mexicano y obtenga su reporte anual. De ahí, obtenga el valor de los activos menos los pasivos (excepto el capital) y construya el valor en libros de la empresa. Posteriormente, de dicho reporte, o del sitio de la BMV o de la BIVA, obtenga el valor de capitalización de mercado de la misma empresa y finalmente construya la variable ``Q'' como la razón de dichos valores.
+
+\item Utilice su cuenta de GitHub.com para entrar al repositorio fisionmail, Colmex\_Macro\_2\_2021 y bajar el archivo de datos que está ahí, está en formato de stata,  ``.dta''. Cree una medida de inversión y una medida de q de Tobin: inversión puede ser el gasto en capital (capx) sobre el capital (ppen), o la tasa de cambio en el capital (\%$\Delta$ ppen), o la tasa de cambio de los activos (\%$\Delta$ta). 
+
+\item Cree una medida de la q de Tobin: el  valor de mercado de la empresa sobre el valor en libros de la empresa, en donde el valor de mercado es es número de acciones por el precio de la acción.
+
+\item Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo y la q de tobin en el mismo o en el periodo inmediato anterior. 
+
+\item Produzca un estimado del coeficiente del costo de ajuste. 
+
+\item Explique, suponiendo que la función de costo de ajuste es cuadrática (es decir $C_t=b(I_t/K_t)^2K_t $), qué implican los resultados de sus regresiones sobre el costo de ajuste relativo al capital total para una inversión de 30\% del capital total y qué implican los resultados para el tiempo que le tomaría a una empresa recorrer la mitad mitad del camino entre el capital que tiene, $K$, y el que quisiera tener $K^*$.
+
+\item Simule una relación lineal $Y=a+bX+\epsilon$ y cree dos variables con error de medición $\tilde{X}=X+\tilde{\epsilon}$ and also $\tilde{\tilde{X}}=X-c{\epsilon}$. Luego estime tres relaciones lineales, la de $Y$ con $X$, la de $Y$ con $\tilde{X}$ y la de $Y$ con $\tilde{\tilde{X}}$, explicando los resultados que obtenga y relacionandolos con los hayazgos del inciso anterior.
+
+\item Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo, la $q$ de Tobin en el mismo o en el periodo inmediato anterior, y el flujo de efectivo o las ganancias netas. Interprete los resultados contrastándolos con los resultados que obtuvo anteriormente.
+
+
+\end{enumerate}
+
+\item Proponga una mejora al archivo Diccionario de Economía utilizando github.
+
+\end{enumerate}
+```
+\newpage
+
+# Soluciones
+
+## Ejercicio 1
+
+**Resuelva los ejercicios 9.1, 9.4 y 9.7 [@romer]. Realice estos con ayuda de su laboratorista y entregue las soluciones escritas a máquina, utilizando LaTeX. [3 horas,0.5 punto cada inciso]**
+
+### 9.1.
+
+**Supongamos una empresa que produce bienes empleando una combinación Cobb-Douglas de capital y trabajo:** $Y=k^\alpha L^{1-\alpha}, 0<\alpha<1$. Supongamos que el precio del bien está dado en el corto plazo. Así, pues, tanto el precio del producto, $P$, como la cantidad producida, $Y$, constituyen datos para la empresa. Por último, los mercados de factores son competitivos, de modo que los salarios, $W$, y el precio de alquiler del capital $r_k$ son también variables dadas.
+
+<p>
+
+ 
+
+</p>
+
+**a) ¿Qué nivel de L elegiría la empresa dados** $P,Y,W yK$?
+
+La cantidad producida Y es un dato dado para la empresa, que puede representar la cantidad demandada. Como $K$ también es una cantidad dada, la empresa contratará un nivel de trabajo suficiente para satisfacer esa demanda.
+
+Despejando $L$ de la función de producción $Y=k^\alpha L^{1-\alpha}$ tenemos:
+
+$$L^{1-\alpha}=YK^{-\alpha}$$ $$L=(YK^{-\alpha})^{\frac {1}{1-\alpha}}$$
+
+$$L=Y^{\frac{1}{1-\alpha}}K^{\frac{-\alpha}{1-\alpha}}$$
+
+<p>
+
+ 
+
+</p>
+
+**b) Dado el nivel elegido de** $L$, ¿Cuáles serían sus beneficios expresados en función de $P,Y,W, y K$?
+
+Sabemos que la función de beneficios es: $\pi = Ingresos - Costos$, entonces tenemos:
+
+$$\pi =PY - WL - r_KK$$
+
+sustituyo en esta expresión el nivel elegido de L que se obtuvo en el inciso anterior, es decir, $L=Y^{\frac{1}{1-\alpha}}K^{\frac{-\alpha}{1-\alpha}}$ y tenemos los beneficios dado el nivel elegido de L:
+
+$$\pi =PY - W[Y^{\frac{1}{1-\alpha}}K^{\frac{-\alpha}{1-\alpha}}] - r_KK$$
+
+<p>
+
+ 
+
+</p>
+
+**c) Halle la condición de primer orden para la optimización de K. ¿Se satisface la condición de segundo orden?**
+
+Para las c.p.o, derivo $\pi$ c.r.a K:
+
+$$\frac{\partial \pi}{\partial K} =\frac{\alpha}{1-\alpha}W \ Y^{\frac{1}{1-\alpha}} \ K^{\frac{-\alpha}{1-\alpha }-1} - r_K = 0$$
+
+$$\frac{\alpha}{1-\alpha}W \ Y^{\frac{1}{1-\alpha}} \ K^{\frac{-\alpha -1 + \alpha}{1-\alpha }} = r_K $$
+
+$$\frac{\alpha}{1-\alpha}W \ Y^{\frac{1}{1-\alpha}} \ K^{-\frac{1}{1-\alpha }} = r_K $$
+
+La condición de segundo orden que debe satisfacerse para que el valor de $K$ sea el que maximice los beneficios es que $\frac{\partial^2 \pi}{\partial K^2}<0$ (para que la función sea cóncava y se esté maximizando):
+
+$$\frac{\partial^2 \pi}{\partial K^2} = \left ( \frac{-1}{1-\alpha}\right)\left( \frac{\alpha}{1-\alpha}\right)  W \ Y^{\frac{1}{1-\alpha}} \ K^{\frac{-1}{1-\alpha }- \left ({\frac{1-\alpha}{1-\alpha }}\right)} $$
+
+$$= \left ( \frac{-1}{1-\alpha}\right)\left( \frac{\alpha}{1-\alpha}\right)  W \ Y^{\frac{1}{1-\alpha}} \ K^{\frac{\alpha -2}{1-\alpha }} \ \ \ \ < \ \ \ 0$$
+
+La condición de segundo orden se satisface, puesto que\
+$$\alpha<1 \ \ \to \ \ (1-\alpha)>0   \ \ \to\ \ \ \frac{-1}{1-\alpha}<0$$ y $$\left( \frac{\alpha}{1-\alpha}\right)  W \ Y^{\frac{1}{1-\alpha}} \ K^{\frac{\alpha -2}{1-\alpha }} \ \ \ \ > \ \ \ 0$$
+
+<p>
+
+ 
+
+</p>
+
+**d) Resuelva la condición de primer orden hallando en c) para** $K$ en función de $P,Y,W y r_K$. ¿Cómo afectaría a $K$, si es que lo hace un cambio en estas variables?
+
+Despejando K de la C.P.O. hallado en C:
+
+$$\ K^{\frac{1}{1-\alpha }} \ \ r_K =\left( \frac{\alpha}{1-\alpha}\right) W \ Y^{\frac{1}{1-\alpha}}$$
+
+$$\ K^{\frac{1}{1-\alpha }} =\left( \frac{\alpha}{1-\alpha}\right) \frac{WY^{\frac{1}{1-\alpha}}}{r_K} $$
+
+$$K=\left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} \left(\frac{WY^{\frac{1}{1-\alpha}}}{r_K} \right)^{1-\alpha}$$
+
+$$K=Y\left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} \left(\frac{W}{r_K} \right)^{1-\alpha}$$
+
+En primer lugar observamos que no aparece $P$, entonces los cambios en el precio del producto $(P)$, no influyen directamente en la elección de $K$ para maximizar los beneficios. Aunque Y que representa la demanda del producto que produce la empresa, si puede verse afectada por los cambios en $P$.
+
+<p>
+
+ 
+
+</p>
+
+Para ver el efecto en K de un cambio en estas variables, obtenemos elasticidades. Empecemos por obtener las parciales del capital respecto del salario y del ingreso:
+
+$$\frac{\partial K}{\partial W}=Y\left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} (1-\alpha)\left(\frac{W^{-\alpha}}{r^{1-\alpha}_K}\right)$$
+
+<p>
+
+ 
+
+</p>
+
+$$\frac{\partial K}{\partial Y}=\left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} \left(\frac{W}{r_K}\right)^{1-\alpha}$$
+
+<p>
+
+ 
+
+</p>
+
+<p>
+
+ 
+
+</p>
+
+Elasticidad de $K$ respecto de $W$:
+
+$$\frac{\partial K}{\partial W}\frac{W}{K}         =  Y\left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} (1-\alpha)    \left(\frac{W^{-\alpha}}{r^{1-\alpha}_K}\right)     \left[\frac{W}{Y\left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} \left(\frac{W}{r_K} \right)^{1-\alpha}}    \right]$$
+
+<p>
+
+ 
+
+</p>
+
+$$=(1-\alpha)W^{-\alpha+1-(1-\alpha)} \ r_K^{-(1-\alpha)+(1-\alpha)}$$
+
+<p>
+
+ 
+
+</p>
+
+$$=(1-\alpha)W^0r_K^0$$
+
+<p>
+
+ 
+
+</p>
+
+$$=(1-\alpha) >0$$
+
+<p>
+
+ 
+
+</p>
+
+La elasticidad de $K$ respecto de $W$ es $(1-\alpha)$ y es positiva, lo que quiere decir que un cambio de 1% en el salario, provoca un cambio de 1% en el capital.
+
+<p>
+
+ 
+
+</p>
+
+<p>
+
+ 
+
+</p>
+
+Elasticidad de K c.r.a Y:
+
+$$\frac{\partial Y}{\partial W}\frac{Y}{K}         =    \left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} \left(\frac{W}{r_K}\right)^{1-\alpha}        \left[\frac{Y}{Y\left( \frac{\alpha}{1-\alpha}\right)^{1-\alpha} \left(\frac{W}{r_K} \right)^{1-\alpha}}    \right]      \ = \ \frac{Y}{Y}  \  =  \ 1$$
+
+<p>
+
+ 
+
+</p>
+
+La elasticidad de K con respecto de Y es de 1, es decir, un cambio de 1% en la cantidad demandada ocasiona un cambio de 1% en el capital.
+
+\newpage
+
+### 9.4.
+
+**Construyendo intuición sobre la condición de transversalidad.**
+
+**Considere a un individuo que elige la trayectoria de G para maximizar**
+
+$$\int_{t=0}^{\infty} e^{-\rho t} \left[ -\frac{a}{2}G(t)^2 \right]dt   \  \  \  \  \  \ ,  \  \ \ \ \ \  a>0 \  \  \ , \  \ \ \rho>0$$ **Aquí** $G(t)$ es la cantidad de "basura" que el individuo crea en el momento t; para simplificar admitimos la posibilidad de que $G$ puede ser negativo. La creación de "basura" por parte del individuo afecta el stock de "basura". En particular, el stock de "basura", $T$, evoluciona de acuerdo con $T(0)=0$, $\dot{T}=G(t)$.
+
+**a) Demuestre utilizando la menor cantidad de matemáticas posible que la ruta de maximización de la utilidad es** $G(t)=0$ para todo $t$.
+
+<p>
+
+ 
+
+</p>
+
+El problema de maximización de utilidad del individuo es:
+
+$$\int_{t=0}^{\infty} e^{-\rho t} \left [ -\frac{a}{2}G(t)^2\right ]dt$$
+
+Como se puede observar en el problema de maximización de utilidad del individuo, un valor positivo de G(t) genera una utilidad negativa para el individuo. Similar efecto sucede cuando $G(t)$ puede tomar un valor negativo debido a que en el planteamiento del problema, $G(t)$ está elevado al cuadrado. Entonces, la ruta de maximización de la utilidad del agente sería cuando $G(t)$ sea igual a cero para $t$ alcanzando una utilidad de cero.
+
+<p>
+
+ 
+
+</p>
+
+**b) Suponga que queremos analizar este problema utilizando el cálculo de variaciones. Sea** $G$ la variable de control y T la variable de estado y sea $\mu$ la variable de coestado.¿Cuál es el Hamiltoniano de valor actual?
+
+<p>
+
+ 
+
+</p>
+
+El problema del individuo es:
+
+$$\int_{t=0}^{\infty} e^{-\rho t} \left [ -\frac{a}{2}G(t)^2\right ]dt$$ Sujeto a la acumulación del stock de basura: $$\dot T(t)=G(t)$$ En el enunciado del enciso nos dijeron que $G(t)$ es la variable de control, es decir la variable que puede ser controlada libremente por el individuo, $T(t)$ es la variable de estado, variable con la propiedad de que su valor en cualquier momento es determinado por decisiones pasadas del individuo, y $\mu (t)$ es la variable coestado, la variable sombra de la variable de estado.
+
+Para poder formular el hamiltoniano, vamos a suponer que $e^{-\rho t}$ es igual a $1/(1+r)^t$
+
+Entonces, el hamiltoniano del valor actual es:
+
+$$H(G,T,\mu)=  e^{-\rho t} \left [ -\frac{a}{2}G(t)^2\right ]+\mu (t)\dot T(t)$$ Como $\dot T(t)=G(t)$, reemplazando en la anterior ecuación, obtenemos que:
+
+$$H(G,T,\mu)=e^{-\rho t} \left [ -\frac{a}{2}G(t)^2\right ]+\mu (t) G(t)$$
+
+**c) Encuentre las condiciones de optimalidad distintas de la condición de transversalidad. Describe la trayectoria de** $G$ que satisfacen esas condiciones.
+
+*Existe tres condiciones que caracterizan el comportamiento óptimo del individuo:*
+
+**La primera condición** que caracteriza al óptimo es que la derivada del hamiltoniano con respecto a la variable de control debe ser igual a cero en cualquier periodo,
+
+$$\frac{\partial H(G,T,\mu)}{\partial G(t)}=-e^{-\rho t}aG(t)+\mu (t)=0$$ Se obtiene que:
+
+$$\mu (t)= e^{-\rho t}aG(t)$$ **La segunda condición** es que la derivada del hamiltoniano con respecto a la variable de estado es igual a la tasa de descuento multiplicada por la variable de coestado menos la derivada de la variable de coestado con respecto al tiempo. En nuestro caso, esta condición es:
+
+$$\frac{\partial H(G,T,\mu)}{\partial T(t)}=\rho\mu (t)-\dot \mu (t)$$
+
+**La tercera condición** es la derivada del hamiltoniano con respecto a la variable coestado es igual a cero.
+
+$$\frac{\partial H(G,T,\mu)}{\partial \mu (t)}=\dot T(t)=0$$ Como $\dot T(t)=G(t)$, entonces $G(t)=0$.
+
+<p>
+
+ 
+
+</p>
+
+**d) ¿Cuál es la condición de transversalidad? Muestre que descarta todas las rutas que encontró en la parte (c) menos una, y que la ruta restante es la que mostró en la parte (a) como óptima:** $G(t)=0$ para toda $t$.
+
+<p>
+
+ 
+
+</p>
+
+La condición de transversalidad permite poder caracterizar la senda de equilibrio óptimo, es decir que nos permite asegurar que el individuo logra maximizar su utilidad.
+
+**La condición de transversalidad** establece que es igual al límite del producto de la variable coestado descontada y la variable estado debe ser igual a cero. En nuestro ejercicio, la condición es:
+
+$$\displaystyle\lim_{t \to\infty}e^{-\rho t}\mu (t)T(t)=0$$ Dentro de las tres condiciones de optimalidad que se obtuvo en el enciso(c) consideramos que la tercera condición, permite demostrar que $G(t)=0$.
+
+<p>
+
+ 
+
+</p>
+
+**e) Explique en una oración o dos porqué las soluciones en (c) distintas de** $G(t)=0$ para toda $t$ parecen maximizar la utilidad si no se considera la condición de transversalidad, y porqué la condición de transversalidad los descarta.
+
+Las condiciones de optimalidad del hamiltoniano del individuo nos permite determinar que $\mu$ es coherente a lo largo del tiempo, así como determinar que cantidad de basura ($G(t)$) y stock de basura ($T(t)$) es optima para cada periodo de tiempo. Estas condiciones son óptimas y determinan valores diferentes a cero.
+
+Sin embargo, la condición de transversalidad nos garantiza que la acumulación del stock de basura tenga que ser igual a cero $(\dot T(t)=G(t)=0)$ en el horizonte de planificación (o el periodo de vida del individuo). Esta condición asegura una trayectoria convergente de la variable estado $T(t)$. De no cumplirse la condición de transversalidad habría la posibilidad de que exista una secuencia explosiva de dicha variable.
+
+### 9.7.
+
+**Considere el modelo de inversión analizado en las secciones 9.2 a 9.5. Describa los efectos de los cambios que se enumeran a continuación cuando** $\dot{k}=0$ y $\dot{q}=0$, así como sus efectos sobre $k$ y $q$ tanto en el momento del cambio como después de éste. En ambos casos, suponga que $k$ y $q$ se encuentran inicialmente en sus valores de equilibrio a largo plazo.
+
+<p>
+
+ 
+
+</p>
+
+**a) Una guerra destruye la mitad del stock de capital de la economía.**
+
+<p>
+
+ 
+
+</p>
+
+```{r}
+imagen1 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/gr%C3%A1fica_9.7_a.PNG")
+
+plot(imagen1, main = "Figura 1.1. Diagrama de fase: Una guerra destruye la mitad \n del stock de capital de la economía", axes = FALSE, cex.main = 0.8)
+```
+
+Si se destruye la mitad del stock de capital de la economía, el nivel de $K_0$ se recorre a $K_1= K_0/2$ en el momento de la destrucción. Se observa que las lineas que representan a $\dot{K}$ y $\dot{q}$ no se mueven, es decir, las fuerzas dinámicas de la economía no cambian.
+
+<p>
+
+ 
+
+</p>
+
+Como el capital se hace escaso relativamente, se vuelve más valioso y por lo tanto, su valor de mercado se vuelve más alto. En el nuevo equilibrio de la economía $q$ (el valor que tiene para una empresa una unidad adicional de capital) se ajusta en un nivel más alto "regresando a la senda de los puntos silla".
+
+<p>
+
+ 
+
+</p>
+
+El mayor valor de mercado del capital atrae inversiones y poco a poco el capital de la economía comienza a recuperarse pero al mismo tiempo las ganancias comienzan a caer, así como también el valor de mercado del capital. El proceso continua hasta que el valor de mercado del capital vuelve a su nivel de equilibrio de largo plazo y el stock de capital vuelve a su nivel original y de esta manera la economía regresa al punto E.
+
+<p>
+
+ 
+
+</p>
+
+**b) El gobierno grava los rendimientos empresariales a un tipo** $\tau$.
+
+<p>
+
+ 
+
+</p>
+
+```{r}
+imagen2 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/gr%C3%A1fica_9.7_b.PNG")
+
+plot(imagen2, main = "Figura 1.2. Diagrama de fase: El gobierno grava \n los rendimientos empresariales", axes = FALSE, cex.main = 0.8)
+```
+
+En el primer nivel de equilibrio $E_0$, el nivel de beneficios es de $\pi(K)$, pero con un impuestos, los beneficios en el nuevo punto de equilibrio $E_1$ son de $\pi(K)[1-\tau]$. Entonces la nueva condición para que $\dot{q}=0$ es $q=(1-\tau) \frac{\pi(K)}{r}$.
+
+<p>
+
+ 
+
+</p>
+
+Para cualquier nivel de $K$, el nivel de $q$ que hace que $\dot{q}=0$ ahora es menor, por lo que el nuevo $\dot{q}_1=0$ se encuentra por debajo del antiguo $\dot{q}_0=0$, además la pendiente de la linea $\dot{q}=0$ es menor ya que $\frac {\partial q}{\partial K}=(1-\tau) \frac{\pi'(K)}{r}<\frac{\pi'(K)}{r}$, es decir $\dot{q}=0$ se vuelve más plana.Por otro lado podemos observar que $\dot{K}=0$ no se ve afectado.
+
+<p>
+
+ 
+
+</p>
+
+Como el gobierno ahora está tomando una fracción de los beneficios, el capital existente se vuelve menos valioso y por lo tanto el valor de mercado del capital cae $(\downarrow q)$, gráficamente vemos como esto se representa por un salto hacia abajo de $q$ hacia la nueva senda de silla, en el punto $A$.
+
+<p>
+
+ 
+
+</p>
+
+El menor valor de mercado del capital desalienta la inversión y el stock de capital comienza a caer, pero a medida que esto ocurre, los beneficios del capital comienzan a aumentar y, por lo tanto, también aumenta el valor de mercado del capital. Este proceso continua hasta que el valor de mercado del capital vuelve a su valor de equilibrio de largo plazo igual a 1, sin embargo, el capital de la economía se encuentra en un nivel permanentemente más bajo.
+
+<p>
+
+ 
+
+</p>
+
+La economía termina en el punto $E_1$. De esta manera el menor capital y, por tanto, los mayores beneficios antes de impuestos compensan el hecho de que el gobierno se lleve una fracción de esos beneficios.
+
+<p>
+
+ 
+
+</p>
+
+<p>
+
+ 
+
+</p>
+
+**c) El gobierno graba la inversión. En particular, las empresas deben pagar en concepto de impuestos un porcentaje** $\gamma$ por cada unidad de capital que compran y reciben una subvención $\gamma$ por unidad desinvertida
+
+<p>
+
+ 
+
+</p>
+
+```{r}
+imagen3 <- load.image("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/gr%C3%A1fica_9.7_c.PNG")
+
+plot(imagen3, main = "Figura 1.3. Diagrama de fase: El gobierno grava la inversión", axes = FALSE, cex.main = 0.8)
+```
+
+Se desalienta la inversión, puesto que ha sido grabada. Al reducirse la inversión, los beneficios de la industria (sin tomar en cuenta el impuesto) serán más altos y por lo tanto, el capital existente será más valioso, lo cual implica que gráficamente $q$ salte hacia arriba.
+
+<p>
+
+ 
+
+</p>
+
+Antes del gravamen, teníamos que $q_0(t) = 1+C'(I(t))=1$ ya que cuando la empresa optimiza, invierte hasta el punto en el que el costo de adquirir capital es igual al valor de ese capital. Con este impuesto a la inversión, el costo de adquirir una unidad adicional de capital es el precio de compra más el impuesto $(1+\gamma)$, más el coste de ajuste marginal, entones tenemos que $q_1(t) = 1+ \gamma +C'(I(t))= 1+\gamma$.
+
+<p>
+
+ 
+
+</p>
+
+Hay que recordar que $C'(0)=0$, $I(t)=0$ y por lo tanto $\dot{K}=0$, por lo cual en la gráfica, $\dot{K}=0$ debe desplazarse hacia arriba, al nivel en el que $q(t) = 1+ \gamma$ y $\dot{q}=0$ no se verá afectado.
+
+<p>
+
+ 
+
+</p>
+
+El nuevo equilibrio se alcanza con un nivel de capital permanentemente menor, y aunque el nivel de mercado del capital es igual a $1+ \gamma$, después de impuestos el valor de mercado del capital sigue siendo 1.
+
+\newpage
+
+## Ejercicio 2
+
+**Estudie los determinantes de la inversión agregada en México siguiendo estos pasos: [3 horas, 0.5 puntos cada inciso]**
+
+### a)
+
+**Obtenga, del INEGI, datos DESESTACIONALIZADOS para México del consumo "C", datos de "I", la inversión privada (inversión fija bruta), y de "Y", el PIB, entre 1980 y 2018/III, A FRECUENCIA TRIMESTRAL, EN TÉRMINOS REALES. (Si encuentra varias series pero ninguna cubre el periodo completo, tome una decisión ejecutiva para "unir" las series.)**
+
+Para este ejercicio obtuvimos datos del Instituto Nacional de Estadística y Geografía [@inegi] de 1980 a 1993 a precios de 1993, y de 1993 al tercer trimestre de 2020 a precios del 2013. Deflactamos los datos que se encontraban a precios de 1993 para tener todos los datos a precios de 2013 expresados en millones de pesos.
+
+```{r include=FALSE}
+
+dataej2 <- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/dataej2.csv")
+
+```
+
+```{r}
+serie1 <- ts(dataej2, start=1980, frequency = 4)
+```
+
+```{r}
+C<-serie1[ ,1]
+I<-serie1[ ,2]
+Y<-serie1[ ,3]
+
+```
+
+### b)
+
+**Grafique la relación entre I y Y, es decir, grafique los puntos (%**$\Delta Y_t$,%$\Delta I_t$) poniendo la inversión en el eje la ordenadas.
+
+Para este ejercicio primero calculamos las tasas de crecimiento de las variables respecto del mismo trimestre de un año anterior. Podemos observar los siguientes resultados:
+
+<p>
+
+ 
+
+</p>
+
+<p>
+
+ 
+
+</p>
+
+```{r}
+##Creo la variable de la tasa de crecimiento del consumo, aunque no la grafico, porque en este inciso no la necesito.
+
+crecC <- growth.rate(C, lag=4)
+```
+
+```{r}
+#Creo la variable $\% \Delta I_t$ (tasa de crecimiento de la inversión, respecto de un año anterior) y la grafico
+
+crecI <- growth.rate(I, lag=4)
+
+ts.plot (crecI,   xlab="Trimestres", ylab="Porcentaje", main="Gráfica 2.1. Tasa de crecimiento de la Inversión", col="blue", lwd=2)
+
+
+```
+
+```{r}
+
+#Creo la variable de la tasa de crecimiento del PIB respecto de un año anterior y la grafico
+
+crecY <- growth.rate(Y, lag=4)
+
+
+ts.plot (crecY,   xlab="Trimestres", ylab="Porcentaje", main="Gráfica 2.2. Tasa de crecimiento del PIB", col="green3", lwd=2)
+
+
+```
+
+```{r}
+# Grafico los puntos ($\% \Delta Y_t$,$\% \Delta I_t$) poniendo la inversión en el eje la ordenadas
+
+scatter.smooth(x=crecY, y=crecI, xlab="Porcentaje", ylab="Tasa de crecimiento de la inversión", main="Grafica 2.3. Relación Inversión-PIB ", col="magenta", lwd=2, cex=0.5)
+
+```
+
+Podemos observar que una relación directa entre la tasa de crecimiento de la inversión y y la tasa de crecimiento del producto.
+
+\newpage
+
+### c)
+
+**Calcule la volatilidad de las tres series de tasas de crecimiento (**$\% \Delta I$, $\% \Delta C$ y $\% \Delta Y$) y explique cuál es más volátil.
+
+Para calcular la volatilidad de las tasas de crecimiento del PIB, de la inversión y del consumo, utilizamos el indicador de desviación estándar, que mide el grado de dispersión de las observaciones respecto a su media, de acuerdo a la siguiente fórmula:
+
+$$\sigma=\sqrt{\frac {1}{N}\sum_{i=1}^{N}(x_i-\mu)^2}$$ Obteniendo los siguientes resultados:
+
+```{r include=FALSE}
+#Creo las variables de desviación estándar del PIB, de la Inversión y del Consumo respectivamente y pongo en una tabla los resultados:
+
+sdY<- sd(crecY)
+sdI<- sd(crecI)
+sdC<- sd(crecC)
+sdY
+sdI
+sdC
+```
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 2.1. Desviaciones estándar de tasas de crecimiento.}
+\end{center}
+```
+| Indicador           | PIB    | Inversión | Consumo |
+|---------------------|--------|-----------|---------|
+| Desviación Estándar | 4.1754 | 13.4347   | 3.8237  |
+
+Con el cuadro anterior, podemos observar que la desviación estándar de la tasa de crecimiento de PIB es de 4.17 puntos porcentuales, de la tasa de crecimiento de la inversión es de 13.43 puntos porcentuales, y de la tasa de crecimiento del consumo es de 3.82 puntos porcentuales, por lo que la desviación estándar de la tasa de crecimiento de la inversión es significativamente mayor que la desviación estándar de la tasa de crecimiento del PIB y del consumo lo cual nos muestra la fuerte volatilidad que tiene esta variable macroeconómica.
+
+A continuación se muestra el gráfico que mide la variación de los datos respecto a su media, encontrando que todas las series presentan volatilidad en el periodo de estudio, sin embargo, la inversión sobresale.
+
+<p>
+
+ 
+
+</p>
+
+```{r}
+#Creo las variables A,B,C corespondientes a la variación de ellas mismas respecto de su media
+
+A <- crecY-mean(crecY)
+B <- crecI-mean(crecI)
+C <- crecC-mean(crecC)
+
+#A es variación del PIB respecto de su media
+#B es variación de la inversión respecto de su media
+#C es variación del consumo respecto de su media
+
+#Convierto estas variables en series de tiempo
+
+A<- ts(A, start=1980, frequency = 4)
+B<- ts(B, start=1980, frequency = 4)
+C<- ts(C, start=1980, frequency = 4)
+
+ts.plot (A,B,C, gpars=list(xlab="Trimestres", ylab="Variación respecto de la media", main=" Gráfica 2.4. Variación del PIB, \n inversión y consumo, respecto a su media", col=c("green","blue","red"),lwd= 2, cex.main=0.9))
+legend ('bottom', col=c("green","blue","red"),lwd=3, legend=c("PIB","Inversión","Consumo"), bg='white',bty="n",cex=0.7)
+
+
+```
+
+La inversión es una variable altamente volátil, con fuertes caídas en crisis.
+
+<p>
+
+ 
+
+</p>
+
+### d)
+
+**Obtenga, del banco de México, datos sobre las tasas de interés reales (**$r^r$) de la economía $r^r=r^n-\pi$, es decir, la tasa de interés nominal, menos la tasa de inflación esperada (en cuyo caso se trata de la tasa de interés real "ex-ante"), o menos la tasa de inflación observada (en cuyo caso se trata de la "ex-post").
+
+Para este ejercicio acudimos por datos en la página web oficial del Banco de México. Obtuvimos la serie de la tasa de interés real $(r^r)$, con la diferencia entre la tasa de interés nominal -en este caso usamos la tasa de interés interbancaria a 28 días $(r^n)$- y la tasa de inflación, que para nuestro modelo se trata de la tasa de inflación ex post. Por la disponibilidad de datos, el periodo de análisis es del primer trimestre de 1995 al tercer trimestre de 2020.
+
+```{r include=FALSE}
+#Subo los datos. Uso otra data, puesto que para los datos de la tasa de interés solo tenemos datos a partir de 1995. De aquí en adelante se trabaja con esta otra data.
+
+library(readxl)
+based<- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/dataej2_d.csv")
+
+
+#Nota. Based significa base del ejercicio d
+
+```
+
+```{r echo=FALSE}
+#Genero el periodo de estudio (un vector con las fechas) 
+
+date <- seq(as.Date("1995/3/1"), as.Date("2020/9/30"), by = "quarter")
+
+```
+
+```{r}
+
+# Unifico la base de datos, es decir, le agrego la fecha a la data
+basend <- cbind(date, based)
+```
+
+### e)
+
+**Estime una serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión** $\Delta \% I_t$. Utilice valores corrientes y rezagados del crecimiento en el producto, de la tasa de interés real, valores rezagados de la propia tasa de cambio en la inversión y combinaciones de estas variables.
+
+Para este inciso, consideramos modelos de regresión lineales, con variable dependiente a la tasa de crecimiento de la inversión. Tomamos en cuenta tasas de crecimiento de las diferentes variables respecto de un año anterior y respecto del trimestre anterior.
+
+```{r echo=FALSE}
+#Dentro de la base "basend", creo otras variables, conservando las que ya tiene. Las nuevas variables son la tasa de crecimiento de la inversión y del PIB con respecto del año anterior, es decir, con 4 rezagos. 
+
+
+basend<- mutate(basend,tI_d= (basend$I_d-lag(basend$I_d,4))/lag(basend$I_d,4)*100)
+basend<-mutate(basend,tY_d= (basend$Y_d-lag(basend$Y_d,4))/lag(basend$Y_d,4)*100)
+
+#Lo mismo pero con respecto del trimestre anterior, es decir, con 1 rezago.
+
+basend<- mutate(basend,tI_d2= (basend$I_d-lag(basend$I_d,1))/lag(basend$I_d,1)*100)
+basend<-mutate(basend,tY_d2= (basend$Y_d-lag(basend$Y_d,1))/lag(basend$Y_d,1)*100)
+
+
+```
+
+```{r}
+#Creo la nueva base "baser", en la cual le quito los primeros cuatro trimestres a la base "basend", puesto que tiene NA en todas las variables que son tasas de crecimiento, así que esta nueva base empieza desde 1996. Cuando trabaje con la tasa de interés, usaré esta base.
+
+baser<-basend[-c(1:4),]
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 1.1 y 1.2:** Para el primer modelo consideramos como variable independiente la tasa de crecimiento del producto interno bruto (PIB) como variable explicativa de la tasa de crecimiento de la inversión, ambas en el mismo periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t)$$ Estimaremos un modelo de regresión lineal. Es decir: $$\triangle \% I_t =\alpha + \beta\  \triangle \% \ Y_t+ \epsilon$$
+
+```{r}
+reg1 <- lm(baser$tI_d ~ baser$tY_d)
+
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 2.1 y modelo 2.2:** Consideramos como variable explicativa a la tasa de crecimiento del Producto Interno Bruto (PIB) de un periodo anterior.
+
+$$\triangle \% I_t = f(Y_{t-1})$$ $$\triangle \% I_t =\alpha + \beta\  \triangle \% \ Y_{t-1}+\epsilon$$
+
+```{r}
+#La variable Y_{t-1} se obtiene con el comando lag. No es necesario usar la base "baser"
+
+reg2 <- lm(baser$tI_d ~ lag(baser$tY_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 3.1 y modelo 3.2:** Consideramos como variable explicativa a la tasa de interés real.
+
+$$\triangle \% I_t = f(r^r_t)$$ $$\triangle \% I_t =\alpha+ \beta \  r^r_t + \epsilon$$
+
+```{r}
+#Uso la base "baser" porque ya se eliminaron las NA y la serie de la tasa de crecimiento de la inversión es del mismo tamaño que la de la tasa de interés.
+
+reg3 <- lm(baser$tI_d ~ baser$r_r_d)
+
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 4.1 y modelo 4.2:** Consideramos como variable independiente la propia tasa de crecimiento de la inversión, pero de un periodo anterior, esto es, rezagada un periodo.
+
+$$\triangle \% \ I_t = f(\triangle \% \ I_{t-1})$$ $$\triangle \% I_t = \alpha + \beta\  \triangle \% \ I_{t-1}+\epsilon$$
+
+```{r}
+# Consideramos el rezago de la inversión (lag).
+
+reg4 <- lm(baser$tI_d ~ lag(baser$tI_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+Los modelos 1.1, 2.1, 3.1 y 4.1 corresponden al caso en que las tasas de crecimiento son respecto del mismo trimestre de un año anterior, y los modelos 1.2, 2.2, 3.2 y 4.2 corresponden al caso en que las tasas de crecimiento son respecto de un trimestre anterior.
+
+<p>
+
+ 
+
+</p>
+
+**Los resultados obtenidos los resumimos en las siguientes dos tablas. Empecemos con la tabla que corresponde a los modelos 1.1, 2.1, 3.1 y 4.1:**
+
+<p>
+
+ 
+
+</p>
+
+```{r REGRESIÓN1, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg1, reg2, reg3, reg4,  
+          title= "Cuadro 2.2. Regresiones que explican la tasa de crecimiento de la inversión, respecto de un año anterior",
+          column.labels = c("reg1.1","reg2.1","reg3.1","reg4.1"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con una sola variable explicativa",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("Crec. anual PIB", "Crec. anual PIB(-1)", "Tasa de interés", "Crec. Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+En esta tabla podemos observar que todas las variables son estadísticamente significativas a un nivel de significancia del 1% para explicar el comportamiento de la tasa de crecimiento de la inversión, a excepción de la tasa de interés, puesto que el valor de la prueba F es mayor a 1.96 en valor absoluto ($F statistic > 1.96$) lo cual significa que se rechaza la hipótesis nula de que el coeficiente de la variable explicativa sea igual a cero (esto significa que $\hat{\beta}\ne 0$), otra manera de verlo es con la prueba t-student (cociente entre los estimadores y sus respectivos errores estándar) también es mayor que 1.96 (y por lo tanto el P-valor será menor a 0.05.
+
+<p>
+
+ 
+
+</p>
+
+La tasa de crecimiento del PIB respecto del mismo trimestre del año anterior es la variable explicativa económicamente más significativa, puesto que tiene el mayor coeficiente (de 2.16). En esta regresión lineal (1.1) vemos la elasticidad de la inversión-PIB. Por un cambio porcentual en la tasa de crecimiento del PIB en el periodo t, la inversión crece 2.16 puntos porcentuales también en el periodo t ($\triangle \% I_t = -\hat{1.48} + \hat{2.16} \ \triangle \% \ Y_t$), con un intercepto negativo que nos indica que cuando la tasa de crecimiento del PIB es igual a cero, hay "desinversión", es decir, no se invierte y además el capital se está depreciando.
+
+<p>
+
+ 
+
+</p>
+
+En la regresión lineal 2.1 ($\triangle \% \ I_t = -\hat{0.85} + \hat{1.76} \ \ \triangle \% \ Y_{t-1}$)vemos la elasticidad de la $inversión-PIB_{t-1}$. Por un cambio porcentual en la tasa de crecimiento del PIB de un periodo anterior, es decir, del periodo t-1, la inversión crece 1.76 puntos porcentuales en el periodo t. La inversión es menos sensible al crecimiento del PIB del año anterior, respecto de este mismo año.
+
+<p>
+
+ 
+
+</p>
+
+En la regresión lineal 3.1 observamos la relación inversa entre la tasa de interés y la tasa de crecimiento de la inversión($\triangle \% I_t =\hat{3.97} - \hat{0.18} \  r^r_t$). Podemos observar la elasticidad de la inversión-tasa de interés que nos dice que un aumento de un punto porcentual en la tasa de interés en el mismo periodo, provoca que la inversión decrezca 0.18 puntos porcentuales. A diferencia de lo que dice la teoría, empíricamente obtenemos que esta variable no es ni estadísticamente ni económicamente significativa para explicar la tasa de crecimiento de la inversión.
+
+<p>
+
+ 
+
+</p>
+
+En la regresión lineal 4.1 ($\triangle \% I_t = \hat{0.26} + \hat{0.84} \  \triangle \% \ I_{t-1}$), podemos observar que el coeficiente $\hat{\beta}$ es un valor alto, lo que indica que la tasa de crecimiento de la inversión de un periodo anterior tiene un efecto fuerte en el crecimiento de la tasa de inversión en el periodo actual (es económicamente significativa para explicar la dinámica en la inversión).
+
+<p>
+
+ 
+
+</p>
+
+```{r}
+#Modelo 1.2
+reg1.2 <- lm(baser$tI_d2 ~ baser$tY_d2)
+```
+
+```{r}
+#*Modelo 2.2:* 
+# En este modelo consideramos como variable independiente la tasa de crecimiento del producto interno bruto (PIB) de un año anterior, es decir como la variable que explica a la tasa de crecimiento de la inversión.
+
+#$$\triangle \% I_t = f(Y_{t-1})$$
+#$$\triangle \% I_t =\alpha + \beta\  \triangle \% \ Y_{t-1}+\epsilon$$
+
+#La variable Y_{t-1} se obtiene con el comando lag. No es necesario usar la base "baser"
+
+reg2.2 <- lm(basend$tI_d2 ~ lag(basend$tY_d2))
+```
+
+```{r}
+#**Modelo 3.2:**
+
+#En este modelo consideramos como variable independiente la tasa de interés real que explica a la tasa de crecimiento de la inversión.
+
+# $$\triangle \% I_t = f(r^r_t)$$
+# $$\triangle \% I_t =\alpha+ \beta \  r^r_t + \epsilon$$
+
+#Uso la base "baser" porque ya se eliminaron las NA y la serie de la tasa de crecimiento de la inversión es del mismo tamaño que la de la tasa de interés.
+
+reg3.2 <- lm(baser$tI_d2 ~ baser$r_r_d)
+```
+
+```{r}
+#**Modelo 4.2:**
+#Para este modelo consideramos como variable independiente la propia tasa de crecimiento de la inversión, pero del trimestre anterior, esto es, rezagada 1 periodos (trimestre)
+
+# $$\triangle \% \ I_t = f(\triangle \% \ I_{t-1})$$
+# $$\triangle \% I_t = \alpha + \beta\  \triangle \% \ I_{t-1}+\epsilon$$
+
+# Consideramos el rezago de la inversión (lag).
+
+reg4.2 <- lm(basend$tI_d2 ~ lag(basend$tI_d2))
+```
+
+**A continuación tendremos las mismas 4 combinaciones para las regresiones de la tabla anterior, pero ahora consideramos las tasas de crecimiento con respecto a un trimestre anterior (no a un año), es decir, esta tabla nos muestra el resumen de los modelos 1.2, 2.2, 3.2 y 4.2:**
+
+```{r REGRESIÓN2, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg1.2, reg2.2, reg3.2, reg4.2,  
+          title= "Cuadro 2.3. Regresiones que explican la tasa de crecimiento de la inversión, respecto de un trimestre anterior",
+          column.labels = c("reg1.2","reg2.2","reg3.2","reg4.2"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con una sola variable explicativa",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("Crec. trim. PIB", "Crec. trim. PIB(-1)", "Tasa de interés", "Crec. trim. Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+Podemos observar que todas las variables son estadísticamente significativas, sin embargo, destaca con gran ventaja la regresión 1.2.
+
+En la regresión lineal 1.2 $\triangle \% I_t = -\hat{0.18} + \hat{1.73} \ \triangle \% \ Y_t)$ podemos observar los valores de la elasticidad de la inversión-PIB. Podemos observar que esta regresión lineal es estadísticamente más significativa que cuando se toman tasas de crecimiento del PIB respecto del mismo trimestre de un año anterior, sin embargo, es económicamente menos significativa, ya que tiene una menor elasticidad Inversión_PIB -por un cambio porcentual en la tasa de crecimiento del PIB en el mismo trimestre, la inversión crece 1.73 puntos porcentuales también en el mismo trimestre- (cuándo se toman tasas de crecimiento respecto del mismo trimestre de un año anterior, la elasticidad es de 2.16).
+
+<p>
+
+ 
+
+</p>
+
+En la regresión lineal 2.2 ($\triangle \% \ I_t = \hat{1.07} - \hat{0.53} \ \ \triangle \% \ Y_{t-1}$) vemos la elasticidad de la inversión-PIB(t-1). Por un aumento de un punto porcentual en la tasa de crecimiento del PIB de un trimestre anterior, es decir, del periodo t-1, la inversión disminuye en 0.53 puntos porcentuales en el periodo t. La inversión es menos sensible al crecimiento del PIB del trimestre anterior, respecto de este mismo trimestre. Podemos observar que el coeficiente $\hat{\beta}$ ahora es menor, incluso ahora es negativo y cuando lo calculamos con tasas de crecimiento anuales, era positivo (antes era de 1.76). Económicamente es menos significativo en valor absoluto y también estadísticamente es menos significativo para explicar el comportamiento de la tasa de crecimiento de la inversión.
+
+<p>
+
+ 
+
+</p>
+
+En la regresión lineal 3.2 ($\triangle \% I_t =\hat{1.49} - \hat{0.23} \  r^r_t$) observamos que la tasa de interés ahora si es estadísticamente significativa, es decir, la tasa de crecimiento de la inversión entre un trimestre y otro si responde a los cambios en la tasa de interés. Observamos una relación inversa, la elasticidad de la inversión-tasa de interés en este caso nos dice que un aumento de un punto porcentual en la tasa de interés en el mismo periodo, provoca que la inversión decrezca 0.23 puntos porcentuales (en el otro caso era menor, de 0.18, pero no era estadísticamente significativo).
+
+<p>
+
+ 
+
+</p>
+
+En el modelo de regresión linea 4.2 ($\triangle \% I_t = \hat{0.96} - \hat{0.17} \  \triangle \% \ I_{t-1}$) encontramos que la tasa de crecimiento de la inversión de un trimestre anterior es estadisticamente y económicamente significativa para explicar el comportamiento de la tasa de crecimiento de la inversión pero con en menor medida que la que es respecto del mismo trimestre de un año anterior, y a demás llama la atención el hecho de que ahora el signo del coeficiente $\hat{\beta}$ es negativo, siendo contrario al caso anterior, es decir, si en un trimestre anterior aumentó la tasa de crecimiento de la inversión en un punto porcentual, nos hace esperar que en el trimestre corriente disminuya en 0.17 puntos porcentuales. Una explicación que damos a este hecho es que puede ser que las empresas ya invirtieron, están gastadas y sus planes de inversión son a más largo plazo. Por ello explica mejor la tasa de crecimiento de la inversión respecto de un año anterior, ya que el estadístico F es significativamente mayor (además el coeficiente $\hat{\beta}=0.85$ es positivo y tiene un valor alto, es decir, es económicamente significativo).
+
+<p>
+
+ 
+
+</p>
+
+**Ahora vamos a considerar combinaciones de dos variables explicativas:**
+
+**Modelo 5.1 y 5.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB del periodo t y del periodo (t-1)
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t, \triangle \% \ Y_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+ \beta_2 \triangle \% \ Y_{t-1}+ \epsilon$$
+
+```{r}
+reg5 <- lm(baser$tI_d ~ baser$tY_d+lag(baser$tY_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 6.1 y 6.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB y la tasa de interés, ambos en el periodo de interés.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t, r)$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+ \beta_2 r + \epsilon$$
+
+```{r}
+reg6 <- lm(baser$tI_d ~ baser$tY_d+baser$r_r_d)
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 7.1 y 7.2:** Consideremos como variables explicativas a la tasa de crecimiento del PIB y la tasa de tasa de crecimiento de la inversión rezagada un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t, \triangle \% \ I_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+ \beta_2 \triangle \% \ I_{t-1} + \epsilon$$
+
+```{r}
+reg7 <- lm(baser$tI_d ~ baser$tY_d+lag(baser$tI_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 8.1 y 8.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB del periodo anterior y de la tasa de interés.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1}, r)$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_{t-1}+ \beta_2 r + \epsilon$$
+
+```{r}
+reg8 <- lm(baser$tI_d ~ lag(baser$tY_d)+baser$r_r_d)
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 9.1 y 9.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB del periodo anterior y la tasa de tasa de crecimiento de la inversión también rezagada un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1}, \triangle \% \ I_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_{t-1}+ \beta_2 \triangle \% \ I_{t-1} + \epsilon$$
+
+```{r}
+
+reg9 <- lm(baser$tI_d ~ lag(baser$tY_d)+lag(baser$tI_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 10.1 y 10.2:** Consideramos como variables explicativas a la tasa de interés y la tasa de crecimiento de la inversión rezagada un periodo.
+
+$$\triangle \%\  I_t = f(r, \triangle \% \ I_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\ \ r+ \beta_2  \triangle \% \ I_{t-1}+ \epsilon$$
+
+```{r}
+reg10 <- lm(baser$tI_d ~  baser$r_r_d+lag(baser$tI_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+Los modelos 5.1, 6.1, 7.1, 8.1, 9.1 y 10.1 corresponden al caso en que las tasas de crecimiento son respecto del mismo trimestre de un año anterior, y los modelos 5.2, 6.2, 7.2, 8.2, 9.2 y 10.2 corresponden al caso en que las tasas de crecimiento son respecto de un trimestre anterior. En las tablas 3 y cuatro se muestran los resultados de estas regresiones respectivamente.
+
+<p>
+
+ 
+
+</p>
+
+Encontramos como resultado que todas las regresiones son estadísticamente significativas, pero destaca la regresión 7.1 $(\triangle \% I_t =-\hat{1.45} + \hat{1.45} \  \triangle \% \ Y_t+ \hat{0.4} \triangle \% \ I_{t-1} + \epsilon)$. Tenemos el estadístico t-student más alto de todos para cualquier variable, pero nos importa más aún el estadístico F, que nos habla de que las variables conjuntas son estadísticamente significativas. También tiene el valor $R^2=0.85$ más alto.
+
+<p>
+
+ 
+
+</p>
+
+Esta regresión nos dice que cuando la tasa de crecimiento del PIB con respecto del mismo trimestre de un año anterior aumenta un punto porcentual y todo lo demás se mantiene constante, la tasa de crecimiento de la inversión respecto del mismo trimestre de un año anterior, aumenta en 1.45 puntos porcentuales, lo cual nos indica que esta variable también es económicamente significativa para explicar el comportamiento del crecimiento de la inversión. Por otro lado, el aumento de un punto porcentual en la tasa de crecimiento de la inversión del mismo trimestre del año anterior, manteniendo todo lo demás constante, nos hace esperar que la tasa de crecimiento de la inversión en el año corriente aumente en 0.4 puntos porcentuales.
+
+```{=tex}
+\newpage
+\begin{landscape}
+
+\thinspace
+
+```{r REGRESIÓN3, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg5, reg6, reg7, reg8, reg9, reg10, 
+          title= "Cuadro 2.4. Regresiones lineales que explican la tasa de crecimiento de la inversión, respecto de un año anterior, con dos variables explicativas",
+          column.labels = c("reg5.1","reg6.1","reg7.1","reg8.1", "reg9.1","reg10.1"),
+          header = FALSE,
+          font.size = "tiny",
+          dep.var.caption = "Con dos variables explicativa",
+          dep.var.labels = "Tasa de crecimiento de la inversión respecto de un año",
+          covariate.labels = c("Crec. anual PIB", "Crec. anual PIB(-1)", "Tasa de interés", "Crec. anual  Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp", 
+          
+          single.row = T)
+```
+
+\thinspace
+
+\thinspace
+
+Obsérvese como la mayoría de regresiones son estadísticamente más significativas cuando se toman tasas de crecimiento respecto del mismo trimestre de un año anterior que respecto del trimestre inmediato anterior.
+
+\thinspace
+
+\thinspace
+
+```{r}
+# **Modelo 5.2:** Ahora consideramos como variables explicativas a la tasa de crecimiento del PIB del periodo t y del periodo (t-1) (es decir, del trimestre corriente y del trimestre anterior).
+
+
+# $$\triangle \%\  I_t = f(\triangle \% \ Y_t, \triangle \% \ Y_{t-1})$$
+# Estimaremos un modelo lineal. Es decir:
+# $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+ \beta_2 \triangle \% \ Y_{t-1}+ \epsilon$$
+reg5.2 <- lm(baser$tI_d2 ~ baser$tY_d2+lag(baser$tY_d2))
+```
+
+
+```{r}
+# **Modelo 6:**
+# Ahora consideramos como variables explicativas a la tasa de crecimiento del PIB y la tasa de interés, ambos en el periodo de interés (en el mismo trimestre).
+
+# $$\triangle \%\  I_t = f(\triangle \% \ Y_t, r)$$
+# Estimaremos un modelo lineal. Es decir:
+# $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+ \beta_2 r + \epsilon$$
+
+
+reg6.2 <- lm(baser$tI_d2 ~ baser$tY_d2+baser$r_r_d)
+```
+
+```{r}
+# **Modelo 7:**
+# Ahora consideramos como variables explicativas a la tasa de crecimiento del PIB y la tasa de tasa de crecimiento de la inversión rezagada un trimestre.
+
+# $$\triangle \%\  I_t = f(\triangle \% \ Y_t, \triangle \% \ I_{t-1})$$
+# Estimaremos un modelo lineal. Es decir:
+# $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+ \beta_2 \triangle \% \ I_{t-1} + \epsilon$$
+
+reg7.2 <- lm(baser$tI_d2 ~ baser$tY_d2+lag(baser$tI_d2))
+```
+
+```{r}
+# **Modelo 8.2:**
+# Ahora consideramos como variables explicativas a la tasa de crecimiento del PIB del trimestre anterior y de la tasa de interés.
+
+# $$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1}, r)$$
+# Estimaremos un modelo lineal. Es decir: $\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_{t-1}+ \beta_2 r + \epsilon$
+
+reg8.2 <- lm(baser$tI_d2 ~ lag(baser$tY_d2)+baser$r_r_d)
+```
+
+```{r}
+## **Modelo 9.2:**
+## Ahora consideramos como variables explicativas a la tasa de crecimiento del PIB del trimestre anterior y la tasa de tasa de crecimiento de la inversión también rezagada un trimestre.
+
+##$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1}, \triangle \% \ I_{t-1})$$
+## Estimaremos un modelo lineal. Es decir: $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_{t-1}+ \beta_2 \triangle \% \ I_{t-1} + \epsilon$$
+reg9.2 <- lm(baser$tI_d2 ~ lag(baser$tY_d2)+lag(baser$tI_d2))
+```
+
+```{r}
+# **Modelo 10:**
+# Ahora consideramos como variables explicativas a la tasa de interés y la tasa de crecimiento de la inversión rezagada un trimestre.
+
+# $$\triangle \%\  I_t = f(r, \triangle \% \ I_{t-1})$$
+# Estimaremos un modelo lineal. Es decir: $$\triangle \% I_t =\beta_0 + \beta_1\ \ r+ \beta_2  \triangle \% \ I_{t-1}+ \epsilon$$
+
+reg10.2 <- lm(baser$tI_d2 ~  baser$r_r_d+lag(baser$tI_d2))
+```
+
+
+```{r REGRESIÓN4, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg5.2, reg6.2, reg7.2, reg8.2, reg9.2, reg10.2, 
+          title= "Cuadro 2.5. Regresiones lineales que explican la tasa de crecimiento de la inversión, respecto de un trimestre anterior, con tres variables explicativas",
+          column.labels = c("reg5.2","reg6.2","reg7.2","reg8.2", "reg9.2","reg10.2"),
+          header = FALSE,
+          font.size = "tiny",
+          dep.var.caption = "Con dos variables explicativa",
+          dep.var.labels = "Tasa de crecimiento de la inversión respecto de un trimestre",
+          covariate.labels = c("Crec. trim. PIB", "Crec. trim. PIB(-1)", "Tasa de interés", "Crec. trim.  Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp", 
+          
+          single.row = T)
+```
+
+
+\end{landscape}
+```
+\newpage
+
+**Ahora consideremos combinaciones de tres variables explicativas:**
+
+**Modelo 11.1 y 11.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB, tanto del periodo de estudio como del periodo anterior y la tasa de interés.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,\triangle \% \ Y_{t-1}, r)$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+  \beta_2\  \triangle \% \ Y_{t-1} + \beta_3 r + \epsilon$$
+
+```{r}
+reg11 <- lm(baser$tI_d ~ baser$tY_d+lag(baser$tY_d)+baser$r_r_d)
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 12.1 y 12.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB, tanto del periodo de estudio como del periodo anterior y la tasa de crecimiento de la inversión rezagada un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,\triangle \% \ Y_{t-1}, \triangle \% \ I_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+  \beta_2\  \triangle \% \ Y_{t-1} + \beta_3 \triangle \% \ I_{t-1} + \epsilon$$
+
+```{r}
+reg12 <- lm(baser$tI_d ~ baser$tY_d+lag(baser$tY_d)+lag(baser$tI_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 13.1 y 13.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB del periodo en estudio, la tasa de interés y la tasa de crecimiento de la tasa de crecimiento de la inversión rezagada un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,r, \triangle \% \ I_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_t+  \beta_2\ r + \beta_3 \triangle \% \ I_{t-1} + \epsilon$$
+
+```{r}
+reg13 <- lm(baser$tI_d ~ baser$tY_d+baser$r_r_d+lag(baser$tI_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+**Modelo 14.1 y 14.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB de un periodo anterior, la tasa de interés y la tasa de crecimiento de la inversión rezagada un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1},r, \triangle \% \ I_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\  \triangle \% \ Y_{t-1}+  \beta_2\ r + \beta_3 \triangle \% \ I_{t-1} + \epsilon$$
+
+```{r}
+reg14 <- lm(baser$tI_d ~ lag(baser$tY_d)+baser$r_r_d+lag(baser$tI_d))
+```
+
+<p>
+
+ 
+
+</p>
+
+```{r}
+# **Modelo 11.2:**
+reg11.2 <- lm(baser$tI_d2 ~ baser$tY_d2+lag(baser$tY_d2)+baser$r_r_d)
+```
+
+```{r}
+# **Modelo 12.2:**
+reg12.2 <- lm(baser$tI_d2 ~ baser$tY_d2+lag(baser$tY_d2)+lag(baser$tI_d2))
+```
+
+```{r}
+# **Modelo 13.2:**
+reg13.2 <- lm(baser$tI_d2 ~ baser$tY_d2+baser$r_r_d+lag(baser$tI_d2))
+```
+
+```{r}
+# **Modelo 14.2:**
+reg14.2 <- lm(baser$tI_d2 ~ lag(baser$tY_d2)+baser$r_r_d+lag(baser$tI_d2))
+```
+
+<p>
+
+ 
+
+</p>
+
+Los modelos 11.1, 12.1, 13.1 y 14.1, corresponden al caso en que las tasas de crecimiento son respecto del mismo trimestre de un año anterior, y los modelos 11.2, 12.2, 13.2 y 14.2 corresponden al caso en que las tasas de crecimiento son respecto de un trimestre anterior. Los resultados se muestran en las tablas 5 y 6 respectivamente.
+
+<p>
+
+ 
+
+</p>
+
+En este grupo de regresiones con tres variables explicativas, encontramos que el modelo de regresión que mejor explica el comportamiento del crecimiento de la tasa de inversión es la regresión 12.1 ($\triangle \% I_t = -\hat{0.45} + \hat{1.74} \ \triangle \% \ Y_t - \hat{1.20} \ \triangle \% \ Y_{t-1}- \hat{0.74} \ I_{t-1}$), el cual también es ligeramente superior que el modelo con dos variables.
+
+A continuación se muestran los resultados de estas regresiones en las siguientes dos tablas:
+
+\newpage
+
+<p>
+
+ 
+
+</p>
+
+```{r REGRESIÓN5, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg11, reg12, reg13, reg14, 
+          title= "Cuadro 2.6. Regresiones lineales que explican la tasa de crecimiento de la inversión, respecto de un año anterior, con dos variables explicativas",
+          column.labels = c("reg11.1","reg12.1","reg13.1","reg14.1"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con tres variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión respecto de un año",
+          covariate.labels = c("Crec. anual PIB", "Crec. anual PIB(-1)", "Tasa de interés", "Crec. anual  Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp", 
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+```{r REGRESIÓN6, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg11.2, reg12.2, reg13.2, reg14.2, 
+          title= "Cuadro 2.7. Regresiones lineales que explican la tasa de crecimiento de la inversión, respecto del trimestre anterior, con tres variables explicativas",
+          column.labels = c("reg11.2","reg12.2","reg13.2","reg14.2"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con tres variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión respecto de un trimestre",
+          covariate.labels = c("Crec. trim. PIB", "Crec. trim. PIB(-1)", "Tasa de interés", "Crec. trim.  Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp", 
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+\newpage
+
+**Ahora consideremos las cuatro variables explicativas:**
+
+**Modelo 15.1 y 15.2:** Consideramos como variables explicativas a la tasa de crecimiento del PIB del periodo corriente y un periodo anterior, la tasa de interés y la tasa de crecimiento de la inversión rezagada un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,\triangle \% \ Y_{t-1},r, \triangle \% \ I_{t-1})$$ $$\triangle \% I_t =\beta_0 + \beta_1\ \triangle \% \ Y_t+ \beta_2\triangle \% \ Y_{t-1}+ \beta_3 \ r + \beta_4 \triangle \% \ I_{t-1} + \epsilon$$
+
+```{r}
+reg15 <- lm(baser$tI_d ~ baser$tY_d+lag(baser$tY_d)+baser$r_r_d+lag(baser$tI_d))
+```
+
+```{r}
+reg15.2 <- lm(baser$tI_d2 ~ baser$tY_d2+lag(baser$tY_d2)+baser$r_r_d+lag(baser$tI_d2))
+```
+
+```{r REGRESIÓN7, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg15, 
+          title= "Cuadro 2.8. Regresión con cuatro variables explicativas que explican la tasa de crecimiento de la inversión, respecto de un año anterior",
+          column.labels = c("reg15.1"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con cuatro variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión respecto de un año",
+          covariate.labels = c("Crec. anual PIB", "Crec. anual PIB(-1)", "Tasa de interés", "Crec. anual  Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp", 
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+```{r REGRESIÓN8, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg15.2, 
+          title= "Cuadro 2.9. Regresión con cuatro variables explicativas que explican la tasa de crecimiento de la inversión, respecto de un trimestre anterior",
+          column.labels = c("reg11.2","reg12.2","reg13.2","reg14.2"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con cuatro variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión respecto de un trimestre",
+          covariate.labels = c("Crec. trim. PIB", "Crec. trim. PIB(-1)", "Tasa de interés", "Crec. trim.  Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp", 
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+Nuevamente observamos que sigue siendo más significativo estadísticamente el modelo que contempla las tasas de crecimiento con respecto del mismo trimestre de un año anterior que respecto del trimestre trimestre anterior, es decir el modelo 15.1 ($\triangle \% I_t = -\hat{0.14} + \hat{1.73} \ \triangle \% \ Y_t - \hat{0.13} \ \triangle \% \ Y_{t-1} - \hat{0.12} \ r + \hat{0.72} \ \triangle \% \ I_{t-1}$). A pesar de que el estadístico F dio más alto en el modelo 12.1, en este modelo $R^2 = 0.90$ que es más alta.
+
+Cabe destacar que en todas las regresiones, la prueba t-student para la tasa de interés nos muestra empíricamente resultados no tan cercanos a la teoría. A pesar de que el signo siempre mostró su relación inversa con la tasa de crecimiento de la inversión, no resultó ser ni estadísticamente ni económicamente significativo.
+
+```{=tex}
+\begin{landscape}
+
+\thinspace
+
+En resumen, según el tipo de regresiones que se realizaron, los cinco mejores modelos con distinta cantidad de variables para explicar la dinámica del crecimiento de la inversión respectivamente son:
+
+\thinspace
+
+1.2:    $\triangle \% I_t = -\hat{0.18} + \hat{1.73} \ \triangle \% \ Y_t + \epsilon$
+
+1.1:    $\triangle \% I_t = -\hat{1.48}+ \hat{2.16} \ \triangle \% \ Y_t + \epsilon$    
+
+12.1:   $\triangle \% I_t = -\hat{0.45} + \hat{1.74} \ \triangle \% \ Y_t - \hat{1.20} \ \triangle \% \ Y_{t-1}- \hat{0.74} \ I_{t-1}+ \epsilon$
+
+7.1:    $\triangle \% I_t =-1.45 + \hat{1.45 } \  \triangle \% \ Y_t+ \hat{0.41} \triangle \% \ I_{t-1} + \epsilon$
+
+15.1:   $\triangle \% I_t =-0.14 + \hat{1.73 } \ \triangle \% \ Y_t - \hat{1.13} \triangle \% \ Y_{t-1} - \hat{0.12} \ r + \hat{0.72} \triangle \% \ I_{t-1} + \epsilon$
+
+\thinspace
+
+```{r REGRESIÓN9, results = 'asis', echo = FALSE, message=FALSE, warning=FALSE}
+stargazer(reg1, reg1.2, reg7, reg12, reg15, 
+          title= "Cuadro 2.10. Mejores modelos de regresión lineal que explican la tasa de crecimiento de la inversión",
+          column.labels = c("reg1.1","reg1.2","reg7.1","reg12.1","reg15.1"),
+          header = FALSE,
+          font.size = "footnotesize",
+
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("Crec. anual PIB", "Crec. trim. PIB","Crec anual PIB (-1)", "Tasa de interés", "Crec. anual  Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp", 
+          
+          single.row = T)
+```
+
+\end{landscape}
+```
+### f)
+
+**Estime otra serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión** $\triangle \%I_t$: a las especificaciones del inciso anterior, agregue valores corrientes y/o rezagados de la *confianza empresarial* del INEGI además de también estimar su efecto por si solas.
+
+Con relación, a la variable *confianza empresarial*, nosotros consideramos el índice de la confianza empresarial del sector manufacturero debido a que es el índice con mayor número de datos a comparación del índice del sector comercio y construcción.
+
+Por lo tanto, el periodo de estudio será de 2004 al 2020 con datos trimestrales.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(readxl)
+basef<- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/2F.csv")
+
+```
+
+```{r echo=FALSE}
+### esto sirve para generar el periodo de estudio 
+
+datef <- seq(as.Date("2004/3/1"), as.Date("2020/9/30"), by = "quarter")
+### unifica bases de datos 
+basefn <- cbind(datef, basef)
+```
+
+Para este enciso, consideramos como variables independientes la tasa de crecimiento del producto, de la tasa de interés real y el índice de la confianza empresarial. A continuación mostramos los siguientes modelos de regresión:
+
+```{r echo=FALSE}
+#Dentro de la base "basend", creo otras variables, conservando las que ya tiene. Las nuevas variables son la tasa de crecimiento de la inversión y del PIB con respecto del año anterior, es decir, con 4 rezagos. 
+
+
+basefn<- mutate(basefn,tI_f= (basefn$I_f-lag(basefn$I_f,4))/lag(basefn$I_f,4)*100)
+basefn<-mutate(basefn,tY_f= (basefn$Y_f-lag(basefn$Y_f,4))/lag(basefn$Y_f,4)*100)
+
+#Lo mismo pero con respecto del trimestre anterior, es decir, con 1 rezago.
+
+basefn<- mutate(basefn,tI_f2= (basefn$I_f-lag(basefn$I_f,1))/lag(basefn$I_f,1)*100)
+basefn<-mutate(basefn,tY_f2= (basefn$Y_f-lag(basefn$Y_f,1))/lag(basefn$Y_f,1)*100)
+
+
+```
+
+```{r echo=FALSE}
+#Creo la nueva base "baser", en la cual le quito los primeros cuatro trimestres a la base "basend", puesto que tiene NA en todas las variables que son tasas de crecimiento, así que esta nueva base empieza desde 1996.
+
+baseg<-basefn[-c(1:4),]
+```
+
+**Modelo 1.1 y Modelo 1.2:** En este modelo consideramos como variable dependiente la tasa de crecimiento trimestral de la inversión respecto al trimestre de año anterior y respecto al trimestre anterior y como variable independiente, el índice de la confianza empresarial.
+
+$$\triangle \%\  I_t = f(CE_t)$$
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg31 <- lm(baseg$tI_f ~ baseg$CE_f)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg32 <- lm(baseg$tI_f2 ~ baseg$CE_f)
+
+```
+
+**Modelo 2.1 y Modelo 2.2:** En este modelo consideramos como variable dependiente la tasa de crecimiento trimestral de la inversión respecto al trimestre de año anterior y respecto al trimestre anterior y como variable independiente, el índice de la confianza empresarial.
+
+$$\triangle \%\  I_t = f(CE_{t-1})$$
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg33 <- lm(baseg$tI_f ~ lag(baseg$CE_f))
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg34 <- lm(baseg$tI_f2 ~ lag(baseg$CE_f))
+
+```
+
+En la siguiente cuadro, mostramos modelos donde consideran la tasa de crecimiento trimestral respecto al trimestre del año anterior.
+
+<p>
+
+ 
+
+</p>
+
+```{r REGRESIÓN10, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+stargazer(reg31,reg33,  
+          title= "Cuadro 2.11. Regresiones que explican la tasa de crecimiento trimestral de la inversión, respecto al trimestre del año anterior",
+          column.labels = c("reg1.1","reg2.1"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con una sola variable explicativa",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("CE", "CE(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+De acuerdo a los resultados, se observa que en los modelos 1.1 y 2.1, respectivamente, el índice de Confianza Empresarial (CE) es estadísticamente significativa para explicar el comportamiento de la tasa de crecimiento trimestral de la inversión. Entonces, se puede decir que el índice de confianza empresarial es un buen indicador para explicar el comportamiento de la inversión, no obstante el $R^2$ es relativamente bajo por lo que se requiere incluir otras variables independientes.
+
+El modelo 1.1 $(\triangle \%\  I_t = -63.65 +1.27CE_t)$, considera como variable independiente, el índice de Confianza Empresarial y como variable dependiente, la tasa de crecimiento de la inversión. Los resultados de la regresión indican que cuando la indice de confianza empresarial aumenta un punto, entonces la tasa de crecimiento aumenta 1.27 puntos porcentuales.
+
+El modelo 2.1 $(\triangle \%\  I_t = -57.49 +1.15CE_t)$, considera como variable independiente, el índice de Confianza Empresarial de un periodo anterior y como variable dependiente, la tasa de crecimiento de la inversión. Los resultados de la regresión indican que cuando la indice de confianza empresarial de un periodo anterior aumenta un punto, entonces la tasa de crecimiento aumenta 1.15 puntos porcentuales.
+
+<p>
+
+ 
+
+</p>
+
+```{r REGRESIÓN11, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+stargazer(reg32,reg34,  
+          title= "Cuadro 2.12. Regresiones que explican la tasa de crecimiento trimestral de la inversión, respecto al trimestre anterior",
+          column.labels = c("reg1.2","reg2.2"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con una sola variable explicativa",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("CE", "CE(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+Se observa, que el modelo 1.2 es estadísticamente significativo porque su p-valor es menor al 5 por ciento; mientras que el Modelo 2.2 no es estadísticamente significativo (p-valor mayor al 5 por ciento) para explicar el comportamiento de la tasa crecimiento de la inversión.
+
+En estos dos modelos, se considera como variable dependiente la tasa de crecimiento trimestral de la inversión respecto al trimestre anterior, y como variables independientes, el índice de Confianza empresarial del trimestre y del trimestre anterior.
+
+El Modelo 1.2 es estadísticamente significativo, sin embargo su $R^2$ (7.7%) es muy bajo para que el índice de Confianza Empresarial explique el comportamiento de la tasa de crecimiento trimestral de la inversión respecto al trimestre anterior.
+
+Como se ha observado en los primeros modelos planteados y los resultados de las regresiones de los modelos del inciso anterior, las tasas de crecimiento trimestral de las variables respecto al trimestre anterior no son significativas para explicar el comportamiento de la tasa de crecimiento de la inversión.
+
+Por eso, en adelante, propondremos modelos donde consideremos solo tasas de crecimiento trimestral respecto al trimestre del año anterior.
+
+**Modelo 3:** Se considera como variables independientes a la tasa de crecimiento trimestral del producto (PBI) respecto al trimestre anterior y el índice de Confianza Empresarial.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,CE_t)$$
+
+```{r echo=FALSE}
+reg55 <- lm(baseg$tI_f ~ baseg$tY_f+baseg$CE_f)
+
+```
+
+**Modelo 4:** Las variables independientes son la tasa de interés real y el índice de Confianza Empresarial.
+
+$$\triangle \%\  I_t = f(r^r_t,CE_t)$$
+
+```{r echo=FALSE}
+reg56 <- lm(baseg$tI_f ~ baseg$Rr_f+baseg$CE_f)
+
+```
+
+**Modelo 5:** Se considera como variables independientes a la tasa de crecimiento trimestral del producto (PBI) respecto al trimestre anterior y el índice de Confianza Empresarial rezagado por un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,CE_{t-1})$$
+
+```{r echo=FALSE}
+reg57 <- lm(baseg$tI_f ~ baseg$tY_f+lag(baseg$CE_f))
+
+```
+
+**Modelo 6:** En este modelo, las variables independientes son la tasa de crecimiento trimestral del producto (PBI) rezagado por un periodo y el índice de Confianza Empresarial del periodo anterior.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1},CE_{t-1})$$
+
+```{r echo=FALSE}
+reg58 <- lm(baseg$tI_f ~ lag(baseg$tY_f)+lag(baseg$CE_f))
+```
+
+**Modelo 7:** Las variables independientes son la tasa de interés real rezagado por un periodo y el índice de Confianza Empresarial de un periodo anterior.
+
+$$\triangle \%\  I_t = f(r^r_{t-1},CE_{t-1})$$
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg59 <- lm(baseg$tI_f ~ lag(baseg$Rr_f)+lag(baseg$CE_f))
+```
+
+En el siguiente cuadro, se muestran regresiones donde se consideran dos variables explicativas de la tasa de crecimiento de la inversión.
+
+Se puede observar, que los modelos 5 y 6 son estadísticamente significativos tanto individual como conjuntamente para explicar la tasa de crecimiento de la inversión privada.
+
+El modelo 5 ($\triangle \%\  I_t = -13.90+1.8\triangle \% \ Y_t+0.26CE_{t-1}$) considera que la tasa de crecimiento del producto (PBI) y el índice de la Confianza Empresarial rezagado por un periodo son estadísticamente significativas para explicar la tasa de crecimiento de la inversión. Los resultados de la regresión nos indican que si la tasa de crecimiento del producto aumenta en un punto porcentual, entonces la tasa de crecimiento de la inversión se incrementa en 1.8 puntos porcentuales, y si el índice de la confianza empresarial se incrementa en un punto, la tasa de crecimiento de la inversión aumenta en 0.26 puntos porcentuales.
+
+En el modelo 6, consideran que la tasa de crecimiento del producto rezagado por un periodo y el índice de confianza empresarial de un periodo anterior son estadísticamente significativas para explicar la evolución de la tasa de crecimiento de la inversión.
+
+Por otro lado, los otros modelos muestran que una de las variables independientes no son estadísticamente significativas como es el caso de la tasa de interés en el modelo 4 y 7.
+
+```{=tex}
+\newpage
+\begin{landscape}
+
+\thinspace
+
+```{r REGRESIÓN12, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+stargazer(reg55,reg56,reg57,reg58,reg59,  
+          title= "Cuadro 2.13. Regresiones que explican la tasa de crecimiento trimestral de la inversión, respecto al trimestre del año anterior",
+          column.labels = c("reg3","reg4","reg5","reg6","reg7"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con dos variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("Crec. anual PBI","Tasa de Interés","CE","Crec. anual PBI(-1)","Tasa de Interés (-1)", "CE(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+\thinspace
+
+\end{landscape}
+```
+\newpage
+
+**Modelo 8:** En el modelo, se considera tres variables explicativas, y son la tasa de crecimiento del producto, la tasa de interés y el índice de confianza empresarial.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,r^r_t,CE_t)$$
+
+```{r echo=FALSE}
+reg60 <- lm(baseg$tI_f ~ baseg$tY_f+baseg$CE_f+baseg$Rr_f)
+
+```
+
+**Modelo 9:** En el modelo, proponemos como variables explicativas de la tasa de crecimiento de la inversión a la tasa de crecimiento del producto, la tasa de interés real y el índice de Confianza Empresarial, todas ellas rezagadas por un periodo.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1},r^r_{t-1},CE_{t-1})$$
+
+```{r echo=FALSE}
+reg61 <- lm(baseg$tI_f ~ lag(baseg$tY_f)+lag(baseg$CE_f)+lag(baseg$Rr_f))
+
+```
+
+**Modelo 10:** En el modelo, proponemos como variables explicativas de la tasa de crecimiento de la inversión a la tasa de crecimiento del producto rezagado por un periodo, la tasa de interés real y el índice de Confianza Empresarial de un periodo anterior.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1},r^r_{t},CE_{t-1})$$
+
+```{r echo=FALSE}
+reg62 <- lm(baseg$tI_f ~ lag(baseg$tY_f)+lag(baseg$CE_f)+baseg$Rr_f)
+
+```
+
+<p>
+
+ 
+
+</p>
+
+```{r REGRESIÓN13, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+stargazer(reg60,reg61,reg62,  
+          title= "Cuadro 2.14. Regresiones que explican la tasa de crecimiento trimestral de la inversión, respecto al trimestre anterior",
+          column.labels = c("reg8","reg9","reg10"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con tres variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("Crec. anual PBI","CE","Tasa de interés","Crec. anual PBI(-1)","CE(-1)","Tasa de interés(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+En el cuadro, se realiza regresiones con tres variables independientes para explicar la evolución de la tasa de crecimiento de la inversión. Se puede observar que la tasa de crecimiento del PBI y el índice de Confianza Empresarial con estadísticamente significativos mientras que la tasa de interés muestra un comportamiento contrario.
+
+En el modelo 9, las tres variables son estadísticamente significativas en su conjunto, pero sólo la tasa de crecimiento del PBI rezagado por un periodo y el índice de confianza empresarial de un periodo anterior son estadísticamente significativas de manera individual. Los resultados indican que si la tasa de crecimiento del producto de un periodo rezagado se incrementa en un punto porcentual, la tasa de crecimiento de la inversión aumenta en 0.88 puntos porcentuales, y si el índice de la confianza empresarial del periodo anterior aumenta un punto, entonces la tasa de crecimiento de la inversión se incrementa en 0.66 puntos porcentuales.
+
+El modelo 8 ($\triangle \%\  I_t = 1.80\triangle \% \ Y_t-0.01r^r_t+0.19CE_t$) muestra que sólo la tasa de crecimiento del producto es estadísticamente significativa para explicar la tasa de crecimiento de la inversión. Si aumenta en un punto porcentual la tasa de crecimiento del producto, la tasa de crecimiento de la inversión aumenta 1.80 puntos porcentuales.
+
+En el modelo 10, las variables estadísticamente significativas que explican la tasa de crecimiento de la inversión son la tasa de crecimiento del producto y el índice de Confianza Empresarial, ambas rezagadas por un periodo.
+
+**Modelo 11:** En el modelo, proponemos cuatro variables explicativas como la tasa de crecimiento del producto, la tasa de interés, el índice de Confianza Empresarial y la tasa de crecimiento de la inversión de un periodo anterior.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_t,r^r_t,CE_t,\triangle \%\  I_{t-1})$$
+
+```{r echo=FALSE}
+reg63 <- lm(baseg$tI_f ~ baseg$tY_f+baseg$Rr_f+baseg$CE_f+lag(baseg$tI_f))
+
+```
+
+**Modelo 12:** Se considera como variables explicativas, la tasa de crecimiento del producto, la tasa de crecimiento del producto rezagada por un periodo, la tasa de interés y el índice de Confianza Empresarial.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t},\triangle \% \ Y_{t-1},r^r_{t},CE_{t})$$
+
+```{r echo=FALSE}
+reg64 <- lm(baseg$tI_f ~ baseg$tY_f+lag(baseg$tY_f)+baseg$Rr_f+baseg$CE_f)
+
+```
+
+**Modelo 13:** En este modelo, la tasa de crecimiento de la inversión, esta explicada por la tasa de crecimiento del producto de un periodo anterior, la tasa de interés, el índice de Confianza Empresarial y la tasa de crecimiento de la inversión de un periodo anterior.
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t-1},r^r_{t},CE_{t},\triangle \% \ I_{t-1})$$
+
+```{r echo=FALSE}
+reg65 <- lm(baseg$tI_f ~ lag(baseg$tY_f)+baseg$Rr_f+baseg$CE_f+lag(baseg$tI_f))
+
+```
+
+```{r REGRESIÓN14, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+stargazer(reg63,reg64,reg65,  
+          title= "Cuadro 2.15. Regresiones que explican la tasa de crecimiento trimestral de la inversión, respecto al trimestre anterior",
+          column.labels = c("reg11","reg12","reg13"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con cuatro variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("Crec. anual PBI","Crec. anual PBI(-1)" ,"Tasa de interés","CE","Crec. anual Inversión(-1)"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+<p>
+
+ 
+
+</p>
+
+En el cuadro, proponemos cuatro variables explicativas de la tasa de crecimiento de la inversión, de los cuales podemos concluir que la tasa de crecimiento del producto, la tasa de crecimiento de la inversión de un periodo anterior y el índice de la confianza empresarial son estadísticamente significativas en general; mientra que la tasa de interés muestra un comportamiento contrario en los tres modelos.
+
+En el modelo 11 ($\triangle \%\  I_t = 1.51\triangle \% \ Y_t-0.13r^r_t+0.04CE_t+0.30\triangle \%\  I_{t-1})$), las variables estadísticamente significativas son la tasa de crecimiento del producto y la tasa de crecimiento de la inversión por un periodo rezagado para explicar la tasa de crecimiento de la inversión. Los resultados nos indican que si aumenta en un punto porcentual la tasa de crecimiento del producto entonces la tasa de crecimiento de la inversión aumenta en 1.51 puntos porcentuales, y si la tasa de crecimiento de la inversión de un periodo rezagado se incrementa en un punto porcentual genera que la tasa de crecimiento de la inversión aumente 0.30 puntos porcentuales.
+
+En el modelo 12, sólo la tasa de crecimiento del producto es estadísticamente significativo y con las otras sucede lo contrario.
+
+En el modelo 13, las variables significativas son la tasa de crecimiento de la inversión y el índice de Confianza Empresarial, ambas rezagadas por un periodo. Por otro lado, la tasa de crecimiento de la producción y la tasa de interés no son estadísticamente significativas.
+
+### g)
+
+**Interprete los resultados.**
+
+Con los modelos propuestos, se puede concluir que la tasa de crecimiento del producto es la mejor variable que explica el comportamiento de la tasa de crecimiento de la inversión privada.
+
+Con relación a la tasa de interés, en algunos modelos es estadísticamente significativa y en otras, no. Por otro lado, en todos los modelos, se observo una relación negativa con la tasa de crecimiento de la inversión privada.
+
+Respecto, al índice de Confianza Empresarial, esta variable es estadísticamente significativa, en su mayoría, y muestra una relación positiva.
+
+Ahora, decidimos incorporar la tasa de crecimiento de la inversión pública para explicar el comportamiento de la tasa de crecimiento de la inversión privada.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(readxl)
+basefe<- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/2Fextension.csv")
+
+```
+
+```{r echo=FALSE}
+### esto sirve para generar el periodo de estudio 
+
+datef <- seq(as.Date("1995/3/1"), as.Date("2020/9/30"), by = "quarter")
+### unifica bases de datos 
+basefc <- cbind(datef, basefe)
+```
+
+```{r echo=FALSE}
+#Dentro de la base "basend", creo otras variables, conservando las que ya tiene. Las nuevas variables son la tasa de crecimiento de la inversión y del PIB con respecto del año anterior, es decir, con 4 rezagos. 
+
+
+basefc<- mutate(basefc,tIPr= (basefc$IPr-lag(basefc$IPr,4))/lag(basefc$IPr,4)*100)
+basefc<- mutate(basefc,tPIB= (basefc$PIB-lag(basefc$PIB,4))/lag(basefc$PIB,4)*100)
+basefc<- mutate(basefc,tIPub= (basefc$IPub-lag(basefc$IPub,4))/lag(basefc$IPub,4)*100)
+
+```
+
+```{r echo=FALSE}
+#Creo la nueva base "baser", en la cual le quito los primeros cuatro trimestres a la base "basend", puesto que tiene NA en todas las variables que son tasas de crecimiento, así que esta nueva base empieza desde 1996.
+
+basefa<-basefc[-c(1:4),]
+```
+
+**Modelo 14:**
+
+$$\triangle \%\  I_t = f(\triangle \% \ Y_{t},r^r_{t},\triangle \% \ I pub_{t})$$
+
+```{r echo=FALSE}
+reg66 <- lm(basefa$tIPr ~ basefa$tPIB+basefa$Rr+basefa$tIPub)
+
+```
+
+```{r REGRESIÓN15, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+stargazer(reg66,  
+          title= "Cuadro 2.16. Regresiones que explican la tasa de crecimiento trimestral de la inversión, respecto al trimestre anterior",
+          column.labels = c("reg14"),
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Con tres variables explicativas",
+          dep.var.labels = "Tasa de crecimiento de la inversión",
+          covariate.labels = c("Crec. anual PBI","Tasa de interes","Crec. anual Inv Pública"),
+          notes.label = "Nivel de significancia (P-valor)",
+          type="latex",
+          table.placement = "!htbp",
+          
+          single.row = T)
+```
+
+En este modelo de regresión, consideramos como variables explicativas la tasa de crecimiento del producto (PIB), la tasa de interés y la tasa de crecimiento de la inversión pública, donde obtuvimos que todas las variables son estadísticamente significativos. La tasa de crecimiento del producto tiene una relación positiva y la tasa de interés tiene una relación negativa con relación a la tasa de crecimiento de la inversión privada, cuyos resultados están acorde a la teoría económica.
+
+Con relación a la inversión pública, se muestra una relación negativa, efecto Crowding Out, es decir un efecto desplazamiento de la inversión pública sobre la inversión privada. Respecto a este resultado no se tiene certeza de esto porque es una regresión lineal donde no se ha realizado test para comprobar si se cumple con los supuestos clásicos de una regresión o ver si las series son estacionarias y buscar una relación estable de largo plazo.
+
+## Ejercicio 3
+
+**Estudie la habilidad de modelo de la q de Tobin para explicar las tasas de inversión de empresas individuales, siguiendo estos pasos [3 horas, 0.5 puntos cada inciso]:**
+
+### a)
+
+**Con el propósito de desarrollar intuición sobre la existencia y fuente de los datos corporativos, vaya al sitio de internet de algún corporativo mexicano y obtenga su reporte anual. De ahí, obtenga el valor de los activos menos los pasivos (excepto el capital) y construya el valor en libros de la empresa. Posteriormente, de dicho reporte, o del sitio de la BMV o de la BIVA, obtenga el valor de capitalización de mercado de la misma empresa y finalmente construya la variable "Q" como la razón de dichos valores.**
+
+Para este ejercicio, se eligió a la empresa El Puerto de Liverpool, mejor conocida como Liverpool [@liverpool], fundada en 1847 y dedicada a la operación de tiendas departamentales, restaurantes y centros comerciales.
+
+Así, se obtuvieron los datos de cada trimestre a partir de la base de datos obtenida de Github, información que fue comprobada y completada con los datos individuales de cada trimestre de 2011-2020. **Así, la base de datos completa incluye observaciones a partir del segundo trimestre de 2007 y hasta el cuarto trimestre de 2020.**
+
+Para los fines de este inciso, el último Informe Anual disponible es el de 2019, publicado en febrero de 2020 (el correspondiente a 2020 no ha sido publicado a la fecha de entrega de este documento). Por tal motivo, a continuación se presenta la información financiera más relevante al último trimestre de 2019:
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 3.1. Situación financiera de El Puerto de Liverpool, último trimestre 2019.}
+\end{center}
+```
+|              Variable              | Valor en miles de pesos |
+|:----------------------------------:|:-----------------------:|
+|          Activos totales           |    \$200'561'869.00     |
+|          Total de pasivos          |     \$91'487'331.00     |
+|     Total de capital contable      |    \$109'074'538.00     |
+| Total de pasivo y capital contable |    \$200'561'869.00     |
+
+Por otro lado, para obtener el valor de capitalización de mercado de la empresa, es necesario obtener el precio de la acción y multiplicarlo por el volumen de acciones que se encuentran en el mercado. Para tal efecto, se utilizaron los datos reportados al último trimestre de 2019 (si bien existen datos más recientes, se consideró pertinente empatar la temporalidad de la información financiera inmediata anterior con su correspondiente capitalización de mercado) en el Informe Trimestral de Liverpool [@liverpool2]:
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 3.2. Volumen, precio unitario de acciones y capitalización de mercado de El Puerto de Liverpool, último trimestre de 2019.}
+\end{center}
+```
+|                Variable                | Valor (numérico y en pesos, respectivamente) |
+|:--------------------------------------:|:--------------------------------------------:|
+|    Total de acciones en el mercado     |                1'342'196'100                 |
+| Último cierre del precio de una acción |                   \$99.84                    |
+|       Capitalización de mercado        |             \$134'004'858'624.00             |
+
+Así, la variable Q (q promedio) se obtiene dividiendo el valor de la capitalización de mercado entre el total de capital que tiene la empresa. Este procedimiento funciona como una variable *proxy*: una aproximación al valor marginal que tiene la inversión en esta empresa.
+
+\setcounter{equation}{0}
+
+```{=tex}
+\begin{equation}
+Q = \frac{Valor\;total\;de\;la\;empresa}{Capital\;total\;de\;la\;empresa} = \frac{V}{K} = \frac{134'004'858'624}{109'074'538'000}  = 1.2285
+\end{equation}
+```
+Intuitivamente, una Q promedio mayor a 1 incentiva la inversión, dado que el beneficio esperado es mayor a los costos asociados a adquirir una unidad más de capital.
+
+### b)
+
+**Utilice su cuenta de GitHub.com para entrar al repositorio fisionmail, Colmex_Macro_2\_2021 y bajar el archivo de datos que está ahí, está en formato de stata, ".dta". Cree una medida de inversión y una medida de q de Tobin: inversión puede ser el gasto en capital (capx) sobre el capital (ppen), o la tasa de cambio en el capital (%**$\Delta$ ppen), o la tasa de cambio de los activos (%$\Delta$ta).
+
+Para este inciso, y con base en los datos contables obtenidos de GitHub, se creó una medida de la inversión a partir de la tasa de cambio de los activos de El Puerto de Liverpool. La tasa de cambio es de un trimestre con respecto al mismo trimestre del año anterior.
+
+```{r include=FALSE}
+
+bd_liverpool<- read_csv("https://raw.githubusercontent.com/LeoEnriquez/TareasMacro2/Tarea-2/Datos%20Tarea%202/bd_liverpool.csv")
+
+```
+
+```{r include=FALSE}
+
+tasaactivosTT<- ts(bd_liverpool$tasa_activos_trimtrim, start=c(2007,2), frequency = 4)
+
+```
+
+```{r echo=FALSE}
+grafica_tc_activos1<- plot.ts(tasaactivosTT, xlab="Trimestres", ylab="Tasa de crecimiento", main="Gráfica 3.1. Tasa de crecimiento trimestral del valor de los activos\n de El Puerto de Liverpool, 2007T3 - 2020T4", col = "blue", lwd=1, cex.main = 0.9)
+
+```
+
+La gráfica anterior muestra las variaciones más inmediatas de un trimestre a otro en el valor de los activos de Liverpool. Puede observarse bastante volatilidad en dichos valores a lo largo del tiempo.
+
+Otro indicador que puede obtenerse de la inversión es la tasa de crecimiento del valor de los activos de un trimestre con respecto al mismo trimestre del año anterior, que a continuación se presentan:
+
+```{r}
+
+tasaactivosTA<- ts(bd_liverpool$tasa_activos_trimanual, start=c(2007,2), frequency = 4)
+
+grafica_tc_activos2<- plot.ts(tasaactivosTA, xlab="Trimestres", ylab="Tasa de crecimiento", main="Gráfica 3.2. Tasa de crecimiento trimestral del valor de los activos\n de El Puerto de Liverpool, con respecto al año anterior, 2008T2 - 2020T4", col = "red", lwd=1, cex.main = 0.9)
+
+
+```
+
+En la gráfica inmediata anterior puede observarse que, respecto al año anterior, el crecimiento del valor de los activos es siempre positivo, lo que indica que, año con año, Liverpool incrementa, al menos un poco el valor de sus activos.
+
+Ahora, se presenta una medida de inversión construida a partir de la tasa de variación del capital de un trimestre con respecto al inmediato anterior. Puede verse que el comportamiento es relativamente estable a excepción de acontecimientos extraordinarios donde el stock de capital de la empresa subió o bajó drásticamente:
+
+```{r echo=FALSE}
+
+tasacapitalTT<- ts(bd_liverpool$tasa_capital_trimtrim, start=c(2007,2), frequency = 4)
+
+grafica_tc_capial1<- plot.ts(tasacapitalTT, xlab="Trimestres", ylab="Tasa de crecimiento", main="Gráfica 3.3. Tasa de crecimiento trimestral del capital\n de El Puerto de Liverpool, 2007T3 - 2020T4", col = "green", lwd=1, cex.main = 0.9)
+```
+
+Asimismo, se calculó la tasa de crecimiento del capital trimestral pero ahora con respecto al trimestre del año anterior. A diferencia de la gráfica anterior, la siguiente exhibe un comportamiento donde es claro que el crecimiento de capital suele ser positivo si se compara con el año anterior. Exceptuando el año 2012, que por razones obvias es un *outlier,* el crecimiento siempre es positivo.
+
+```{r echo=FALSE}
+
+tasacapitalTA<- ts(bd_liverpool$tasa_capital_trimanual, start=c(2007,2), frequency = 4)
+
+grafica_tc_capial1<- plot.ts(tasacapitalTA, xlab="Trimestres", ylab="Tasa de crecimiento", main="Gráfica 3.4. Tasa de crecimiento trimestral del capital\n de El Puerto de Liverpool, con respecto al año anterior, 2008T2 - 2020T4", col = "cyan", lwd=1, cex.main = 0.9)
+```
+
+### c)
+
+**Cree una medida de la q de Tobin: el valor de mercado de la empresa sobre el valor en libros de la empresa, en donde el valor de mercado es es número de acciones por el precio de la acción.**
+
+```{r}
+qT<-(bd_liverpool$precio_acciones*bd_liverpool$num_acciones)/(bd_liverpool$activos_totales-bd_liverpool$pasivos_totales)
+qT_ts<- ts(qT, start=c(2007,2), frequency = 4)
+
+```
+
+```{r}
+grafica_qT <- plot.ts (qT_ts,   xlab="Trimestres", ylab="q de Tobin", main="Gráfica 3.5. Medida de la q de Tobin\n de El Puerto de Liverpool, 2007T2 - 2020T4", col = "purple", lwd=1, cex.main = 0.9)
+abline(h = mean(qT_ts), col ="red", legend("topright", "Media", fill = "red"))
+```
+
+La Gráfica 3.5 muestra los valores de la q de Tobin desde el segundo trimestre de 2007 para Liverpool. De hecho, solo se observan valores menores a 1 en el año 2020, derivado de la crisis económica ocasionada por la pandemia de Covid-19. Durante todos los periodos anteriores a este año, el valor de la q de Tobin es positivo, lo que indica una propensión de la empresa a incrementar su inversión en capital, dado que los beneficios esperados de esta eran mayores a los costos de adquirirlo. Específicamente, el promedio de la q de Tobin durante este periodo es de 2.56.
+
+```{r include=FALSE}
+mean(qT_ts)
+```
+
+### d)
+
+**Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo y la q de Tobin en el mismo o en el periodo inmediato anterior.**
+
+```{r include=FALSE}
+
+qT_ts1 <- stats::lag(qT_ts, k = -1)
+qT_ts1
+```
+
+```{r}
+scatter.smooth(x = qT_ts1, y = tasaactivosTT, span = 1, main = "Gráfica 3.6. q de Tobin y crecimiento de los activos trimestre-trimestre.", xlab = "q de Tobin", ylab = "Crecimiento valor activos", col = "#333399", cex = 0.5, cex.main = 0.8)
+```
+
+```{r results='asis'}
+regg3.1 <- lm(tasaactivosTT ~ qT_ts1)
+
+stargazer(regg3.1,
+          title= "Cuadro 3.3. Regresión q de Tobin y crecimiento de los activos trimestre-trimestre.",
+          column.labels = "",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Crecimiento valor activos",
+          covariate.labels = c("q de Tobin", "Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+```{r}
+scatter.smooth(x = qT_ts1, y = tasaactivosTA, span = 1, main = "Gráfica 3.7.q de Tobin y crecimiento de los activos trimestre/anual.", xlab = "q de Tobin", ylab = "Crecimiento valor activos", col = "#333399", cex = 0.5, cex.main = 0.8)
+```
+
+```{r results='asis'}
+regg3.2 <- lm(tasaactivosTA ~ qT_ts1)
+
+stargazer(regg3.2,
+          title= "Cuadro 3.4. Regresión q de Tobin y crecimiento de los activos trimestre/anual.",
+          column.labels = "",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Crecimiento valor activos",
+          covariate.labels = c("q de Tobin", "Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+```{r}
+scatter.smooth(x = qT_ts1, y = tasacapitalTT, span = 1, main = "Gráfica 3.8.q de Tobin y crecimiento del capital trimestre-trimestre", xlab = "q de Tobin", ylab = "Crecimiento capital", col = "#333399", cex = 0.5, cex.main = 0.8)
+```
+
+```{r results='asis'}
+regg3.3 <- lm(tasacapitalTT ~ qT_ts1)
+
+stargazer(regg3.3,
+          title= "Cuadro 3.5. Regresión q de Tobin y crecimiento del capital trimestre-trimestre.",
+          column.labels = "",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Crecimiento capital",
+          covariate.labels = c("q de Tobin", "Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+```{r}
+scatter.smooth(x = qT_ts1, y = tasacapitalTA, span = 1, main = "Gráfica 3.9.q de Tobin y crecimiento del capital trimestre/anual", xlab = "q de Tobin", ylab = "Crecimiento capital", col = "#333399", cex = 0.5, cex.main = 0.8)
+```
+
+```{r results='asis'}
+regg3.4 <- lm(tasacapitalTA ~ qT_ts1)
+
+stargazer(regg3.4,
+          title= "Cuadro 3.6. Regresión q de Tobin y crecimiento del capital trimestre/anual",
+          column.labels = "",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Crecimiento capital",
+          covariate.labels = c("q de Tobin", "Constante"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+Las regresiones inmediatas anteriores exhiben coeficientes de relación estadísticamente no significativos entre la q de Tobin y las cuatro diferentes medidas de inversión creadas. Intuitivamente, esto quiere decir que las decisiones de inversión de Liverpool no están, de ninguna manera, relacionadas con el valor que tome la q de Tobin en ningún periodo. Por tal motivo, es sensato suponer que se trata de una empresa que toma en cuenta otros factores externos para aumentar o disminuir su *stock* de capital.
+
+### e)
+
+**Produzca un estimado del coeficiente del costo de ajuste.**
+
+Para fines analíticos de este inciso y el siguiente, y con el objetivo de proveer una explicación teórica remotamente pertinente, se hará uso de la siguiente licencia: supóngase que los coeficientes $\hat\beta$ estimados en los modelos anteriores **SÍ** son significativos y demuestran una relación positiva entre las medidas de inversión y el valor de la q de Tobin (se excluirá el cuarto modelo, dado que presenta una relación negativa entre las variables de interés y resulta intuitivamente incorrecta); esto es, supóngase que el *stock* de capital de Liverpool aumenta si la q de Tobin sube, y disminuye si este baja.
+
+De acuerdo a lo propuesto por [@summers], la función de costos de ajuste tiene la forma:
+
+$$C(I(t),k(t)) = \frac{1}{2}a[\frac{I(t)}{k(t)}]^2k(t), \; \; a > 0$$
+
+Dado lo anterior, y sabiendo que $a = \frac{1}{\hat\beta}$, es decir, el parámetro $a$ es igual al inverso del parámetro $\hat\beta$ estimado en los modelos del inciso anterior, podemos obtener los siguientes valores de a:
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 3.7. Parámetros "a" implícitos de los coeficientes $\beta$ de 3 modelos lineales entre inversión y q de Tobin.}
+\end{center}
+```
+| Valor                 | Modelo 1 | Modelo 2 | Modelo 3 |
+|-----------------------|----------|----------|----------|
+| Estimador $\hat\beta$ | 0.537    | 1.287    | 0.257    |
+| "a" implícita         | 1.8621   | 0.7770   | 3.8910   |
+
+### f)
+
+**Explique, suponiendo que la función de costo de ajuste es cuadrática (es decir** $C_t=b(I_t/K_t)^2K_t$), qué implican los resultados de sus regresiones sobre el costo de ajuste relativo al capital total para una inversión de 30% del capital total y qué implican los resultados para el tiempo que le tomaría a una empresa recorrer la mitad mitad del camino entre el capital que tiene, $K$, y el que quisiera tener $K^*$
+
+Sea $b = \frac{1}{2}a$, lo que implica:
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 3.8. Parámetro b por modelo.}
+\end{center}
+```
+| Valor         | Modelo 1  | Modelo 2 | Modelo 3 |
+|---------------|-----------|----------|----------|
+| Parámetro "b" | 0.9310987 | 0.3885   | 1.9455   |
+
+Los coeficientes anteriores implican costos de ajuste variados: si la empresa busca aumentar sus *stocks* de capital, dependiendo del modelo explicativo, tendría que incurrir en costos de ajustes más grande o más pequeño de lo que se paga por el aumento de capital.
+
+Para observar qué implican en términos de costos de ajuste para Liverpool estos resultados, dada una supuesta inversión de 30% del capital total, se tomarán los datos más recientes, del último trimestre de 2020 sobre la variable PPE (Propiedad, Planta y Equipo).
+
+Dado que la PPE más reciente es de \$50'684'928'000.00, el 30% es \$15'194'678'400.00.
+
+Dada la función de costos propuesta, $C_t=b(\frac{I_t}{K_t})^2K_t$, se obtienen los siguientes valores para $C_t$ (se omite el resultado del Modelo 4 por presentar mal comportamiento y no ser pertinente para el análisis de los costos de ajuste):
+
+```{r include=FALSE}
+
+C1 <- 0.9310987*(15194678400/50684928000)^2*50684928000
+C1
+
+C2 <- 0.3885*(15194678400/50684928000)^2*50684928000
+C2
+
+C3 <- 1.9455*(15194678400/50684928000)^2*50684928000
+C3
+```
+
+```{=tex}
+\begin{center}
+\textbf{Cuadro 3.9. Costos de ajuste estimados, dada una inversión de 30 por ciento del total, 2020T4.}
+\end{center}
+```
++-----------------+--------------------+--------------------+--------------------+
+|                 | Modelo 1           | Modelo 2           | Modelo 3           |
++=================+====================+====================+====================+
+| Costo de ajuste | \$4'241'308'974.00 | \$1'769'681'922.00 | \$8'862'075'105.00 |
++-----------------+--------------------+--------------------+--------------------+
+
+Como puede observarse, los costos de ajuste son relativamente bajos; de hecho, todos son menores al costo en el que se incurriría de hacer una inversión equivalente al 30% del *stock* actual. Esto es consistente con el hecho de que las medidas de inversión creadas en los incisos anteriores suelen ser positivas, al tiempo que la q de Tobin estimada para cada periodo es mayor a 1.
+
+Un menor costo de ajuste implica que el tiempo que le tomaría a una empresa recorrer la mitad del camino entre el capital que tiene, $K$, y el que quisiera tener $K^*$ es menor. Es decir, cuanto menor sea el costo de ajuste de la empresa, más rápido podrá pasar de un stock de capital del estado estacionario inicial a un stock de capital de estado estacionario final. Considerando el cálculo de Summer (1981), de que un costo de ajuste del $65\%$ del stock de capital implica que el stock de capital requiere de 10 años en llegar a la mitad de la trayectoria de su nuevo estado estacionario, calculamos con el modelo 3 lo siguiente: el costo de ajuste representa el $17.48\%$ del stock de capital de la empresa, y por lo tanto, al stock de capital le tomará $2.68$ años en estar a la mitad de la trayectoria de su nuevo estado estacionario incrementado en un $30\%$.
+
+### g)
+
+**Simule una relación lineal** $Y=a+bX+\epsilon$ y cree dos variables con error de medición $\tilde{X}=X+\tilde{\epsilon}$ and also $\tilde{\tilde{X}}=X-c{\epsilon}$. Luego estime tres relaciones lineales, la de $Y$ con $X$, la de $Y$ con $\tilde{X}$ y la de $Y$ con $\tilde{\tilde{X}}$, explicando los resultados que obtenga y relacionándolos con los hallazgos del inciso anterior.
+
+En el siguiente cuadro planteamos los tres modelos, 3.9 a 3.11. El primero 3.9 es el modelo 3.1 planteado en la sección (d), el segundo modelo 3.10 considera la variable independiente de la q de Tobin más un término de error $\epsilon$ y el tercer modelo 3.11 considera como variable independiente la q de Tobin menos un error $c \epsilon$.El término de error $\epsilon$ se conformó de valores aleatorios con media cero y varianza de $0.2$ y el término de error $c\epsilon$ con media cero y varianza $0.2$.
+
+```{r results='asis'}
+set.seed(1)
+epsilon<-c(rnorm(55,0,0.2))
+cepsilon<-c(rnorm(55,0,0.2))
+qTe<-qT_ts1+epsilon
+qTce<-qT_ts1-cepsilon
+
+
+
+reg_1<-lm(tasaactivosTT ~ qT_ts1)
+reg_e<-lm(tasaactivosTT ~ qTe)
+reg_ce<-lm(tasaactivosTT ~ qTce)
+
+
+
+stargazer(reg_1,reg_e, reg_ce,
+          title= "Cuadro 3.10. Regresiones 3.9 - 3.11. Inversión (crecimiento de los activos) y  la q de Tobin con elemento de error",
+          column.labels = "",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          dep.var.labels = "Crecimiento activos T",
+          covariate.labels = c("q de Tobin"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+Observemos que el coeficiente asociado a la q de Tobin es mayor en 3.10 con respecto al modelo original, y es menor con respecto al modelo original en el caso del modelo 3.11. Es decir, la suma de un término de error, aumenta el valor del coeficiente $\beta$, mientras que una resta de un término de error disminuye el valor de $\beta$. Es importante recalcar que pueden producirse distintos resultados ya que los términos de error son aleatorios.
+
+Esto podría tener implicaciones en los resultados del inciso anterior (f), ya que al cambiar los valores de $\beta$ también cambiarían los valores de $a$ y de $b$, con lo cual los costos de ajuste también se verían modificados. Si $\beta$ aumenta, los costos de ajuste se hacen menores.
+
+### h)
+
+**Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo, la** $q$ de Tobin en el mismo o en el periodo inmediato anterior, y el flujo de efectivo o las ganancias netas. Interprete los resultados contrastándolos con los resultados que obtuvo anteriormente.
+
+A continuación se muestran las regresiones anteriores 3.1 a 3.4 ampliadas con una variable independiente adicional, que es la del efectivo de la empresa y que hemos resumido en el siguiente cuadro como las regresiones 3.5(1) a 3.8(4), asociadas a los anteriores, respectivamente . La variable "tasaactivosTT" es la tasa de crecimiento de los activos de la empresa de un trimestre con respecto al trimestre anterior, "tasaactivosTA" es la tasa de crecimiento de los activos de la empresa de un trimestre con respecto al mismo trimestre del año anterior, la misma lógica aplica para la tasa de crecimiento del capital. Hemos tomado ambos indicadores como la inversión de la empresa.
+
+```{r results='asis'}
+reg1_efectivo <- lm(tasaactivosTT ~ qT_ts1 + bd_liverpool$Efectivo)
+reg2_efectivo <- lm(tasaactivosTA ~ qT_ts1 + bd_liverpool$Efectivo)
+reg3_efectivo <- lm(tasacapitalTT ~ qT_ts1 + bd_liverpool$Efectivo)
+reg4_efectivo <- lm(tasacapitalTA ~ qT_ts1 + bd_liverpool$Efectivo)
+
+stargazer(reg1_efectivo,reg2_efectivo, reg3_efectivo, reg4_efectivo,
+          title= "Cuadro 3.11. Regresión 3.5(1) - 3.8(4). Inversión (crecimiento de los activos y del capital),  la q de Tobin, y el efectivo.",
+          column.labels = "",
+          header = FALSE,
+          font.size = "footnotesize",
+          dep.var.caption = "Variable Dependiente",
+          #dep.var.labels = "Crecimiento activos T",
+          covariate.labels = c("q de Tobin", "Efectivo"),
+          notes.label = "P-valor",
+          type="latex",
+          table.placement = "!htbp")
+```
+
+Se puede observar que la q de Tobin no es estadísticamente significativa, al igual que en los modelos anteriores. La constante no es significativa en ninguno de los modelos planteados y el coeficiente asociado del efectivo es estadísticamente significativo en dos de los modelos considerados, sin embargo, los coeficientes son muy marginales. Cabe notar que el segundo modelo se vuelve significativo en su conjunto, con la introducción del efectivo que es estadísticamente significativo. Esto implica que con la introducción de esta variable, podríamos mejorar en su conjunto los modelos planteados.
+
+## Ejercicio 4
+
+**Proponga una mejora al archivo Diccionario de Economía utilizando github.**
+
+Link de *commits* realizados por el equipo:
+
+<https://github.com/fisionmail/Colmex_Macro_2_2021/commits/main/Diccionario_De_Economia.tex>
+
+\newpage
+
+# Referencias
+
+<!-- <div id="refs"></div> -->
